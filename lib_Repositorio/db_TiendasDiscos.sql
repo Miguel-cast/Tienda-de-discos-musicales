@@ -4,167 +4,6 @@ GO
 USE db_TiendaDiscos;
 GO
 
-
--- Tabla Discos
-CREATE TABLE [Discos] (
-	[DiscoId] INT IDENTITY (1,1) PRIMARY KEY,
-	[Titulo] NVARCHAR(50) NOT NULL,
-	[AñoLanzamiento] INT,
-	[Precio] DECIMAL(10,2) NOT NULL,
-);
-GO
-
--- Tabla Discos
-
-ALTER TABLE [Discos] 
-	ADD [ArtistaId] INT CONSTRAINT FK_Discos_Artistas 
-			FOREIGN KEY REFERENCES [Artistas]([ArtistaId]),
-		[Id] INT CONSTRAINT FK_Discos_ 
-			FOREIGN KEY REFERENCES []([Id]),
-		[ProveedoresId] INT CONSTRAINT FK_Discos_Proveedores 
-			FOREIGN KEY REFERENCES [Proveedores]([ProveedoresId]);
-GO
-
-
---tabla Proveedores
-
-CREATE TABLE [Proveedores](
-	[ProveedoresId] INT IDENTITY (1,1) PRIMARY KEY,
-	[NombreEmpresa] NVARCHAR (100) NOT NULL,
-	[Contacto] NVARCHAR (50) NOT NULL,
-	[Telefono] NVARCHAR (20) NOT NULL,
-	[Direccion] NVARCHAR (200),
-);
-
-GO
-
--- Tabla Generos
-
-CREATE TABLE [Generos](
-	[GenerosId] INT IDENTITY (1,1) PRIMARY KEY,
-	[NombreGenero] NVARCHAR (50) NOT NULL,
-	[Descripcion]  NVARCHAR (500) 
-);
-
-GO
-
--- Tabla Detalles Pedidos
-
-CREATE TABLE [DetallePedidos](
-	[DetallesId] INT IDENTITY(1,1) PRIMARY KEY,
-	[Cantidad] INT NOT NULL,
-	[PrecioUnitario] DECIMAL(10,2) NOT NULL,
-	[PedidoId] INT NOT NULL,
-	CONSTRAINT FK_DetallePedidos_Pedidos 
-		FOREIGN KEY ([PedidoId]) REFERENCES [Pedidos]([PedidoID])
-);
-GO
-
---tabla Cansiones
-
-CREATE TABLE [Canciones](
-	[CancionId] INT IDENTITY(1,1) PRIMARY KEY,
-	[Titulo] NVARCHAR(100) NOT NULL,
-	[Duracion] TIME NOT NULL,
-	[DiscoID] INT NOT NULL,
-	CONSTRAINT FK_Canciones_Discos 
-		FOREIGN KEY ([DiscoId]) REFERENCES [Discos]([DiscoID])
-);
-GO
--------------------------------------------------------------------------------------------------------
---Inserts
-
-INSERT INTO [Discos] (Titulo, AñoLanzamiento, Precio, ArtistaId, Id, ProveedoresId) VALUES
-('Abbey Road', 2019, 55000.00, 1, 4, 2),           
-('El Dorado', 2017, 48000.00, 2, 2, 1),         
-('30', 2021, 52000.00, 3, 5, 2),                 
-('Trap Cake Vol. 2', 2023, 42000.00, 5, 3, 5),   
-('Las Que No Iban a Salir', 2020, 60000.00, 5, 1, 4); 
-GO
-
-
-INSERT INTO [Proveedores] (NombreEmpresa, Contacto, Telefono, Direccion) VALUES
-('Sony Music Colombia', 'María Fernández', '3101234567', 'Zona Rosa, Bogotá'),
-('Universal Music Group', 'Carlos Mendoza', '3157891234', 'El Poblado, Medellín'),
-('Warner Music Latina', 'Ana Rodríguez', '3209876543', 'Zona T, Bogotá'),
-('Codiscos S.A.', 'Felipe Vargas', '3186547890', 'Centro, Medellín'),
-('Rimas Entertainment', 'Diego Santos', '3198765432', 'Laureles, Medellín'),
-('Flow Music', 'Camila Torres', '3167894521', 'Norte, Barranquilla');
-GO
-
-INSERT INTO [] (NombreGenero, Descripcion) VALUES
-('Reggaeton', 'Género musical urbano originario de Puerto Rico y Colombia'),
-('Pop Latino', 'Música popular en español con influencias modernas'),
-('Trap Latino', 'Subgénero del hip hop con influencias latinas'),
-('R&B Contemporáneo', 'Rhythm and Blues moderno'),
-('Indie Pop', 'Pop independiente con sonidos alternativos'),
-('Hip Hop', 'Género urbano estadounidense');
-GO
-
-INSERT INTO [Canciones] (Titulo, Duracion, DiscoID) VALUES
-
-('Come Together', '00:04:19', 12),
-('Something', '00:03:03', 12),
-('Maxwell''s Silver Hammer', '00:03:27', 12),
-('Oh! Darling', '00:03:26', 12),
-('Octopus''s Garden', '00:02:51', 12),
-('Here Comes the Sun', '00:03:05', 12),
-
-('Me Enamoré', '00:03:27', 13),
-('Nada', '00:03:23', 13),
-('Chantaje', '00:03:16', 13),
-('When a Woman', '00:03:07', 13),
-('Amarillo', '00:03:40', 13),
-('Perro Fiel', '00:03:25', 13),
-
-('Strangers By Nature', '00:03:03', 14),
-('Easy On Me', '00:03:44', 14),
-('My Little Love', '00:06:29', 14),
-('Cry Your Heart Out', '00:04:00', 14),
-('Oh My God', '00:03:45', 14),
-('Can I Get It', '00:03:30', 14),
-
-('Billie Jean', '00:04:54', 15),
-('Beat It', '00:04:18', 15),
-('Thriller', '00:05:57', 15),
-('Human Nature', '00:04:06', 15),
-('P.Y.T. Pretty Young Thing', '00:03:58', 15),
-('The Way You Make Me Feel', '00:04:58', 15),
-
-('Creepy', '00:02:45', 15),
-('Diabla', '00:03:12', 15),
-('Bzrp Music Sessions 50', '00:02:58', 15),
-('420', '00:03:25', 15),
-('No Soy Yo', '00:02:52', 15),
-('Lokotron', '00:03:15', 15),
-
-('Whiskey', '00:03:08', 16),
-('Mi Diablo', '00:02:47', 16),
-('Hijo de la Noche', '00:03:22', 16),
-('Pacto', '00:03:05', 16),
-('Lukeando', '00:02:38', 16),
-('Eclipse', '00:03:45', 16);
-GO
-
-INSERT INTO [DetallePedidos] (Cantidad, PrecioUnitario, PedidoId) VALUES
-(2, 65000.00, 1),
-(1, 55000.00, 2), 
-(1, 45000.00, 3), 
-(1, 48000.00, 4), 
-(2, 47000.00, 5); 
-GO
-
-----------------------------------------------------------------------------------------------
--- tabla Artistas
-
-CREATE TABLE [Artistas](
-    [ArtistaId] INT IDENTITY (1,1) PRIMARY KEY,
-    [NombreArtista] NVARCHAR(100) NOT NULL,
-    [Nacionalidad] NVARCHAR(50)
-);
-GO
--- Tabla Clientes
-
 CREATE TABLE [Clientes](
     [ClienteId] INT IDENTITY (1,1) PRIMARY KEY,
     [Nombre] NVARCHAR(50) NOT NULL,
@@ -177,11 +16,6 @@ CREATE TABLE [Clientes](
 );
 GO
 
-SELECT * FROM Discos;
-GO
-
--- Empleados
-
 CREATE TABLE [Empleados](
     [EmpleadoId] INT IDENTITY (1,1) PRIMARY KEY,
     [Nombre] NVARCHAR(50) NOT NULL,
@@ -192,80 +26,55 @@ CREATE TABLE [Empleados](
 );
 GO
 
--- Tabla Inventario Movimientos
+CREATE TABLE [Proveedores](
+	[ProveedoresId] INT IDENTITY (1,1) PRIMARY KEY,
+	[NombreEmpresa] NVARCHAR (100) NOT NULL,
+	[Contacto] NVARCHAR (50) NOT NULL,
+	[Telefono] NVARCHAR (20) NOT NULL,
+	[Direccion] NVARCHAR (200),
+);
 
-CREATE TABLE [InventarioMovimientos](
-    [MovimientoId] INT IDENTITY (1,1) PRIMARY KEY,
-    [FechaMovimiento] DATE NOT NULL,
-    [TipoMovimiento] NVARCHAR(20) NOT NULL, -- Entrada / Salida
-    [Cantidad] INT NOT NULL,
-    [DiscoId] INT NOT NULL,
-    [EmpleadoId] INT NOT NULL,
-    CONSTRAINT FK_InventarioMovimientos_Discos 
-        FOREIGN KEY ([DiscoId]) REFERENCES [Discos]([DiscoId]),
-    CONSTRAINT FK_InventarioMovimientos_Empleados 
-        FOREIGN KEY ([EmpleadoId]) REFERENCES [Empleados]([EmpleadoId])
+GO
+
+CREATE TABLE [Artistas](
+    [ArtistaId] INT IDENTITY (1,1) PRIMARY KEY,
+    [NombreArtista] NVARCHAR(100) NOT NULL,
+    [Nacionalidad] NVARCHAR(50)
 );
 GO
 
---tabla usuarios Sistema
-CREATE TABLE [UsuariosSistema](
-    [UsuarioId] INT IDENTITY (1,1) PRIMARY KEY,
-    [NombreUsuario] NVARCHAR(50) NOT NULL,
-    [ContrasenaHash] NVARCHAR(200) NOT NULL,
-    [Rol] NVARCHAR(50) NOT NULL,
-    [EmpleadoId] INT NOT NULL,
-    CONSTRAINT FK_UsuariosSistema_Empleados 
-        FOREIGN KEY ([EmpleadoId]) REFERENCES [Empleados]([EmpleadoId])
+CREATE TABLE [Generos](
+	[GenerosId] INT IDENTITY (1,1) PRIMARY KEY,
+	[NombreGenero] NVARCHAR (50) NOT NULL,
+	[Descripcion]  NVARCHAR (500) 
+);
+
+GO
+
+CREATE TABLE [Discos] (
+    [DiscoId] INT IDENTITY(1,1) PRIMARY KEY,
+    [Titulo] NVARCHAR(50) NOT NULL,
+    [AñoLanzamiento] INT,
+    [Precio] DECIMAL(10,2) NOT NULL,
+    [ArtistaId] INT CONSTRAINT FK_Discos_Artistas 
+        FOREIGN KEY REFERENCES [Artistas]([ArtistaId]),
+    [GenerosId] INT CONSTRAINT FK_Discos_Generos 
+        FOREIGN KEY REFERENCES [Generos]([GenerosId]),
+    [ProveedoresId] INT CONSTRAINT FK_Discos_Proveedores 
+        FOREIGN KEY REFERENCES [Proveedores]([ProveedoresId])
 );
 GO
 
-----------------------------------------------------------------------------------
---Insert en tablas
-
-INSERT INTO [Artistas] (NombreArtista, Nacionalidad) VALUES
-('The Beatles', 'Reino Unido'),
-('Shakira', 'Colombia'),
-('Adele', 'Reino Unido'),
-('Michael Jackson', 'Estados Unidos'),
-('Hades66', 'Colombia');
+CREATE TABLE [Canciones](
+	[CancionId] INT IDENTITY(1,1) PRIMARY KEY,
+	[Titulo] NVARCHAR(100) NOT NULL,
+	[Duracion] TIME NOT NULL,
+	[DiscoID] INT NOT NULL,
+	CONSTRAINT FK_Canciones_Discos 
+		FOREIGN KEY ([DiscoId]) REFERENCES [Discos]([DiscoID])
+);
 GO
 
-INSERT INTO [Clientes] (Nombre, Apellido, Email, Telefono, Direccion, Ciudad, Pais) VALUES
-('Carlos', 'Ramírez', 'carlos.ramirez@mail.com', '3001234567', 'Cra 10 #20-30', 'Bogotá', 'Colombia'),
-('Ana', 'García', 'ana.garcia@mail.com', '3157654321', 'Calle 45 #12-05', 'Medellín', 'Colombia'),
-('Luis', 'Pérez', 'luis.perez@mail.com', '3109988776', 'Av. Siempre Viva 123', 'Cali', 'Colombia'),
-('María', 'Lopez', 'maria.lopez@mail.com', '3001122334', 'Calle 8 #5-44', 'Barranquilla', 'Colombia'),
-('Jorge', 'Martínez', 'jorge.martinez@mail.com', '3015566778', 'Carrera 15 #45-67', 'Cartagena', 'Colombia');
-GO
-
-INSERT INTO [Empleados] (Nombre, Apellido, Cargo, Email, Telefono) VALUES
-('Andrés', 'Gómez', 'Vendedor', 'andres.gomez@tiendadiscos.com', '3201112233'),
-('Claudia', 'Ruiz', 'Cajera', 'claudia.ruiz@tiendadiscos.com', '3202223344'),
-('Felipe', 'Torres', 'Gerente', 'felipe.torres@tiendadiscos.com', '3203334455'),
-('Laura', 'Mendoza', 'Bodeguera', 'laura.mendoza@tiendadiscos.com', '3204445566'),
-('Santiago', 'Morales', 'Soporte TI', 'santiago.morales@tiendadiscos.com', '3205556677');
-GO
-
-INSERT INTO [InventarioMovimientos] (FechaMovimiento, TipoMovimiento, Cantidad, DiscoId, EmpleadoId) VALUES
-('2025-09-01', 'Entrada', 20, 1, 1),
-('2025-09-02', 'Salida', 5, 1, 2),
-('2025-09-03', 'Entrada', 15, 2, 3),
-('2025-09-04', 'Salida', 2, 2, 4),
-('2025-09-05', 'Entrada', 30, 3, 5);
-GO
-
-INSERT INTO [UsuariosSistema] (NombreUsuario, ContrasenaHash, Rol, EmpleadoId) VALUES
-('andresg', 'hash123', 'Admin', 1),
-('claudiar', 'hash234', 'Cajera', 2),
-('felipet', 'hash345', 'Gerente', 3),
-('lauram', 'hash456', 'Bodega', 4),
-('santiagom', 'hash567', 'Soporte', 5);
-GO
-----------------------------------------------------------------------------------
-
-
--- Tabla: Pedidos
 CREATE TABLE [Pedidos] (
     [PedidoID] INT IDENTITY(1,1) PRIMARY KEY,
     [FechaPedido] DATE NOT NULL,
@@ -279,9 +88,16 @@ CREATE TABLE [Pedidos] (
 );
 GO
 
+CREATE TABLE [DetallePedidos](
+	[DetallesId] INT IDENTITY(1,1) PRIMARY KEY,
+	[Cantidad] INT NOT NULL,
+	[PrecioUnitario] DECIMAL(10,2) NOT NULL,
+	[PedidoId] INT NOT NULL,
+	CONSTRAINT FK_DetallePedidos_Pedidos 
+		FOREIGN KEY ([PedidoId]) REFERENCES [Pedidos]([PedidoID])
+);
+GO
 
-
--- Tabla: Facturas
 CREATE TABLE [Facturas] (
     [FacturaID] INT IDENTITY(1,1) PRIMARY KEY,
     [FechaFactura] DATE NOT NULL,
@@ -315,6 +131,32 @@ CREATE TABLE [Envios] (
 );
 GO
 
+CREATE TABLE [UsuariosSistema](
+    [UsuarioId] INT IDENTITY (1,1) PRIMARY KEY,
+    [NombreUsuario] NVARCHAR(50) NOT NULL,
+    [ContrasenaHash] NVARCHAR(200) NOT NULL,
+    [Rol] NVARCHAR(50) NOT NULL,
+    [EmpleadoId] INT NOT NULL,
+    CONSTRAINT FK_UsuariosSistema_Empleados 
+        FOREIGN KEY ([EmpleadoId]) REFERENCES [Empleados]([EmpleadoId])
+);
+GO
+
+
+CREATE TABLE [InventarioMovimientos](
+    [MovimientoId] INT IDENTITY (1,1) PRIMARY KEY,
+    [FechaMovimiento] DATE NOT NULL,
+    [TipoMovimiento] NVARCHAR(20) NOT NULL, -- Entrada / Salida
+    [Cantidad] INT NOT NULL,
+    [DiscoId] INT NOT NULL,
+    [EmpleadoId] INT NOT NULL,
+    CONSTRAINT FK_InventarioMovimientos_Discos 
+        FOREIGN KEY ([DiscoId]) REFERENCES [Discos]([DiscoId]),
+    CONSTRAINT FK_InventarioMovimientos_Empleados 
+        FOREIGN KEY ([EmpleadoId]) REFERENCES [Empleados]([EmpleadoId])
+);
+GO
+
 CREATE TABLE [ReseñasClientes] (
     [ReseñaID] INT IDENTITY(1,1) PRIMARY KEY,
     [Comentario] NVARCHAR(500) NOT NULL,
@@ -328,8 +170,101 @@ CREATE TABLE [ReseñasClientes] (
         FOREIGN KEY ([DiscoId]) REFERENCES [Discos]([DiscoId])
 );
 GO
---------------------------------------------------------------------------------------------------
---INSERTSS TABLAS
+----- Inserts -----
+INSERT INTO [Clientes] (Nombre, Apellido, Email, Telefono, Direccion, Ciudad, Pais) VALUES
+('Carlos', 'Ramírez', 'carlos.ramirez@mail.com', '3001234567', 'Cra 10 #20-30', 'Bogotá', 'Colombia'),
+('Ana', 'García', 'ana.garcia@mail.com', '3157654321', 'Calle 45 #12-05', 'Medellín', 'Colombia'),
+('Luis', 'Pérez', 'luis.perez@mail.com', '3109988776', 'Av. Siempre Viva 123', 'Cali', 'Colombia'),
+('María', 'Lopez', 'maria.lopez@mail.com', '3001122334', 'Calle 8 #5-44', 'Barranquilla', 'Colombia'),
+('Jorge', 'Martínez', 'jorge.martinez@mail.com', '3015566778', 'Carrera 15 #45-67', 'Cartagena', 'Colombia');
+GO
+
+INSERT INTO [Empleados] (Nombre, Apellido, Cargo, Email, Telefono) VALUES
+('Andrés', 'Gómez', 'Vendedor', 'andres.gomez@tiendadiscos.com', '3201112233'),
+('Claudia', 'Ruiz', 'Cajera', 'claudia.ruiz@tiendadiscos.com', '3202223344'),
+('Felipe', 'Torres', 'Gerente', 'felipe.torres@tiendadiscos.com', '3203334455'),
+('Laura', 'Mendoza', 'Bodeguera', 'laura.mendoza@tiendadiscos.com', '3204445566'),
+('Santiago', 'Morales', 'Soporte TI', 'santiago.morales@tiendadiscos.com', '3205556677');
+GO
+
+INSERT INTO [Proveedores] (NombreEmpresa, Contacto, Telefono, Direccion) VALUES
+('Sony Music Colombia', 'María Fernández', '3101234567', 'Zona Rosa, Bogotá'),
+('Universal Music Group', 'Carlos Mendoza', '3157891234', 'El Poblado, Medellín'),
+('Warner Music Latina', 'Ana Rodríguez', '3209876543', 'Zona T, Bogotá'),
+('Codiscos S.A.', 'Felipe Vargas', '3186547890', 'Centro, Medellín'),
+('Rimas Entertainment', 'Diego Santos', '3198765432', 'Laureles, Medellín'),
+('Flow Music', 'Camila Torres', '3167894521', 'Norte, Barranquilla');
+GO
+
+INSERT INTO [Artistas] (NombreArtista, Nacionalidad) VALUES
+('The Beatles', 'Reino Unido'),
+('Shakira', 'Colombia'),
+('Adele', 'Reino Unido'),
+('Michael Jackson', 'Estados Unidos'),
+('Hades66', 'Colombia');
+GO
+
+INSERT INTO [Generos] (NombreGenero, Descripcion) VALUES
+('Reggaeton', 'Género musical urbano originario de Puerto Rico y Colombia'),
+('Pop Latino', 'Música popular en español con influencias modernas'),
+('Trap Latino', 'Subgénero del hip hop con influencias latinas'),
+('R&B Contemporáneo', 'Rhythm and Blues moderno'),
+('Indie Pop', 'Pop independiente con sonidos alternativos'),
+('Hip Hop', 'Género urbano estadounidense');
+GO
+
+INSERT INTO [Discos] (Titulo, AñoLanzamiento, Precio, ArtistaId, GenerosId, ProveedoresId) VALUES
+('Abbey Road', 2019, 55000.00, 1, 4, 2),           
+('El Dorado', 2017, 48000.00, 2, 2, 1),         
+('30', 2021, 52000.00, 3, 5, 2),                 
+('Trap Cake Vol. 2', 2023, 42000.00, 5, 3, 5),   
+('Las Que No Iban a Salir', 2020, 60000.00, 5, 1, 4); 
+GO
+
+INSERT INTO [Canciones] (Titulo, Duracion, DiscoID) VALUES
+
+('Come Together', '00:04:19', 1),
+('Something', '00:03:03', 1),
+('Maxwell''s Silver Hammer', '00:03:27', 1),
+('Oh! Darling', '00:03:26', 1),
+('Octopus''s Garden', '00:02:51', 1),
+('Here Comes the Sun', '00:03:05', 1),
+
+('Me Enamoré', '00:03:27', 2),
+('Nada', '00:03:23', 2),
+('Chantaje', '00:03:16', 2),
+('When a Woman', '00:03:07', 2),
+('Amarillo', '00:03:40', 2),
+('Perro Fiel', '00:03:25', 2),
+
+('Strangers By Nature', '00:03:03', 2),
+('Easy On Me', '00:03:44', 2),
+('My Little Love', '00:06:29', 2),
+('Cry Your Heart Out', '00:04:00', 2),
+('Oh My God', '00:03:45', 2),
+('Can I Get It', '00:03:30', 2),
+
+('Billie Jean', '00:04:54', 3),
+('Beat It', '00:04:18', 3),
+('Thriller', '00:05:57', 3),
+('Human Nature', '00:04:06', 3),
+('P.Y.T. Pretty Young Thing', '00:03:58', 3),
+('The Way You Make Me Feel', '00:04:58', 3),
+
+('Creepy', '00:02:45', 4),
+('Diabla', '00:03:12', 4),
+('Bzrp Music Sessions 50', '00:02:58', 4),
+('420', '00:03:25', 4),
+('No Soy Yo', '00:02:52', 4),
+('Lokotron', '00:03:15', 4),
+
+('Whiskey', '00:03:08', 5),
+('Mi Diablo', '00:02:47', 5),
+('Hijo de la Noche', '00:03:22', 5),
+('Pacto', '00:03:05', 5),
+('Lukeando', '00:02:38', 5),
+('Eclipse', '00:03:45', 5);
+GO
 
 INSERT INTO [Pedidos] (FechaPedido, Estado, ClienteID, EmpleadoID)
 VALUES
@@ -340,6 +275,13 @@ VALUES
 ('2025-09-05', 'Pendiente', 5, 1);
 GO
 
+INSERT INTO [DetallePedidos] (Cantidad, PrecioUnitario, PedidoId) VALUES
+(2, 65000.00, 1),
+(1, 55000.00, 2), 
+(1, 45000.00, 3), 
+(1, 48000.00, 4), 
+(2, 47000.00, 5); 
+GO
 
 INSERT INTO [Facturas] (FechaFactura, Total, PedidoID)
 VALUES
@@ -368,12 +310,33 @@ VALUES
 ('Cl 20 #10-05', 'Cartagena', 'Colombia', '2025-09-06', 5);
 GO
 
+INSERT INTO [UsuariosSistema] (NombreUsuario, ContrasenaHash, Rol, EmpleadoId) VALUES
+('andresg', 'hash123', 'Admin', 1),
+('claudiar', 'hash234', 'Cajera', 2),
+('felipet', 'hash345', 'Gerente', 3),
+('lauram', 'hash456', 'Bodega', 4),
+('santiagom', 'hash567', 'Soporte', 5);
+GO
+
+INSERT INTO [InventarioMovimientos] (FechaMovimiento, TipoMovimiento, Cantidad, DiscoId, EmpleadoId) VALUES
+('2025-09-01', 'Entrada', 20, 1, 1),
+('2025-09-02', 'Salida', 5, 1, 2),
+('2025-09-03', 'Entrada', 15, 2, 3),
+('2025-09-04', 'Salida', 2, 2, 4),
+('2025-09-05', 'Entrada', 30, 3, 5);
+GO
+
 INSERT INTO [ReseñasClientes] (Comentario, Calificacion, Fecha, ClienteId, DiscoId)
 VALUES
-('Excelente disco, sonido impecable.', 5, '2025-09-05', 1, 12),
-('Me gustó, pero esperaba más canciones.', 3, '2025-09-06', 2, 13),
-('Buen precio y entrega rápida.', 4, '2025-09-07', 3, 14),
-('El empaque llegó dañado, pero la música es buena.', 2, '2025-09-08', 4, 15),
-('El mejor álbum del año, recomendado.', 5, '2025-09-09', 5, 16);
+('Excelente disco, sonido impecable.', 5, '2025-09-05', 1, 1),
+('Me gustó, pero esperaba más canciones.', 3, '2025-09-06', 2, 2),
+('Buen precio y entrega rápida.', 4, '2025-09-07', 3, 3),
+('El empaque llegó dañado, pero la música es buena.', 2, '2025-09-08', 4, 4),
+('El mejor álbum del año, recomendado.', 5, '2025-09-09', 5, 5);
 GO
+
+
+
+
+Select * from ReseñasClientes
 
