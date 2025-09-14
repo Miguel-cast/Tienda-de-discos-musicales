@@ -14,7 +14,7 @@ namespace lib_dominio.Entidades
         [ForeignKey("ClienteID")] public Clientes? Cliente { get; set; }
         [ForeignKey("EmpleadoID")] public Empleados? Empleado { get; set; }
 
-        // Listas de entidades relacionadas
+        // Listas de entidades relacionadas a la tabla
         public ICollection<Facturas>? Facturas { get; set; }
         public ICollection<Envios>? Envios { get; set; }
         public ICollection<DetallesPedidos>? DetallesPedidos { get; set; }

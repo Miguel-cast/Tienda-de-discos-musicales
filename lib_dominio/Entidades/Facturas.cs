@@ -12,7 +12,7 @@ namespace lib_dominio.Entidades
 
         [ForeignKey("PedidoID")] public Pedidos? Pedido { get; set; }
 
-        // Lista de pagos asociados a esta factura
+        // Lista de pagos asociados a esta tabla factura
         public ICollection<Pagos>? Pagos { get; set; }
     }
 }
