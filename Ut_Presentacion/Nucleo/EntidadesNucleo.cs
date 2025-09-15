@@ -1,5 +1,4 @@
-﻿
-using lib_dominio.Entidades;
+﻿using lib_dominio.Entidades;
 using static lib_dominio.Nucleo.Enumerables;
 
 namespace ut_presentacion.Nucleo
@@ -37,7 +36,6 @@ namespace ut_presentacion.Nucleo
 
             return entidad;
         }
-
 
         public static Generos? Generos()
         {
@@ -77,7 +75,7 @@ namespace ut_presentacion.Nucleo
         public static Proveedores? Proveedores()
         {
             var entidad = new Proveedores();
-            entidad.NombreEmpresa = "Music World S.A.S"; 
+            entidad.NombreEmpresa = "Music World S.A.S";
             entidad.Contacto = "Ana Maria Lopez";
             entidad.Telefono = "6012345678";
             entidad.Direccion = "Calle 123 #45-67, Medellin, Colombia";
@@ -89,8 +87,8 @@ namespace ut_presentacion.Nucleo
         {
             var entidad = new DetallesPedidos();
             entidad.cantidad = 70;
-            entidad.PrecioUnitario = 45900.00m; 
-            entidad.PedidoId = 1;   
+            entidad.PrecioUnitario = 45900.00m;
+            entidad.PedidoId = 1;
 
             return entidad;
         }
@@ -100,8 +98,32 @@ namespace ut_presentacion.Nucleo
             var entidad = new Pedidos();
             entidad.FechaPedido = DateTime.Now;
             entidad.Estado = "En Proceso";
-            entidad.ClienteID = 3;  
+            entidad.ClienteID = 3;
             entidad.EmpleadoID = 2;
+
+            return entidad;
+        }
+     public static Pagos? Pagos()
+        {
+            var entidad = new Pagos();
+            entidad.FechaPago = DateTime.Now;
+            entidad.Monto = 125500.00m;
+            entidad.MetodoPago = "Tarjeta de Crédito";
+            entidad.FacturaID = 1;
+
+
+            return entidad;
+        }
+
+
+        public static Envios? Envios()
+        {
+            var entidad = new Envios();
+            entidad.DireccionEntrega = "Calle 45 #12-34";
+            entidad.CiudadEntrega = "Bogotá";
+            entidad.PaisEntrega = "Colombia";
+            entidad.FechaEnvio = DateTime.Now.AddDays(1);
+            entidad.PedidoID = 1;
 
             return entidad;
         }
@@ -114,10 +136,10 @@ namespace ut_presentacion.Nucleo
             entidad.Calificacion = 5;
             entidad.Fecha = DateTime.Now;
             entidad.ClienteID = 2;
-            entidad.DiscoID = 1;
 
             return entidad;
         }
+
 
         public static UsuariosSistema? UsuariosSistema()
         {
@@ -130,16 +152,6 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
-        public static Pagos? Pagos()
-        {
-            var entidad = new Pagos();
-            entidad.FechaPago = DateTime.Now;
-            entidad.Monto = 150000.00m;
-            entidad.MetodoPago = "Tarjeta de Crédito";
-            entidad.FacturaID = 1;
-
-            return entidad;
-        }
 
         public static Facturas? Facturas()
         {
@@ -163,18 +175,6 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
-        public static Envios? Envios()
-        {
-            var entidad = new Envios();
-            entidad.DireccionEntrega = "Calle 45 # 23-56, Bogotá, Colombia";
-            entidad.FechaEnvio = DateTime.Now.AddDays(3);
-            entidad.CiudadEntrega = "Enviado";
-            entidad.PaisEntrega = "Colombia";
-            entidad.PedidoID = 1;
-
-            return entidad;
-        }
-
-
+     
     }
 }
