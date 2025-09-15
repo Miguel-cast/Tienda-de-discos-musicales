@@ -14,6 +14,22 @@ namespace lib_repositorios.Implementaciones
             optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
 
-        public DbSet<Generos>? Generos { get; set; }
-    }
+        
+        public DbSet<Artistas>? Artistas { get; set; }
+        public DbSet<Canciones>? Canciones { get; set; }
+        public DbSet<Clientes>? Clientes { get; set; }
+        public DbSet<DetallesPedidos>? DetallesPedidos { get; set; }
+        public DbSet<Discos>? Discos { get; set; }
+        public DbSet<Empleados>? Empleados { get; set; }
+        public DbSet<Envios>? Envios { get; set; }
+        public DbSet<Facturas>? Facturas { get; set; }
+        public DbSet<Generos>? Generos { get; set; }
+        public DbSet<InventarioMovimientos>? InventarioMovimientos { get; set; }
+        public DbSet<Pagos>? Pagos { get; set; }
+        public DbSet<Pedidos>? Pedidos { get; set; }
+        public DbSet<Proveedores>? Proveedores { get; set; }
+        public DbSet<ReseñasClientes>? ReseñasClientes { get; set; }
+        public DbSet<UsuariosSistema>? UsuariosSistema { get; set; }
+
+    }
 }
