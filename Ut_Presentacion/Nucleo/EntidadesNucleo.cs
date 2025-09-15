@@ -95,5 +95,86 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
+        public static Pedidos? Pedidos()
+        {
+            var entidad = new Pedidos();
+            entidad.FechaPedido = DateTime.Now;
+            entidad.Estado = "En Proceso";
+            entidad.ClienteID = 3;  
+            entidad.EmpleadoID = 2;
+
+            return entidad;
+        }
+
+
+        public static ReseñasClientes? ReseñasClientes()
+        {
+            var entidad = new ReseñasClientes();
+            entidad.Comentario = "Excelente álbum, me encantaron todas las canciones."; 
+            entidad.Calificacion = 5;
+            entidad.Fecha = DateTime.Now;
+            entidad.ClienteID = 2;
+            entidad.DiscoID = 1;
+
+            return entidad;
+        }
+
+        public static UsuariosSistema? UsuariosSistema()
+        {
+            var entidad = new UsuariosSistema();
+            entidad.NombreUsuario = "admin";
+            entidad.ContrasenaHash = "hashed_password"; 
+            entidad.Rol = "Administrador";
+            entidad.EmpleadoId = 4;
+
+            return entidad;
+        }
+
+        public static Pagos? Pagos()
+        {
+            var entidad = new Pagos();
+            entidad.FechaPago = DateTime.Now;
+            entidad.Monto = 150000.00m;
+            entidad.MetodoPago = "Tarjeta de Crédito";
+            entidad.FacturaID = 1;
+
+            return entidad;
+        }
+
+        public static Facturas? Facturas()
+        {
+            var entidad = new Facturas();
+            entidad.FechaFactura = DateTime.Now;
+            entidad.Total = 150000.00m;
+            entidad.PedidoID = 2;
+
+            return entidad;
+        }
+
+        public static Empleados? Empleados()
+        {
+            var entidad = new Empleados();
+            entidad.Nombre = "Felipe";
+            entidad.Apellido = "Suluaga";
+            entidad.Cargo = "Gerente";
+            entidad.Email = "felisulu@gmail.com";
+            entidad.Telefono = "3216549870";
+
+            return entidad;
+        }
+
+        public static Envios? Envios()
+        {
+            var entidad = new Envios();
+            entidad.DireccionEntrega = "Calle 45 # 23-56, Bogotá, Colombia";
+            entidad.FechaEnvio = DateTime.Now.AddDays(3);
+            entidad.CiudadEntrega = "Enviado";
+            entidad.PaisEntrega = "Colombia";
+            entidad.PedidoID = 1;
+
+            return entidad;
+        }
+
+
     }
 }
