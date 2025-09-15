@@ -1,5 +1,4 @@
-﻿
-using lib_dominio.Entidades;
+﻿using lib_dominio.Entidades;
 using static lib_dominio.Nucleo.Enumerables;
 
 namespace ut_presentacion.Nucleo
@@ -37,7 +36,6 @@ namespace ut_presentacion.Nucleo
 
             return entidad;
         }
-
 
         public static Generos? Generos()
         {
@@ -77,7 +75,7 @@ namespace ut_presentacion.Nucleo
         public static Proveedores? Proveedores()
         {
             var entidad = new Proveedores();
-            entidad.NombreEmpresa = "Music World S.A.S"; 
+            entidad.NombreEmpresa = "Music World S.A.S";
             entidad.Contacto = "Ana Maria Lopez";
             entidad.Telefono = "6012345678";
             entidad.Direccion = "Calle 123 #45-67, Medellin, Colombia";
@@ -89,11 +87,66 @@ namespace ut_presentacion.Nucleo
         {
             var entidad = new DetallesPedidos();
             entidad.cantidad = 70;
-            entidad.PrecioUnitario = 45900.00m; 
-            entidad.PedidoId = 1;   
+            entidad.PrecioUnitario = 45900.00m;
+            entidad.PedidoId = 1;
 
             return entidad;
         }
 
+        public static Pagos? Pagos()
+        {
+            var entidad = new Pagos();
+            entidad.FechaPago = DateTime.Now;
+            entidad.Monto = 125500.00m;
+            entidad.MetodoPago = "Tarjeta de Crédito";
+            entidad.FacturaID = 1;
+
+            return entidad;
+        }
+
+        public static Envios? Envios()
+        {
+            var entidad = new Envios();
+            entidad.DireccionEntrega = "Calle 45 #12-34";
+            entidad.CiudadEntrega = "Bogotá";
+            entidad.PaisEntrega = "Colombia";
+            entidad.FechaEnvio = DateTime.Now.AddDays(1);
+            entidad.PedidoID = 1;
+
+            return entidad;
+        }
+
+        public static ReseñasClientes? ReseñasClientes()
+        {
+            var entidad = new ReseñasClientes();
+            entidad.Comentario = "Excelente disco, muy buena calidad de sonido";
+            entidad.Calificacion = 5;
+            entidad.Fecha = DateTime.Now;
+            entidad.ClienteID = 1;
+            entidad.DiscoID = 1;
+
+            return entidad;
+        }
+
+        public static Pedidos? Pedidos()
+        {
+            var entidad = new Pedidos();
+            entidad.FechaPedido = DateTime.Now;
+            entidad.Estado = "Pendiente";
+            entidad.ClienteID = 1;
+            entidad.EmpleadoID = 1;
+
+            return entidad;
+        }
+
+        public static Facturas? Facturas()
+        {
+            var entidad = new Facturas();
+            entidad.FechaFactura = DateTime.Now;
+            entidad.Total = 299500.00m;
+            entidad.PedidoID = 1;
+
+            return entidad;
+        }
     }
 }
