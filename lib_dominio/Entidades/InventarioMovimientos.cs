@@ -12,13 +12,11 @@ namespace lib_dominio.Entidades
     {
         [Key] public int MovimientoId { get; set; }
         public DateTime FechaMovimiento { get; set; }
-        public string TipoMovimiento { get; set; } 
+        public string? TipoMovimiento { get; set; } 
         public int Cantidad { get; set; }
-
-        
         public int DiscoId { get; set; }
-        [ForeignKey("DiscoId")] public Discos Disco { get; set; }
         public int EmpleadoId { get; set; }
-        [ForeignKey("EmpleadoId")] public Empleados Empleado { get; set; }
+        [ForeignKey("DiscoId")] public Discos? Disco { get; set; }
+        [ForeignKey("EmpleadoId")] public Empleados? Empleado { get; set; }
     }
 }

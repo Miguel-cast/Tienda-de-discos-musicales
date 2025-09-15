@@ -11,7 +11,7 @@ namespace lib_dominio.Entidades
     public class Artistas
     {
         [Key] public int ArtistaId { get; set; }
-        public string NombreArtista { get; set; } 
+        public string? NombreArtista { get; set; } 
         public string? Nacionalidad { get; set; }
             
         

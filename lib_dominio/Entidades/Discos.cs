@@ -11,7 +11,7 @@ namespace lib_dominio.Entidades
 		public int AñoLanzamiento { get; set; }
 		public decimal Precio { get; set; }
 		public int ArtistaId { get; set; }
-		public int GeneroId { get; set; }
+		public int GenerosId { get; set; }
 		public int ProveedoresId { get; set; }
 
         // Propiedades de navegación
