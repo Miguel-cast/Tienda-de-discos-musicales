@@ -85,5 +85,15 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
+        public static DetallesPedidos? DetallesPedidos()
+        {
+            var entidad = new DetallesPedidos();
+            entidad.cantidad = 70;
+            entidad.PrecioUnitario = 45900.00m; 
+            entidad.PedidoId = 1;   
+
+            return entidad;
+        }
+
     }
 }
