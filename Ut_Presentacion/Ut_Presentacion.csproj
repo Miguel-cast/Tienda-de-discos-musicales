@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\lib_dominio\lib_dominio.csproj" />
-    <ProjectReference Include="..\lib_Repositorio\lib_Repositorio.csproj" />
+    <ProjectReference Include="..\lib_Repositorio\lib_repositorios.csproj" />
   </ItemGroup>
 
   <ItemGroup>

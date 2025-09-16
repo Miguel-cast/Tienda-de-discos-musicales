@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Pruebas Unitarias", "4. 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib_dominio", "lib_dominio\lib_dominio.csproj", "{CADDD9BD-3208-4529-8628-5214890F6DAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib_Repositorio", "lib_Repositorio\lib_Repositorio.csproj", "{CCEAE8EE-0918-4BD4-98E8-0E51287D5AD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib_repositorios", "lib_Repositorio\lib_repositorios.csproj", "{CCEAE8EE-0918-4BD4-98E8-0E51287D5AD2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ut_Presentacion", "Ut_Presentacion\Ut_Presentacion.csproj", "{7DCA5DA5-42F0-418E-953D-BF0E6F9B6794}"
 EndProject
