@@ -18,7 +18,7 @@ namespace lib_repositorios.Implementaciones
         public DbSet<Artistas>? Artistas { get; set; }
         public DbSet<Canciones>? Canciones { get; set; }
         public DbSet<Clientes>? Clientes { get; set; }
-        public DbSet<DetallesPedidos>? DetallesPedidos { get; set; }
+        public DbSet<DetallePedidos>? DetallePedidos { get; set; }
         public DbSet<Discos>? Discos { get; set; }
         public DbSet<Empleados>? Empleados { get; set; }
         public DbSet<Envios>? Envios { get; set; }

@@ -6,9 +6,9 @@ namespace lib_repositorios.Interfaces
     public interface IDetallesPedidosAplicacion
     {
         void Configurar(string StringConexion);
-        List<DetallesPedidos> Listar();
-        DetallesPedidos? Guardar(DetallesPedidos? entidad);
-        DetallesPedidos? Modificar(DetallesPedidos? entidad);
-        DetallesPedidos? Borrar(DetallesPedidos? entidad);
+        List<DetallePedidos> Listar();
+        DetallePedidos? Guardar(DetallePedidos? entidad);
+        DetallePedidos? Modificar(DetallePedidos? entidad);
+        DetallePedidos? Borrar(DetallePedidos? entidad);
     }
 }

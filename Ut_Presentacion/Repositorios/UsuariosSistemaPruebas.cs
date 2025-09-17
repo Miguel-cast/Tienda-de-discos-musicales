@@ -40,7 +40,9 @@ namespace ut_presentacion.Repositorios
             {
                 NombreUsuario = "admin",
                 ContrasenaHash = "123456",
-                Rol = "Administrador"
+                Rol = "Administrador",
+                EmpleadoId = 1
+
             };
             this.iConexion!.UsuariosSistema!.Add(this.entidad);
             this.iConexion!.SaveChanges();

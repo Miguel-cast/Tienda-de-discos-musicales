@@ -11,9 +11,9 @@ namespace ut_presentacion.Nucleo
             entidad.Titulo = "Un verano sin ti";
             entidad.AñoLanzamiento = 2023;
             entidad.Precio = 59900.00m;
-            entidad.ArtistaId = 4;
+            entidad.ArtistaId = 1;
             entidad.GenerosId = 1;
-            entidad.ProveedoresId = 2;
+            entidad.ProveedoresId = 1;
 
             return entidad;
         }
@@ -23,7 +23,7 @@ namespace ut_presentacion.Nucleo
             var entidad = new Canciones();
             entidad.Titulo = "Waka Waka";
             entidad.Duracion = new TimeOnly(0, 3, 26);
-            entidad.DiscoID = 2;
+            entidad.DiscoID = 1;
 
             return entidad;
         }
@@ -66,7 +66,7 @@ namespace ut_presentacion.Nucleo
             entidad.FechaMovimiento = DateTime.Now;
             entidad.TipoMovimiento = "Entrada";
             entidad.Cantidad = 50;
-            entidad.DiscoId = 3;
+            entidad.DiscoId = 1;
             entidad.EmpleadoId = 1;
 
             return entidad;
@@ -83,9 +83,9 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
-        public static DetallesPedidos? DetallesPedidos()
+        public static DetallePedidos? DetallePedidos()
         {
-            var entidad = new DetallesPedidos();
+            var entidad = new DetallePedidos();
             entidad.cantidad = 70;
             entidad.PrecioUnitario = 45900.00m;
             entidad.PedidoId = 1;
@@ -98,8 +98,8 @@ namespace ut_presentacion.Nucleo
             var entidad = new Pedidos();
             entidad.FechaPedido = DateTime.Now;
             entidad.Estado = "En Proceso";
-            entidad.ClienteID = 3;
-            entidad.EmpleadoID = 2;
+            entidad.ClienteID = 1;
+            entidad.EmpleadoID = 1;
 
             return entidad;
         }
@@ -135,7 +135,8 @@ namespace ut_presentacion.Nucleo
             entidad.Comentario = "Excelente álbum, me encantaron todas las canciones."; 
             entidad.Calificacion = 5;
             entidad.Fecha = DateTime.Now;
-            entidad.ClienteID = 2;
+            entidad.ClienteID = 1;
+            entidad.DiscoID = 1;
 
             return entidad;
         }
@@ -147,7 +148,7 @@ namespace ut_presentacion.Nucleo
             entidad.NombreUsuario = "admin";
             entidad.ContrasenaHash = "hashed_password"; 
             entidad.Rol = "Administrador";
-            entidad.EmpleadoId = 4;
+            entidad.EmpleadoId = 1;
 
             return entidad;
         }
@@ -158,7 +159,7 @@ namespace ut_presentacion.Nucleo
             var entidad = new Facturas();
             entidad.FechaFactura = DateTime.Now;
             entidad.Total = 150000.00m;
-            entidad.PedidoID = 2;
+            entidad.PedidoID = 1;
 
             return entidad;
         }

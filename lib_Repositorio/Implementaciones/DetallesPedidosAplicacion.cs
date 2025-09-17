@@ -18,40 +18,40 @@ namespace lib_repositorios.Implementaciones
             this.IConexion!.StringConexion = StringConexion;
         }
 
-        public DetallesPedidos? Borrar(DetallesPedidos? entidad)
+        public DetallePedidos? Borrar(DetallePedidos? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
             if (entidad.DetallesId == 0)
                 throw new Exception("lbNoSeGuardo");
-            this.IConexion!.DetallesPedidos!.Remove(entidad);
+            this.IConexion!.DetallePedidos!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public DetallesPedidos? Guardar(DetallesPedidos? entidad)
+        public DetallePedidos? Guardar(DetallePedidos? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
             if (entidad.DetallesId != 0)
                 throw new Exception("lbYaSeGuardo");
-            this.IConexion!.DetallesPedidos!.Add(entidad);
+            this.IConexion!.DetallePedidos!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public List<DetallesPedidos> Listar()
+        public List<DetallePedidos> Listar()
         {
-            return this.IConexion!.DetallesPedidos!.Take(20).ToList();
+            return this.IConexion!.DetallePedidos!.Take(20).ToList();
         }
 
-        public DetallesPedidos? Modificar(DetallesPedidos? entidad)
+        public DetallePedidos? Modificar(DetallePedidos? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
             if (entidad.DetallesId == 0)
                 throw new Exception("lbNoSeGuardo");
-            var entry = this.IConexion!.Entry<DetallesPedidos>(entidad);
+            var entry = this.IConexion!.Entry<DetallePedidos>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;

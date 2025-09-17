@@ -10,7 +10,7 @@ namespace lib_dominio.Entidades
         public decimal Total { get; set; }
         public int PedidoID { get; set; }
 
-        [ForeignKey("PedidoID")] public Pedidos? Pedido { get; set; }
+        public Pedidos? Pedido { get; set; }
 
         // Lista de pagos asociados a esta tabla factura
         public ICollection<Pagos>? Pagos { get; set; }

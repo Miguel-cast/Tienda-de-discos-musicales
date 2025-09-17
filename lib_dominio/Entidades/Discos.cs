@@ -15,9 +15,9 @@ namespace lib_dominio.Entidades
 		public int ProveedoresId { get; set; }
 
         // Propiedades de navegación
-        [ForeignKey("Artista")] public Artistas? Artista { get; set; }
-        [ForeignKey("Genero")] public Generos? Genero { get; set; }
-        [ForeignKey("Proveedor")] public Proveedores? Proveedor { get; set; }
+        public Artistas? Artista { get; set; }
+        public Generos? Genero { get; set; }
+        public Proveedores? Proveedor { get; set; }
 
         // lista para las relaciones uno a muchos
         [NotMapped] public ICollection<ReseñasClientes>? ReseñasClientes { get; set; }

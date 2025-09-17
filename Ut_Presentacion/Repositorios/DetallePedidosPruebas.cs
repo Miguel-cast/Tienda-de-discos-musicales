@@ -6,12 +6,12 @@ using ut_presentacion.Nucleo;
 namespace ut_presentacion.Repositorios
 {
     [TestClass]
-    public class DetallesPedidosPruebas
+    public class DetallePedidosPruebas
     {
         private readonly IConexion? iConexion;
-        private List<DetallesPedidos>? lista;
-        private DetallesPedidos? entidad;
-        public DetallesPedidosPruebas()
+        private List<DetallePedidos>? lista;
+        private DetallePedidos? entidad;
+        public DetallePedidosPruebas()
         {
             iConexion = new Conexion();
             iConexion.StringConexion = Configuracion.ObtenerValor("StringConexion");
@@ -26,27 +26,27 @@ namespace ut_presentacion.Repositorios
         }
         public bool Listar()
         {
-            this.lista = this.iConexion!.DetallesPedidos!.ToList();
+            this.lista = this.iConexion!.DetallePedidos!.ToList();
             return lista.Count > 0;
         }
         public bool Guardar()
         {
-            this.entidad = EntidadesNucleo.DetallesPedidos()!;
-            this.iConexion!.DetallesPedidos!.Add(this.entidad);
+            this.entidad = EntidadesNucleo.DetallePedidos()!;
+            this.iConexion!.DetallePedidos!.Add(this.entidad);
             this.iConexion!.SaveChanges();
             return true;
         }
         public bool Modificar()
         {
             this.entidad!.cantidad = 62;
-            var entry = this.iConexion!.Entry<DetallesPedidos>(this.entidad);
+            var entry = this.iConexion!.Entry<DetallePedidos>(this.entidad);
             entry.State = EntityState.Modified;
             this.iConexion!.SaveChanges();
             return true;
         }
         public bool Borrar()
         {
-            this.iConexion!.DetallesPedidos!.Remove(this.entidad!);
+            this.iConexion!.DetallePedidos!.Remove(this.entidad!);
             this.iConexion!.SaveChanges();
             return true;
         }

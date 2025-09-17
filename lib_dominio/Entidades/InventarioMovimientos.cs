@@ -16,7 +16,7 @@ namespace lib_dominio.Entidades
         public int Cantidad { get; set; }
         public int DiscoId { get; set; }
         public int EmpleadoId { get; set; }
-        [ForeignKey("DiscoId")] public Discos? Disco { get; set; }
-        [ForeignKey("EmpleadoId")] public Empleados? Empleado { get; set; }
+        public Discos? Disco { get; set; }
+        public Empleados? Empleado { get; set; }
     }
 }
