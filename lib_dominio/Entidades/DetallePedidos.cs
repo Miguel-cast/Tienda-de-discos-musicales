@@ -13,6 +13,7 @@ namespace lib_dominio.Entidades
         // Propiedad de navegación
         [ForeignKey("PedidoId")]public Pedidos? Pedidos { get; set; }
 
+
     }
 }
 

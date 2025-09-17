@@ -35,10 +35,19 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("lbFaltaInformacion");
             if (entidad.DetallesId != 0)
                 throw new Exception("lbYaSeGuardo");
+
+            // Validaciones de negocio
+            if (entidad.cantidad <= 0)
+                throw new Exception("La cantidad debe ser mayor que cero.");
+
+            if (entidad.PrecioUnitario <= 0)
+                throw new Exception("El precio unitario debe ser mayor que cero.");
+
             this.IConexion!.DetallePedidos!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
+
 
         public List<DetallePedidos> Listar()
         {
@@ -55,6 +64,24 @@ namespace lib_repositorios.Implementaciones
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+
+        // Métodos específicos de lógica de negocio
+
+        public List<DetallePedidos> ObtenerPorPedido(int pedidoId)
+        {
+            return this.IConexion!.DetallePedidos!
+                .Where(d => d.PedidoId == pedidoId)
+                .ToList();
+        }
+
+
+        public decimal CalcularTotalPorPedido(int pedidoId)
+        {
+            return this.IConexion!.DetallePedidos!
+                .Where(d => d.PedidoId == pedidoId)
+                .Sum(d => d.cantidad * d.PrecioUnitario);
         }
     }
 }

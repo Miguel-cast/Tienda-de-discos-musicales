@@ -37,13 +37,27 @@ namespace lib_repositorios.Implementaciones
         public Canciones? Guardar(Canciones? entidad)
         {
             if (entidad == null)
-                throw new Exception("lbFaltaInformacion");
+                throw new Exception("Falta información");
             if (entidad.CancionId != 0)
-                throw new Exception("lbYaSeGuardo");
+                throw new Exception("La canción ya fue guardada");
+
+            // Validaciones de negocio
+            if (string.IsNullOrWhiteSpace(entidad.Titulo))
+                throw new Exception("El título de la canción es obligatorio.");
+
+            if (entidad.DiscoID <= 0)
+                throw new Exception("Debe asociar la canción a un disco válido.");
+
+            if (!this.IConexion!.Discos!.Any(d => d.DiscoId == entidad.DiscoID))
+                throw new Exception("El disco asociado no existe.");
+
+
+
             this.IConexion!.Canciones!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
+
 
         public List<Canciones> Listar()
         {
@@ -61,5 +75,22 @@ namespace lib_repositorios.Implementaciones
             this.IConexion.SaveChanges();
             return entidad;
         }
+
+        // 🔎 Métodos específicos de negocio
+
+        public List<Canciones> ObtenerPorDisco(int discoId)
+        {
+            return this.IConexion!.Canciones!
+                .Where(c => c.DiscoID == discoId)
+                .ToList();
+        }
+
+        public List<Canciones> BuscarPorTitulo(string titulo)
+        {
+            return this.IConexion!.Canciones!
+                .Where(c => c.Titulo.Contains(titulo))
+                .ToList();
+        }
+
     }
 }
