@@ -17,7 +17,7 @@ namespace lib_dominio.Entidades
         public string Rol { get; set; }
 
         public int EmpleadoId { get; set; }
-        [ForeignKey("EmpleadoId")] public Empleados Empleado { get; set; }
+        public Empleados? Empleado { get; set; }
     }
 
 }

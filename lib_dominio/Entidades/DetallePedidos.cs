@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace lib_dominio.Entidades
 {
-    public class DetallesPedidos
+    public class DetallePedidos
     {
         [Key] public int DetallesId { get; set; }
         public int cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public int PedidoId { get; set; }
         // Propiedad de navegación
-        [ForeignKey("PedidoId")] public Pedidos? Pedidos { get; set; }
+        [ForeignKey("PedidoId")]public Pedidos? Pedidos { get; set; }
 
     }
 }

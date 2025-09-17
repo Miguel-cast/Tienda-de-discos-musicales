@@ -14,7 +14,7 @@ namespace lib_dominio.Entidades
 
 
         // Propiedad de navegación
-        [ForeignKey("DiscoID")] public Discos? Disco { get; set; }
+       public Discos? Disco { get; set; }
 
     }
 }

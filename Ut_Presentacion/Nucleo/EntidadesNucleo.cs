@@ -11,9 +11,9 @@ namespace ut_presentacion.Nucleo
             entidad.Titulo = "Un verano sin ti";
             entidad.AñoLanzamiento = 2023;
             entidad.Precio = 59900.00m;
-            entidad.ArtistaId = 4;
+            entidad.ArtistaId = 1;
             entidad.GenerosId = 1;
-            entidad.ProveedoresId = 2;
+            entidad.ProveedoresId = 1;
 
             return entidad;
         }
@@ -23,7 +23,7 @@ namespace ut_presentacion.Nucleo
             var entidad = new Canciones();
             entidad.Titulo = "Waka Waka";
             entidad.Duracion = new TimeOnly(0, 3, 26);
-            entidad.DiscoID = 2;
+            entidad.DiscoID = 1;
 
             return entidad;
         }
@@ -66,7 +66,7 @@ namespace ut_presentacion.Nucleo
             entidad.FechaMovimiento = DateTime.Now;
             entidad.TipoMovimiento = "Entrada";
             entidad.Cantidad = 50;
-            entidad.DiscoId = 3;
+            entidad.DiscoId = 1;
             entidad.EmpleadoId = 1;
 
             return entidad;
@@ -83,9 +83,9 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
-        public static DetallesPedidos? DetallesPedidos()
+        public static DetallePedidos? DetallePedidos()
         {
-            var entidad = new DetallesPedidos();
+            var entidad = new DetallePedidos();
             entidad.cantidad = 70;
             entidad.PrecioUnitario = 45900.00m;
             entidad.PedidoId = 1;
@@ -93,7 +93,17 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
-        public static Pagos? Pagos()
+        public static Pedidos? Pedidos()
+        {
+            var entidad = new Pedidos();
+            entidad.FechaPedido = DateTime.Now;
+            entidad.Estado = "En Proceso";
+            entidad.ClienteID = 1;
+            entidad.EmpleadoID = 1;
+
+            return entidad;
+        }
+     public static Pagos? Pagos()
         {
             var entidad = new Pagos();
             entidad.FechaPago = DateTime.Now;
@@ -101,8 +111,10 @@ namespace ut_presentacion.Nucleo
             entidad.MetodoPago = "Tarjeta de Crédito";
             entidad.FacturaID = 1;
 
+
             return entidad;
         }
+
 
         public static Envios? Envios()
         {
@@ -116,10 +128,11 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
+
         public static ReseñasClientes? ReseñasClientes()
         {
             var entidad = new ReseñasClientes();
-            entidad.Comentario = "Excelente disco, muy buena calidad de sonido";
+            entidad.Comentario = "Excelente álbum, me encantaron todas las canciones."; 
             entidad.Calificacion = 5;
             entidad.Fecha = DateTime.Now;
             entidad.ClienteID = 1;
@@ -128,25 +141,41 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
-        public static Pedidos? Pedidos()
+
+        public static UsuariosSistema? UsuariosSistema()
         {
-            var entidad = new Pedidos();
-            entidad.FechaPedido = DateTime.Now;
-            entidad.Estado = "Pendiente";
-            entidad.ClienteID = 1;
-            entidad.EmpleadoID = 1;
+            var entidad = new UsuariosSistema();
+            entidad.NombreUsuario = "admin";
+            entidad.ContrasenaHash = "hashed_password"; 
+            entidad.Rol = "Administrador";
+            entidad.EmpleadoId = 1;
 
             return entidad;
         }
+
 
         public static Facturas? Facturas()
         {
             var entidad = new Facturas();
             entidad.FechaFactura = DateTime.Now;
-            entidad.Total = 299500.00m;
+            entidad.Total = 150000.00m;
             entidad.PedidoID = 1;
 
             return entidad;
         }
+
+        public static Empleados? Empleados()
+        {
+            var entidad = new Empleados();
+            entidad.Nombre = "Felipe";
+            entidad.Apellido = "Suluaga";
+            entidad.Cargo = "Gerente";
+            entidad.Email = "felisulu@gmail.com";
+            entidad.Telefono = "3216549870";
+
+            return entidad;
+        }
+
+     
     }
 }

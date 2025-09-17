@@ -69,9 +69,9 @@ CREATE TABLE [Canciones](
 	[CancionId] INT IDENTITY(1,1) PRIMARY KEY,
 	[Titulo] NVARCHAR(100) NOT NULL,
 	[Duracion] TIME NOT NULL,
-	[DiscoID] INT NOT NULL,
+	[DiscoId] INT NOT NULL,
 	CONSTRAINT FK_Canciones_Discos 
-		FOREIGN KEY ([DiscoId]) REFERENCES [Discos]([DiscoID])
+		FOREIGN KEY ([DiscoId]) REFERENCES [Discos]([DiscoId])
 );
 GO
 

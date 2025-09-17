@@ -12,8 +12,8 @@ namespace lib_dominio.Entidades
         public int ClienteID { get; set; }
         public int DiscoID { get; set; }
 
-        [ForeignKey("ClienteID")] public Clientes? Cliente { get; set; }
-        [ForeignKey("DiscoID")] public Discos? Disco { get; set; }
+        public Clientes? Cliente { get; set; }
+        public Discos? Disco { get; set; }
     }
 }
 

@@ -1,14 +1,19 @@
-﻿using lib_dominio.Entidades;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class DiscosAplicacion
+    public class ArtistasAplicacion
     {
         private IConexion? IConexion = null;
 
-        public DiscosAplicacion(IConexion iConexion)
+        public ArtistasAplicacion(IConexion iConexion)
         {
             this.IConexion = iConexion;
         }
@@ -18,48 +23,40 @@ namespace lib_repositorios.Implementaciones
             this.IConexion!.StringConexion = StringConexion;
         }
 
-        public Discos? Borrar(Discos? entidad)
+        public Artistas? Borrar(Artistas? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
-            if (entidad!.DiscoId== 0)
+            if (entidad.ArtistaId == 0)
                 throw new Exception("lbNoSeGuardo");
-            // Operaciones
-            this.IConexion!.Discos!.Remove(entidad);
+            this.IConexion!.Artistas!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public Discos? Guardar(Discos? entidad)
+        public Artistas? Guardar(Artistas? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
-            if (entidad.DiscoId != 0)
+            if (entidad.ArtistaId != 0)
                 throw new Exception("lbYaSeGuardo");
-            // Operaciones
-            this.IConexion!.Discos!.Add(entidad);
+            this.IConexion!.Artistas!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public List<Discos> Listar()
+        public List<Artistas> Listar()
         {
-            return this.IConexion!.Discos!.Take(20).ToList();
+            return this.IConexion!.Artistas!.Take(20).ToList();
         }
 
-        public Discos? Modificar(Discos? entidad)
+        public Artistas? Modificar(Artistas? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
-            if (entidad!.DiscoId == 0)
-                throw new Exception(
-
-
-
-
-                    "lbNoSeGuardo");
-            // Operaciones
-            var entry = this.IConexion!.Entry<Discos>(entidad);
+            if (entidad.ArtistaId == 0)
+                throw new Exception("lbNoSeGuardo");
+            var entry = this.IConexion!.Entry<Artistas>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;

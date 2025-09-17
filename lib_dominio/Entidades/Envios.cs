@@ -12,7 +12,7 @@ namespace lib_dominio.Entidades
         public DateTime FechaEnvio { get; set; }
         public int PedidoID { get; set; }
 
-        [ForeignKey("PedidoID")] public Pedidos? Pedido { get; set; }
+        public Pedidos? Pedido { get; set; }
     }
 }
 

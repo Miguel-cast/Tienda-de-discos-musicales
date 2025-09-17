@@ -1,14 +1,14 @@
-﻿using lib_dominio.Entidades;
+using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class DiscosAplicacion
+    public class InventarioMovimientosAplicacion
     {
         private IConexion? IConexion = null;
 
-        public DiscosAplicacion(IConexion iConexion)
+        public InventarioMovimientosAplicacion(IConexion iConexion)
         {
             this.IConexion = iConexion;
         }
@@ -18,48 +18,40 @@ namespace lib_repositorios.Implementaciones
             this.IConexion!.StringConexion = StringConexion;
         }
 
-        public Discos? Borrar(Discos? entidad)
+        public InventarioMovimientos? Borrar(InventarioMovimientos? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
-            if (entidad!.DiscoId== 0)
+            if (entidad.MovimientoId == 0)
                 throw new Exception("lbNoSeGuardo");
-            // Operaciones
-            this.IConexion!.Discos!.Remove(entidad);
+            this.IConexion!.InventarioMovimientos!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public Discos? Guardar(Discos? entidad)
+        public InventarioMovimientos? Guardar(InventarioMovimientos? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
-            if (entidad.DiscoId != 0)
+            if (entidad.MovimientoId != 0)
                 throw new Exception("lbYaSeGuardo");
-            // Operaciones
-            this.IConexion!.Discos!.Add(entidad);
+            this.IConexion!.InventarioMovimientos!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public List<Discos> Listar()
+        public List<InventarioMovimientos> Listar()
         {
-            return this.IConexion!.Discos!.Take(20).ToList();
+            return this.IConexion!.InventarioMovimientos!.Take(20).ToList();
         }
 
-        public Discos? Modificar(Discos? entidad)
+        public InventarioMovimientos? Modificar(InventarioMovimientos? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
-            if (entidad!.DiscoId == 0)
-                throw new Exception(
-
-
-
-
-                    "lbNoSeGuardo");
-            // Operaciones
-            var entry = this.IConexion!.Entry<Discos>(entidad);
+            if (entidad.MovimientoId == 0)
+                throw new Exception("lbNoSeGuardo");
+            var entry = this.IConexion!.Entry<InventarioMovimientos>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;

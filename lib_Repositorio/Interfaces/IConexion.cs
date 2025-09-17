@@ -10,7 +10,7 @@ namespace lib_repositorios.Interfaces
         DbSet<Artistas>? Artistas { get; set; }
         DbSet<Canciones>? Canciones { get; set; }
         DbSet<Clientes>? Clientes { get; set; }
-        DbSet<DetallesPedidos>? DetallesPedidos { get; set; }
+        DbSet<DetallePedidos>? DetallePedidos { get; set; }
         DbSet<Discos>? Discos { get; set; }
         DbSet<Empleados>? Empleados { get; set; }
         DbSet<Envios>? Envios { get; set; }

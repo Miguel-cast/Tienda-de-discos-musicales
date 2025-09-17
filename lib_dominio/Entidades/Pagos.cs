@@ -11,7 +11,7 @@ namespace lib_dominio.Entidades
         public string? MetodoPago { get; set; }
         public int FacturaID { get; set; }
 
-        [ForeignKey("FacturaID")] public Facturas? Factura { get; set; }
+        public Facturas? Factura { get; set; }
     }
 }
 
