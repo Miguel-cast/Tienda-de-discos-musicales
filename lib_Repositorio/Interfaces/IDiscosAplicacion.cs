@@ -11,5 +11,9 @@ namespace lib_Repositorio.Interfaces
         Discos? Guardar(Discos? entidad);
         Discos? Modificar(Discos? entidad);
         Discos? Borrar(Discos? entidad);
+        List<Discos> ObtenerDiscosPorArtista(int artistaId);
+        List<Discos> ObtenerDiscosPorGenero(int generoId);
+        decimal CalcularPromedioPrecios();
+        List<Discos> ObtenerDiscosRecientes(int añosAtras = 5);
     }
 }
