@@ -11,12 +11,6 @@
                 mensaje = exception.InnerException!.Message.ToString();
             if (mensaje.Length >= 110)
                 mensaje = mensaje.Substring(0, 110);
-            //var msg = lib_lenguajes.RsErrores.ResourceManager.GetString(mensaje);
-            //if (!string.IsNullOrEmpty(msg))
-            //{
-            // ViewData!["Mensaje"] = msg;
-            // return;
-            //}
             ViewData!["Mensaje"] = mensaje;
         }
     }

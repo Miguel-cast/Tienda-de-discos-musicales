@@ -41,7 +41,6 @@ namespace lib_repositorios.Implementaciones
             if (entidad.CancionId != 0)
                 throw new Exception("La canción ya fue guardada");
 
-            // Validaciones de negocio
             if (string.IsNullOrWhiteSpace(entidad.Titulo))
                 throw new Exception("El título de la canción es obligatorio.");
 
@@ -76,7 +75,6 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        // 🔎 Métodos específicos de negocio
 
         public List<Canciones> ObtenerPorDisco(int discoId)
         {

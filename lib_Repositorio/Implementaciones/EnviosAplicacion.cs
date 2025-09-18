@@ -25,7 +25,6 @@ namespace lib_repositorios.Implementaciones
             if (entidad.EnvioID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: No permitir borrar envíos ya despachados (fecha pasada)
             if (entidad.FechaEnvio < DateTime.Now.Date)
                 throw new Exception("lbNoPuedeBorrarEnvioYaDespachado");
 
@@ -41,33 +40,26 @@ namespace lib_repositorios.Implementaciones
             if (entidad.EnvioID != 0)
                 throw new Exception("lbYaSeGuardo");
 
-            // Lógica de negocio: Validar dirección no vacía
             if (string.IsNullOrWhiteSpace(entidad.DireccionEntrega))
                 throw new Exception("lbDireccionEntregaRequerida");
 
-            // Lógica de negocio: Validar ciudad no vacía
             if (string.IsNullOrWhiteSpace(entidad.CiudadEntrega))
                 throw new Exception("lbCiudadEntregaRequerida");
 
-            // Lógica de negocio: Validar país no vacío
             if (string.IsNullOrWhiteSpace(entidad.PaisEntrega))
                 throw new Exception("lbPaisEntregaRequerido");
 
-            // Lógica de negocio: Validar que la fecha de envío no sea anterior a hoy
             if (entidad.FechaEnvio < DateTime.Now.Date)
                 throw new Exception("lbFechaEnvioNoDebeSerPasada");
 
-            // Lógica de negocio: Verificar que el pedido existe
             var pedidoExiste = this.IConexion!.Pedidos!.Any(p => p.PedidoID == entidad.PedidoID);
             if (!pedidoExiste)
                 throw new Exception("lbPedidoNoExiste");
 
-            // Lógica de negocio: Verificar que el pedido no tenga ya un envío
             var yaExisteEnvio = this.IConexion!.Envios!.Any(e => e.PedidoID == entidad.PedidoID);
             if (yaExisteEnvio)
                 throw new Exception("lbPedidoYaTieneEnvio");
 
-            // Lógica de negocio: Verificar que el pedido esté en estado "Completado"
             var pedido = this.IConexion!.Pedidos!.Find(entidad.PedidoID);
             if (pedido?.Estado != "Completado")
                 throw new Exception("lbPedidoDebeEstarCompletado");
@@ -92,11 +84,9 @@ namespace lib_repositorios.Implementaciones
             if (entidad.EnvioID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: No permitir modificar envíos ya despachados
             if (entidad.FechaEnvio < DateTime.Now.Date)
                 throw new Exception("lbNoPuedeModificarEnvioYaDespachado");
 
-            // Aplicar validaciones básicas
             if (string.IsNullOrWhiteSpace(entidad.DireccionEntrega))
                 throw new Exception("lbDireccionEntregaRequerida");
 
@@ -112,7 +102,6 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        // Métodos específicos de lógica de negocio
         public List<Envios> ObtenerEnviosPorCiudad(string ciudad)
         {
             return this.IConexion!.Envios!

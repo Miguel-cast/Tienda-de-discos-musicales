@@ -13,7 +13,6 @@ namespace lib_dominio.Entidades
         public int DiscoID { get; set; }
 
 
-        // Propiedad de navegación
        public Discos? Disco { get; set; }
 
     }

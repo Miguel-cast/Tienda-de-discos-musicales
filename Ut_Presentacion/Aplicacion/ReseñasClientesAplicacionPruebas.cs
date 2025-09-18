@@ -25,7 +25,6 @@ namespace ut_presentacion.Aplicacion
             iConexion.StringConexion = Configuracion.ObtenerValor("StringConexion");
             aplicacion = new ReseñasClientesAplicacion(iConexion);
 
-            // Crear datos de prueba necesarios
             CrearDatosPrueba();
         }
 
@@ -33,11 +32,9 @@ namespace ut_presentacion.Aplicacion
         {
             try
             {
-                // Crear cliente
                 cliente = EntidadesNucleo.Clientes();
                 iConexion!.Clientes!.Add(cliente);
 
-                // Crear artista, género y proveedor para el disco
                 artista = EntidadesNucleo.Artistas();
                 iConexion!.Artistas!.Add(artista);
 
@@ -49,7 +46,6 @@ namespace ut_presentacion.Aplicacion
 
                 iConexion!.SaveChanges();
 
-                // Crear disco
                 disco = EntidadesNucleo.Discos();
                 disco.ArtistaId = artista.ArtistaId;
                 disco.GenerosId = genero.GenerosId;
@@ -60,7 +56,6 @@ namespace ut_presentacion.Aplicacion
             }
             catch (Exception)
             {
-                // Si ya existen, obtenerlos de la base de datos
                 cliente = iConexion!.Clientes!.FirstOrDefault() ?? EntidadesNucleo.Clientes()!;
                 artista = iConexion!.Artistas!.FirstOrDefault() ?? EntidadesNucleo.Artistas()!;
                 genero = iConexion!.Generos!.FirstOrDefault() ?? EntidadesNucleo.Generos()!;

@@ -25,17 +25,14 @@ namespace lib_repositorios.Implementaciones
             if (entidad.DiscoId == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: No permitir borrar discos con canciones asociadas
             var tieneCanciones = this.IConexion!.Canciones!.Any(c => c.DiscoID == entidad.DiscoId);
             if (tieneCanciones)
                 throw new Exception("lbNoPuedeBorrarDiscoConCanciones");
 
-            // Lógica de negocio: No permitir borrar discos con movimientos de inventario
             var tieneMovimientos = this.IConexion!.InventarioMovimientos!.Any(m => m.DiscoId == entidad.DiscoId);
             if (tieneMovimientos)
                 throw new Exception("lbNoPuedeBorrarDiscoConMovimientos");
 
-            // Lógica de negocio: No permitir borrar discos con reseñas
             var tieneReseñas = this.IConexion!.ReseñasClientes!.Any(r => r.DiscoID == entidad.DiscoId);
             if (tieneReseñas)
                 throw new Exception("lbNoPuedeBorrarDiscoConReseñas");
@@ -52,30 +49,24 @@ namespace lib_repositorios.Implementaciones
             if (entidad.DiscoId != 0)
                 throw new Exception("lbYaSeGuardo");
 
-            // Lógica de negocio: Validar precio positivo
             if (entidad.Precio <= 0)
                 throw new Exception("lbPrecioDebeSerMayorACero");
 
-            // Lógica de negocio: Validar año de lanzamiento válido
             if (entidad.AñoLanzamiento < 1900 || entidad.AñoLanzamiento > DateTime.Now.Year + 1)
                 throw new Exception("lbAñoLanzamientoInvalido");
 
-            // Lógica de negocio: Validar que el artista existe
             var artistaExiste = this.IConexion!.Artistas!.Any(a => a.ArtistaId == entidad.ArtistaId);
             if (!artistaExiste)
                 throw new Exception("lbArtistaNoExiste");
 
-            // Lógica de negocio: Validar que el género existe
             var generoExiste = this.IConexion!.Generos!.Any(g => g.GenerosId == entidad.GenerosId);
             if (!generoExiste)
                 throw new Exception("lbGeneroNoExiste");
 
-            // Lógica de negocio: Validar que el proveedor existe
             var proveedorExiste = this.IConexion!.Proveedores!.Any(p => p.ProveedoresId == entidad.ProveedoresId);
             if (!proveedorExiste)
                 throw new Exception("lbProveedorNoExiste");
 
-            // Lógica de negocio: Validar título no vacío
             if (string.IsNullOrWhiteSpace(entidad.Titulo))
                 throw new Exception("lbTituloRequerido");
 
@@ -101,7 +92,6 @@ namespace lib_repositorios.Implementaciones
             if (entidad.DiscoId == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Aplicar las mismas validaciones que en Guardar
             if (entidad.Precio <= 0)
                 throw new Exception("lbPrecioDebeSerMayorACero");
 
@@ -117,7 +107,6 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        // Métodos específicos de lógica de negocio
         public List<Discos> ObtenerDiscosPorArtista(int artistaId)
         {
             return this.IConexion!.Discos!

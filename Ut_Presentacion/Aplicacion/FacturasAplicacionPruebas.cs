@@ -23,7 +23,6 @@ namespace ut_presentacion.Aplicacion
             iConexion.StringConexion = Configuracion.ObtenerValor("StringConexion");
             aplicacion = new FacturasAplicacion(iConexion);
 
-            // Crear datos de prueba necesarios
             CrearDatosPrueba();
         }
 
@@ -31,7 +30,6 @@ namespace ut_presentacion.Aplicacion
         {
             try
             {
-                // Verificar si ya existen datos
                 cliente = iConexion!.Clientes!.FirstOrDefault();
                 empleado = iConexion!.Empleados!.FirstOrDefault();
 
@@ -49,7 +47,6 @@ namespace ut_presentacion.Aplicacion
 
                 iConexion!.SaveChanges();
 
-                // Buscar pedido existente sin factura
                 pedido = iConexion!.Pedidos!
                     .Where(p => !iConexion.Facturas!.Any(f => f.PedidoID == p.PedidoID))
                     .FirstOrDefault();
@@ -65,7 +62,6 @@ namespace ut_presentacion.Aplicacion
             }
             catch (Exception ex)
             {
-                // Si falla la creación, usar datos existentes
                 cliente = iConexion!.Clientes!.FirstOrDefault() ?? EntidadesNucleo.Clientes()!;
                 empleado = iConexion!.Empleados!.FirstOrDefault() ?? EntidadesNucleo.Empleados()!;
                 pedido = iConexion!.Pedidos!.FirstOrDefault() ?? EntidadesNucleo.Pedidos()!;

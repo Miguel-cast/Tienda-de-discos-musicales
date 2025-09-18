@@ -28,7 +28,6 @@ namespace ut_presentacion.Aplicacion
             iConexion.StringConexion = Configuracion.ObtenerValor("StringConexion");
             aplicacion = new DetallesPedidosAplicacion(iConexion);
 
-            // Crear datos de prueba necesarios
             CrearDatosPrueba();
         }
 
@@ -36,36 +35,29 @@ namespace ut_presentacion.Aplicacion
         {
             try
             {
-                // Crear cliente
                 cliente = EntidadesNucleo.Clientes();
                 iConexion!.Clientes!.Add(cliente);
 
-                // Crear empleado
                 empleado = EntidadesNucleo.Empleados();
                 iConexion!.Empleados!.Add(empleado);
 
-                // Crear artista
                 artista = EntidadesNucleo.Artistas();
                 iConexion!.Artistas!.Add(artista);
 
-                // Crear género
                 genero = EntidadesNucleo.Generos();
                 iConexion!.Generos!.Add(genero);
 
-                // Crear proveedor
                 proveedor = EntidadesNucleo.Proveedores();
                 iConexion!.Proveedores!.Add(proveedor);
 
                 iConexion!.SaveChanges();
 
-                // Crear disco
                 disco = EntidadesNucleo.Discos();
                 disco.ArtistaId = artista!.ArtistaId;
                 disco.GenerosId = genero!.GenerosId;
                 disco.ProveedoresId = proveedor!.ProveedoresId;
                 iConexion!.Discos!.Add(disco);
 
-                // Crear pedido
                 pedido = EntidadesNucleo.Pedidos();
                 pedido.ClienteID = cliente!.ClienteId;
                 pedido.EmpleadoID = empleado!.EmpleadoId;
@@ -75,7 +67,6 @@ namespace ut_presentacion.Aplicacion
             }
             catch (Exception)
             {
-                // Si ya existen, obtenerlos
                 cliente = iConexion!.Clientes!.FirstOrDefault() ?? EntidadesNucleo.Clientes()!;
                 empleado = iConexion!.Empleados!.FirstOrDefault() ?? EntidadesNucleo.Empleados()!;
                 artista = iConexion!.Artistas!.FirstOrDefault() ?? EntidadesNucleo.Artistas()!;

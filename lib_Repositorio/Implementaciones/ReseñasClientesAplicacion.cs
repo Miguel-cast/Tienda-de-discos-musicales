@@ -25,9 +25,6 @@ namespace lib_repositorios.Implementaciones
             if (entidad.ReseñaID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: Solo permitir borrar reseñas del mismo cliente
-            // (En un escenario real, se validaría con el usuario actual)
-            // Por ahora solo validamos que exista
 
             this.IConexion!.ReseñasClientes!.Remove(entidad);
             this.IConexion.SaveChanges();
@@ -41,33 +38,26 @@ namespace lib_repositorios.Implementaciones
             if (entidad.ReseñaID != 0)
                 throw new Exception("lbYaSeGuardo");
 
-            // Lógica de negocio: Validar calificación entre 1 y 5
             if (entidad.Calificacion < 1 || entidad.Calificacion > 5)
                 throw new Exception("lbCalificacionDebeEstarEntre1Y5");
 
-            // Lógica de negocio: Validar comentario no vacío
             if (string.IsNullOrWhiteSpace(entidad.Comentario))
                 throw new Exception("lbComentarioRequerido");
 
-            // Lógica de negocio: Validar longitud mínima del comentario
             if (entidad.Comentario.Length < 10)
                 throw new Exception("lbComentarioMuyCorto");
 
-            // Lógica de negocio: Validar que la fecha no sea futura
             if (entidad.Fecha > DateTime.Now.Date)
                 throw new Exception("lbFechaReseñaNoDebeSerFutura");
 
-            // Lógica de negocio: Verificar que el cliente existe
             var clienteExiste = this.IConexion!.Clientes!.Any(c => c.ClienteId == entidad.ClienteID);
             if (!clienteExiste)
                 throw new Exception("lbClienteNoExiste");
 
-            // Lógica de negocio: Verificar que el disco existe
             var discoExiste = this.IConexion!.Discos!.Any(d => d.DiscoId == entidad.DiscoID);
             if (!discoExiste)
                 throw new Exception("lbDiscoNoExiste");
 
-            // Lógica de negocio: Un cliente solo puede hacer una reseña por disco
             var yaExisteReseña = this.IConexion!.ReseñasClientes!
                 .Any(r => r.ClienteID == entidad.ClienteID && r.DiscoID == entidad.DiscoID);
             if (yaExisteReseña)
@@ -94,12 +84,10 @@ namespace lib_repositorios.Implementaciones
             if (entidad.ReseñaID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: No permitir modificar reseñas muy antiguas (más de 30 días)
             var diasAntiguedad = (DateTime.Now.Date - entidad.Fecha).Days;
             if (diasAntiguedad > 30)
                 throw new Exception("lbNoPuedeModificarReseñaAntigua");
 
-            // Aplicar validaciones básicas
             if (entidad.Calificacion < 1 || entidad.Calificacion > 5)
                 throw new Exception("lbCalificacionDebeEstarEntre1Y5");
 
@@ -115,7 +103,6 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        // Métodos específicos de lógica de negocio
         public List<ReseñasClientes> ObtenerReseñasPorDisco(int discoId)
         {
             return this.IConexion!.ReseñasClientes!

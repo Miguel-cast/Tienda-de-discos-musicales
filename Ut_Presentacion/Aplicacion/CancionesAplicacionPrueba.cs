@@ -24,7 +24,6 @@ namespace ut_presentacion.Aplicacion
             iConexion.StringConexion = Configuracion.ObtenerValor("StringConexion");
             aplicacion = new CancionesAplicacion(iConexion);
 
-            // Crear datos de prueba necesarios
             CrearDatosPrueba();
         }
 
@@ -32,21 +31,17 @@ namespace ut_presentacion.Aplicacion
         {
             try
             {
-                // Crear artista
                 artista = EntidadesNucleo.Artistas();
                 iConexion!.Artistas!.Add(artista);
 
-                // Crear género
                 genero = EntidadesNucleo.Generos();
                 iConexion!.Generos!.Add(genero);
 
-                // Crear proveedor
                 proveedor = EntidadesNucleo.Proveedores();
                 iConexion!.Proveedores!.Add(proveedor);
 
                 iConexion!.SaveChanges();
 
-                // Crear disco
                 disco = EntidadesNucleo.Discos();
                 disco.ArtistaId = artista!.ArtistaId;
                 disco.GenerosId = genero!.GenerosId;
@@ -159,7 +154,6 @@ namespace ut_presentacion.Aplicacion
             }
         }
 
-        // 🔎 Pruebas de validaciones
 
         [TestMethod]
         public void PruebaValidacionTituloVacio()

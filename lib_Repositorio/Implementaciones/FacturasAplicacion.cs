@@ -25,7 +25,6 @@ namespace lib_repositorios.Implementaciones
             if (entidad.FacturaID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: Verificar que no tenga pagos asociados
             var tienePagos = this.IConexion!.Pagos!.Any(p => p.FacturaID == entidad.FacturaID);
             if (tienePagos)
                 throw new Exception("lbNoPuedeBorrarFacturaConPagos");
@@ -42,20 +41,16 @@ namespace lib_repositorios.Implementaciones
             if (entidad.FacturaID != 0)
                 throw new Exception("lbYaSeGuardo");
 
-            // Lógica de negocio: Validar que el total sea mayor a 0
             if (entidad.Total <= 0)
                 throw new Exception("lbTotalDebeSerMayorACero");
 
-            // Lógica de negocio: Validar que la fecha no sea futura
             if (entidad.FechaFactura > DateTime.Now.Date)
                 throw new Exception("lbFechaFacturaNoDebeSerFutura");
 
-            // Lógica de negocio: Verificar que el pedido existe
             var pedidoExiste = this.IConexion!.Pedidos!.Any(p => p.PedidoID == entidad.PedidoID);
             if (!pedidoExiste)
                 throw new Exception("lbPedidoNoExiste");
 
-            // Lógica de negocio: Verificar que el pedido no tenga ya una factura
             var yaExisteFactura = this.IConexion!.Facturas!.Any(f => f.PedidoID == entidad.PedidoID);
             if (yaExisteFactura)
                 throw new Exception("lbPedidoYaTieneFactura");
@@ -81,11 +76,9 @@ namespace lib_repositorios.Implementaciones
             if (entidad.FacturaID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: Validar que el total sea mayor a 0
             if (entidad.Total <= 0)
                 throw new Exception("lbTotalDebeSerMayorACero");
 
-            // Lógica de negocio: No permitir modificar facturas con pagos completos
             var totalPagos = this.IConexion!.Pagos!
                 .Where(p => p.FacturaID == entidad.FacturaID)
                 .Sum(p => p.Monto);
@@ -99,7 +92,6 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        // Métodos específicos de lógica de negocio
         public decimal CalcularTotalFacturasCliente(int clienteId)
         {
             return this.IConexion!.Facturas!

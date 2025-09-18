@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class ArtistasAplicacion
+    public class UsuariosSistemaAplicacion
     {
         private IConexion? IConexion = null;
 
-        public ArtistasAplicacion(IConexion iConexion)
+        public UsuariosSistemaAplicacion(IConexion iConexion)
         {
             this.IConexion = iConexion;
         }
@@ -23,42 +18,40 @@ namespace lib_repositorios.Implementaciones
             this.IConexion!.StringConexion = StringConexion;
         }
 
-        public Artistas? Borrar(Artistas? entidad)
+        public UsuariosSistema? Borrar(UsuariosSistema? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
-            if (entidad.ArtistaId == 0)
+            if (entidad.UsuarioId == 0)
                 throw new Exception("lbNoSeGuardo");
-            this.IConexion!.Artistas!.Remove(entidad);
+            this.IConexion!.UsuariosSistema!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public Artistas? Guardar(Artistas? entidad)
+        public UsuariosSistema? Guardar(UsuariosSistema? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
-            if (entidad.ArtistaId != 0)
+            if (entidad.UsuarioId != 0)
                 throw new Exception("lbYaSeGuardo");
-            if (string.IsNullOrWhiteSpace(entidad.NombreArtista))
-                throw new Exception("El nombre del artista no puede ser nulo o vacío");
-            this.IConexion!.Artistas!.Add(entidad);
+            this.IConexion!.UsuariosSistema!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public List<Artistas> Listar()
+        public List<UsuariosSistema> Listar()
         {
-            return this.IConexion!.Artistas!.Take(20).ToList();
+            return this.IConexion!.UsuariosSistema!.Take(20).ToList();
         }
 
-        public Artistas? Modificar(Artistas? entidad)
+        public UsuariosSistema? Modificar(UsuariosSistema? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
-            if (entidad.ArtistaId == 0)
+            if (entidad.UsuarioId == 0)
                 throw new Exception("lbNoSeGuardo");
-            var entry = this.IConexion!.Entry<Artistas>(entidad);
+            var entry = this.IConexion!.Entry<UsuariosSistema>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;

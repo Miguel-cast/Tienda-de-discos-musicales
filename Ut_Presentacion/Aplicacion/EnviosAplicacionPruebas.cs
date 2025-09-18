@@ -23,7 +23,6 @@ namespace ut_presentacion.Aplicacion
             iConexion.StringConexion = Configuracion.ObtenerValor("StringConexion");
             aplicacion = new EnviosAplicacion(iConexion);
 
-            // Crear datos de prueba necesarios
             CrearDatosPrueba();
         }
 
@@ -31,17 +30,14 @@ namespace ut_presentacion.Aplicacion
         {
             try
             {
-                // Crear cliente
                 cliente = EntidadesNucleo.Clientes();
                 iConexion!.Clientes!.Add(cliente);
 
-                // Crear empleado
                 empleado = EntidadesNucleo.Empleados();
                 iConexion!.Empleados!.Add(empleado);
 
                 iConexion!.SaveChanges();
 
-                // Crear pedido con estado "Completado"
                 pedido = EntidadesNucleo.Pedidos();
                 pedido.ClienteID = cliente.ClienteId;
                 pedido.EmpleadoID = empleado.EmpleadoId;
@@ -52,12 +48,10 @@ namespace ut_presentacion.Aplicacion
             }
             catch (Exception)
             {
-                // Si ya existen, obtenerlos de la base de datos
                 cliente = iConexion!.Clientes!.FirstOrDefault() ?? EntidadesNucleo.Clientes()!;
                 empleado = iConexion!.Empleados!.FirstOrDefault() ?? EntidadesNucleo.Empleados()!;
                 pedido = iConexion!.Pedidos!.FirstOrDefault() ?? EntidadesNucleo.Pedidos()!;
 
-                // Asegurar que el pedido esté completado
                 if (pedido != null)
                 {
                     pedido.Estado = "Completado";

@@ -36,7 +36,7 @@ namespace lib_repositorios.Implementaciones
             if (entidad.DetallesId != 0)
                 throw new Exception("lbYaSeGuardo");
 
-            // Validaciones de negocio
+        
             if (entidad.cantidad <= 0)
                 throw new Exception("La cantidad debe ser mayor que cero.");
 
@@ -67,7 +67,7 @@ namespace lib_repositorios.Implementaciones
         }
 
 
-        // Métodos específicos de lógica de negocio
+        
 
         public List<DetallePedidos> ObtenerPorPedido(int pedidoId)
         {

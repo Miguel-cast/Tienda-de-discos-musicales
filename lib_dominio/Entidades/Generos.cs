@@ -10,7 +10,6 @@ namespace lib_dominio.Entidades
         public string? NombreGenero { get; set; } 
         public string? Descripcion { get; set; }
 
-        // lista para las relaciones uno a muchos
         [NotMapped] public ICollection<Discos>? Discos { get; set; }
     }
 }

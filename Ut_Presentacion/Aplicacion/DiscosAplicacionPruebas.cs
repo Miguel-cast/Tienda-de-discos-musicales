@@ -23,7 +23,6 @@ namespace ut_presentacion.Aplicacion
             iConexion.StringConexion = Configuracion.ObtenerValor("StringConexion");
             aplicacion = new DiscosAplicacion(iConexion);
 
-            // Crear datos de prueba necesarios
             CrearDatosPrueba();
         }
 
@@ -31,15 +30,12 @@ namespace ut_presentacion.Aplicacion
         {
             try
             {
-                // Crear artista
                 artista = EntidadesNucleo.Artistas();
                 iConexion!.Artistas!.Add(artista);
 
-                // Crear género
                 genero = EntidadesNucleo.Generos();
                 iConexion!.Generos!.Add(genero);
 
-                // Crear proveedor
                 proveedor = EntidadesNucleo.Proveedores();
                 iConexion!.Proveedores!.Add(proveedor);
 
@@ -47,7 +43,6 @@ namespace ut_presentacion.Aplicacion
             }
             catch (Exception)
             {
-                // Si ya existen, obtenerlos de la base de datos
                 artista = iConexion!.Artistas!.FirstOrDefault() ?? EntidadesNucleo.Artistas()!;
                 genero = iConexion!.Generos!.FirstOrDefault() ?? EntidadesNucleo.Generos()!;
                 proveedor = iConexion!.Proveedores!.FirstOrDefault() ?? EntidadesNucleo.Proveedores()!;
@@ -226,7 +221,6 @@ namespace ut_presentacion.Aplicacion
         {
             try
             {
-                // Limpiar datos de prueba si es necesario
                 if (entidad != null && entidad.DiscoId > 0)
                 {
                     var discoExistente = iConexion!.Discos!.Find(entidad.DiscoId);

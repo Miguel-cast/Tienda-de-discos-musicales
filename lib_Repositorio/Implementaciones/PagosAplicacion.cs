@@ -25,7 +25,6 @@ namespace lib_repositorios.Implementaciones
             if (entidad.PagoID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: Validar que el pago no sea muy antiguo (ej: más de 30 días)
             var diasAntiguedad = (DateTime.Now.Date - entidad.FechaPago).Days;
             if (diasAntiguedad > 30)
                 throw new Exception("lbNoPuedeBorrarPagoAntiguo");
@@ -42,25 +41,20 @@ namespace lib_repositorios.Implementaciones
             if (entidad.PagoID != 0)
                 throw new Exception("lbYaSeGuardo");
 
-            // Lógica de negocio: Validar que el monto sea mayor a 0
             if (entidad.Monto <= 0)
                 throw new Exception("lbMontoDebeSerMayorACero");
 
-            // Lógica de negocio: Validar que la fecha no sea futura
             if (entidad.FechaPago > DateTime.Now.Date)
                 throw new Exception("lbFechaPagoNoDebeSerFutura");
 
-            // Lógica de negocio: Validar método de pago válido
             var metodosValidos = new[] { "Efectivo", "Tarjeta de Crédito", "Tarjeta de Débito", "Transferencia", "Cheque" };
             if (string.IsNullOrWhiteSpace(entidad.MetodoPago) || !metodosValidos.Contains(entidad.MetodoPago))
                 throw new Exception("lbMetodoPagoInvalido");
 
-            // Lógica de negocio: Verificar que la factura existe
             var facturaExiste = this.IConexion!.Facturas!.Any(f => f.FacturaID == entidad.FacturaID);
             if (!facturaExiste)
                 throw new Exception("lbFacturaNoExiste");
 
-            // Lógica de negocio: Verificar que el pago no exceda el saldo pendiente
             var factura = this.IConexion!.Facturas!.Find(entidad.FacturaID);
             var totalPagado = this.IConexion!.Pagos!
                 .Where(p => p.FacturaID == entidad.FacturaID)
@@ -90,12 +84,10 @@ namespace lib_repositorios.Implementaciones
             if (entidad.PagoID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: No permitir modificar pagos antiguos
             var diasAntiguedad = (DateTime.Now.Date - entidad.FechaPago).Days;
             if (diasAntiguedad > 7)
                 throw new Exception("lbNoPuedeModificarPagoAntiguo");
 
-            // Aplicar validaciones básicas
             if (entidad.Monto <= 0)
                 throw new Exception("lbMontoDebeSerMayorACero");
 
@@ -105,7 +97,6 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        // Métodos específicos de lógica de negocio
         public List<Pagos> ObtenerPagosPorFactura(int facturaId)
         {
             return this.IConexion!.Pagos!

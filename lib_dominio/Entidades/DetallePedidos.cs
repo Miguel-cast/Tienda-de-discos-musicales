@@ -10,7 +10,6 @@ namespace lib_dominio.Entidades
         public int cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public int PedidoId { get; set; }
-        // Propiedad de navegación
         [ForeignKey("PedidoId")]public Pedidos? Pedidos { get; set; }
 
 

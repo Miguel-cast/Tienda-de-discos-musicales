@@ -25,17 +25,14 @@ namespace lib_repositorios.Implementaciones
             if (entidad.PedidoID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Lógica de negocio: No permitir borrar pedidos con facturas asociadas
             var tieneFacturas = this.IConexion!.Facturas!.Any(f => f.PedidoID == entidad.PedidoID);
             if (tieneFacturas)
                 throw new Exception("lbNoPuedeBorrarPedidoConFacturas");
 
-            // Lógica de negocio: No permitir borrar pedidos con envíos asociados
             var tieneEnvios = this.IConexion!.Envios!.Any(e => e.PedidoID == entidad.PedidoID);
             if (tieneEnvios)
                 throw new Exception("lbNoPuedeBorrarPedidoConEnvios");
 
-            // Lógica de negocio: No permitir borrar pedidos con detalles asociados
             var tieneDetalles = this.IConexion!.DetallePedidos!.Any(d => d.PedidoId == entidad.PedidoID);
             if (tieneDetalles)
                 throw new Exception("lbNoPuedeBorrarPedidoConDetalles");
@@ -52,21 +49,17 @@ namespace lib_repositorios.Implementaciones
             if (entidad.PedidoID != 0)
                 throw new Exception("lbYaSeGuardo");
 
-            // Lógica de negocio: Validar que la fecha no sea futura
             if (entidad.FechaPedido > DateTime.Now.Date)
                 throw new Exception("lbFechaPedidoNoDebeSerFutura");
 
-            // Lógica de negocio: Validar estado válido
             var estadosValidos = new[] { "Pendiente", "En Proceso", "Completado", "Cancelado" };
             if (string.IsNullOrWhiteSpace(entidad.Estado) || !estadosValidos.Contains(entidad.Estado))
                 throw new Exception("lbEstadoPedidoInvalido");
 
-            // Lógica de negocio: Validar que el cliente existe
             var clienteExiste = this.IConexion!.Clientes!.Any(c => c.ClienteId == entidad.ClienteID);
             if (!clienteExiste)
                 throw new Exception("lbClienteNoExiste");
 
-            // Lógica de negocio: Validar que el empleado existe
             var empleadoExiste = this.IConexion!.Empleados!.Any(e => e.EmpleadoId == entidad.EmpleadoID);
             if (!empleadoExiste)
                 throw new Exception("lbEmpleadoNoExiste");
@@ -92,7 +85,6 @@ namespace lib_repositorios.Implementaciones
             if (entidad.PedidoID == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Aplicar las mismas validaciones que en Guardar
             if (entidad.FechaPedido > DateTime.Now.Date)
                 throw new Exception("lbFechaPedidoNoDebeSerFutura");
 
@@ -106,7 +98,6 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        // Métodos específicos de lógica de negocio
         public List<Pedidos> ObtenerPedidosPorCliente(int clienteId)
         {
             return this.IConexion!.Pedidos!

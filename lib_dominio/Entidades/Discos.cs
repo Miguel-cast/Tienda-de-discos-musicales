@@ -14,12 +14,10 @@ namespace lib_dominio.Entidades
 		public int GenerosId { get; set; }
 		public int ProveedoresId { get; set; }
 
-        // Propiedades de navegación
         public Artistas? Artista { get; set; }
         public Generos? Genero { get; set; }
         public Proveedores? Proveedor { get; set; }
 
-        // lista para las relaciones uno a muchos
         [NotMapped] public ICollection<ReseñasClientes>? ReseñasClientes { get; set; }
         [NotMapped] public ICollection<InventarioMovimientos>? InventarioMovimientos { get; set; }
         [NotMapped] public ICollection<Canciones>? Canciones{ get; set; }

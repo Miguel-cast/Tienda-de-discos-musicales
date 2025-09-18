@@ -12,7 +12,6 @@ namespace lib_dominio.Entidades
         public string? Telefono { get; set; }
         public string? Direccion { get; set; }
 
-        // lista para las relaciones uno a muchos
         [NotMapped] public ICollection<Discos>? Discos { get; set; }
 
     }
