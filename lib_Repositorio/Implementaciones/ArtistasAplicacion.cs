@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class ArtistasAplicacion
+    public class ArtistasAplicacion : IArtistasAplicacion
     {
         private IConexion? IConexion = null;
 

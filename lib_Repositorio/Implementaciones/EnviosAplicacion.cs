@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class EnviosAplicacion
+    public class EnviosAplicacion : IEnviosAplicacion
     {
         private IConexion? IConexion = null;
 

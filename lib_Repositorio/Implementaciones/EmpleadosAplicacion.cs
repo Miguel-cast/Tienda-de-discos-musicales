@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class EmpleadosAplicacion
+    public class EmpleadosAplicacion : IEmpleadosAplicacion
     {
         private IConexion? IConexion = null;
 

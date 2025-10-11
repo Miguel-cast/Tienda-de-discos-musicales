@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class InventarioMovimientosAplicacion
+    public class InventarioMovimientosAplicacion : IInventarioMovimientosAplicacion
     {
         private IConexion? IConexion = null;
 

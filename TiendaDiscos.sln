@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48AED912-248B-46F2-BCE6-88101FF7242B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asp_servicios", "asp_servicios\asp_servicios.csproj", "{FB353F99-AFBE-4AC1-A039-E4E9E49E658C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{7DCA5DA5-42F0-418E-953D-BF0E6F9B6794}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DCA5DA5-42F0-418E-953D-BF0E6F9B6794}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DCA5DA5-42F0-418E-953D-BF0E6F9B6794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB353F99-AFBE-4AC1-A039-E4E9E49E658C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB353F99-AFBE-4AC1-A039-E4E9E49E658C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB353F99-AFBE-4AC1-A039-E4E9E49E658C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB353F99-AFBE-4AC1-A039-E4E9E49E658C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{CADDD9BD-3208-4529-8628-5214890F6DAD} = {21861D85-F755-479C-B6E9-42B8CBD00F6B}
 		{CCEAE8EE-0918-4BD4-98E8-0E51287D5AD2} = {F16E8F0F-BAF4-4FA0-BA58-A3F29EA28E33}
 		{7DCA5DA5-42F0-418E-953D-BF0E6F9B6794} = {5386D6C0-EB67-492B-A281-57106069FF5D}
+		{FB353F99-AFBE-4AC1-A039-E4E9E49E658C} = {F16E8F0F-BAF4-4FA0-BA58-A3F29EA28E33}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D6CC51B-B70D-42B5-9746-52F69AFE6291}

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class GenerosAplicacion
+    public class GenerosAplicacion : IGenerosAplicacion
     {
         private IConexion? IConexion = null;
 

@@ -1,10 +1,11 @@
 ﻿using lib_dominio.Entidades;
+using lib_Repositorio.Interfaces;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class DiscosAplicacion
+    public class DiscosAplicacion : IDiscosAplicacion
     {
         private IConexion? IConexion = null;
 

@@ -142,6 +142,21 @@ CREATE TABLE [UsuariosSistema](
 );
 GO
 
+ALTER TABLE [UsuariosSistema]
+    ADD [RolId] INT NULL;
+GO
+
+
+ALTER TABLE [UsuariosSistema]
+    ADD    CONSTRAINT FK_UsuariosSistema_Roles 
+            FOREIGN KEY ([RolId]) REFERENCES [Roles]([RolId])
+GO
+
+ALTER TABLE UsuariosSistema
+    DROP COLUMN Rol;
+GO
+
+
 
 CREATE TABLE [InventarioMovimientos](
     [MovimientoId] INT IDENTITY (1,1) PRIMARY KEY,
@@ -169,6 +184,25 @@ CREATE TABLE [ReseñasClientes] (
     CONSTRAINT FK_ReseñasClientes_Discos
         FOREIGN KEY ([DiscoId]) REFERENCES [Discos]([DiscoId])
 );
+GO
+
+CREATE TABLE [Roles](
+    [RolId] INT IDENTITY(1,1) PRIMARY KEY,
+    [NombreRol] NVARCHAR(50) NOT NULL UNIQUE,
+    [Descripcion] NVARCHAR(200)
+    );
+GO
+
+CREATE TABLE [Auditoria](
+    [AuditoriaId] INT IDENTITY(1,1) PRIMARY KEY,
+    [FechaHora] DATETIME NOT NULL DEFAULT GETDATE(),
+    [UsuarioId] INT NOT NULL,
+    [Accion] NVARCHAR(100) NOT NULL, -- INSERT, UPDATE, DELETE, LOGIN, etc.
+    [Tabla] NVARCHAR(100), -- Tabla afectada
+    CONSTRAINT FK_Auditoria_UsuariosSistema 
+        FOREIGN KEY ([UsuarioId]) REFERENCES [UsuariosSistema]([UsuarioId])
+
+    );
 GO
 ----- Inserts -----
 INSERT INTO [Clientes] (Nombre, Apellido, Email, Telefono, Direccion, Ciudad, Pais) VALUES
@@ -310,12 +344,12 @@ VALUES
 ('Cl 20 #10-05', 'Cartagena', 'Colombia', '2025-09-06', 5);
 GO
 
-INSERT INTO [UsuariosSistema] (NombreUsuario, ContrasenaHash, Rol, EmpleadoId) VALUES
-('andresg', 'hash123', 'Admin', 1),
-('claudiar', 'hash234', 'Cajera', 2),
-('felipet', 'hash345', 'Gerente', 3),
-('lauram', 'hash456', 'Bodega', 4),
-('santiagom', 'hash567', 'Soporte', 5);
+INSERT INTO [UsuariosSistema] (NombreUsuario, ContrasenaHash, EmpleadoId, RolId) VALUES
+('andresg', 'hash123',  1,1),
+('claudiar', 'hash234',  2,1),
+('felipet', 'hash345',  3,1),
+('lauram', 'hash456',  4,1),
+('santiagom', 'hash567', 5,1);
 GO
 
 INSERT INTO [InventarioMovimientos] (FechaMovimiento, TipoMovimiento, Cantidad, DiscoId, EmpleadoId) VALUES
@@ -335,8 +369,18 @@ VALUES
 ('El mejor álbum del año, recomendado.', 5, '2025-09-09', 5, 5);
 GO
 
+INSERT INTO [Roles] (NombreRol, Descripcion) VALUES
+('Admin', 'Acceso total al sistema con todos los permisos administrativos'),
+('Gerente', 'Gestión de inventario, ventas, empleados y generación de reportes'),
+('Vendedor', 'Registro de ventas, gestión de pedidos y atención al cliente'),
+('Cajera', 'Procesamiento de pagos, emisión de facturas y manejo de caja')
+GO
 
 
 
-Select * from ReseñasClientes
 
+
+
+
+SELECT * FROM UsuariosSistema;
+GO

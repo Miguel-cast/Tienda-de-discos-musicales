@@ -14,10 +14,10 @@ namespace lib_dominio.Entidades
         public int UsuarioId { get; set; }
         public string NombreUsuario { get; set; }
         public string ContrasenaHash { get; set; }
-        public string Rol { get; set; }
-
         public int EmpleadoId { get; set; }
+        public int RolId { get; set; }
         public Empleados? Empleado { get; set; }
+        public Roles? Rol { get; set; }
     }
 
 }

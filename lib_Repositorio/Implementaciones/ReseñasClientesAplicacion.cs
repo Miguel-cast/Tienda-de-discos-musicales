@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class ReseñasClientesAplicacion
+    public class ReseñasClientesAplicacion : IReseñasClientesAplicacion
     {
         private IConexion? IConexion = null;
 
