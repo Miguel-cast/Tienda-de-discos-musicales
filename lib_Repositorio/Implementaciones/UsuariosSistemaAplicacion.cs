@@ -1,6 +1,5 @@
 using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
-using lib_repositorios.Interfaces.lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones

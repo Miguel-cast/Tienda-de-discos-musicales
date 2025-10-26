@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using lib_dominio.Entidades;
+using System.Collections.Generic;
 
 namespace lib_repositorios.Interfaces
-{
-    using lib_dominio.Entidades;
-    using System.Collections.Generic;
-
-    namespace lib_repositorios.Interfaces
     {
         public interface IUsuariosSistemaAplicacion
         {
@@ -21,4 +18,4 @@ namespace lib_repositorios.Interfaces
         }
 
     }
-}
+
