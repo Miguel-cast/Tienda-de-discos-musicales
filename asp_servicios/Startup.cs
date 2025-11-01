@@ -1,7 +1,8 @@
-﻿using lib_Repositorio.Interfaces;
+﻿using lib_aplicaciones.Implementaciones;
+using lib_aplicaciones.Interfaces;
+using lib_Repositorio.Interfaces;
 using lib_repositorios.Implementaciones;
 using lib_repositorios.Interfaces;
-using lib_repositorios.Interfaces.lib_repositorios.Interfaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace asp_servicios
@@ -40,8 +41,8 @@ namespace asp_servicios
             services.AddScoped<IInventarioMovimientosAplicacion, InventarioMovimientosAplicacion>();
             services.AddScoped<IPagosAplicacion, PagosAplicacion>();
             services.AddScoped<IPedidosAplicacion, PedidosAplicacion>();
-            services.AddScoped<IReseñasClientesAplicacion, ReseñasClientesAplicacion>();
-            services.AddScoped<IUsuariosSistemaAplicacion, UsuariosSistemaAplicacion>();
+            services.AddScoped<IRolesAplicacion, RolesAplicacion>();
+            services.AddScoped<IAuditoriasAplicacion, AuditoriasAplicacion>();
 
             // Controladores
             //services.AddScoped<TokenController, TokenController>();

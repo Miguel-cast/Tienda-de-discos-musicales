@@ -12,12 +12,12 @@ namespace asp_servicios.Controllers
     public class UsuariosSistemaController : ControllerBase
     {
         private IUsuariosSistemaAplicacion? iAplicacion = null;
-        //private TokenController? tokenController = null;
+        private TokenController? tokenController = null;
 
-        public UsuariosSistemaController(IUsuariosSistemaAplicacion? iAplicacion/*, TokenController tokenController*/)
+        public UsuariosSistemaController(IUsuariosSistemaAplicacion? iAplicacion, TokenController tokenController)
         {
             this.iAplicacion = iAplicacion;
-            //this.tokenController = tokenController;
+            this.tokenController = tokenController;
         }
 
         private Dictionary<string, object> ObtenerDatos()
@@ -35,11 +35,11 @@ namespace asp_servicios.Controllers
             try
             {
                 var datos = ObtenerDatos();
-                /*if (!tokenController!.Validate(datos))
+                if (!tokenController!.Validate(datos))
                 {
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
-                }*/
+                }
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
 
                 respuesta["Entidades"] = this.iAplicacion!.Listar();
@@ -62,11 +62,11 @@ namespace asp_servicios.Controllers
             try
             {
                 var datos = ObtenerDatos();
-                /*if (!tokenController!.Validate(datos))
+                if (!tokenController!.Validate(datos))
                 {
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
-                }*/
+                }
                 var entidad = JsonConversor.ConvertirAObjeto<UsuariosSistema>(
                 JsonConversor.ConvertirAString(datos["Entidad"]));
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
@@ -92,11 +92,11 @@ namespace asp_servicios.Controllers
             try
             {
                 var datos = ObtenerDatos();
-                /*if (!tokenController!.Validate(datos))
+                if (!tokenController!.Validate(datos))
                 {
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
-                }*/
+                }
                 var entidad = JsonConversor.ConvertirAObjeto<UsuariosSistema>(
                 JsonConversor.ConvertirAString(datos["Entidad"]));
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
@@ -122,11 +122,11 @@ namespace asp_servicios.Controllers
             try
             {
                 var datos = ObtenerDatos();
-                /*if (!tokenController!.Validate(datos))
+                if (!tokenController!.Validate(datos))
                 {
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
-                }*/
+                }
                 var entidad = JsonConversor.ConvertirAObjeto<UsuariosSistema>(
                 JsonConversor.ConvertirAString(datos["Entidad"]));
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
