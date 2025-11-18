@@ -2,11 +2,11 @@
 
 namespace lib_presentaciones.Interfaces
 {
-    public interface IUsuariosSistemaPresentacion
+    public interface IPedidosPresentacion
     {
-        Task<List<UsuariosSistema>> Listar();
-        Task<UsuariosSistema?> Guardar(UsuariosSistema? entidad);
-        Task<UsuariosSistema?> Modificar(UsuariosSistema? entidad);
-        Task<UsuariosSistema?> Borrar(UsuariosSistema? entidad);
+        Task<List<Pedidos>> Listar();
+        Task<Pedidos?> Guardar(Pedidos? entidad);
+        Task<Pedidos?> Modificar(Pedidos? entidad);
+        Task<Pedidos?> Borrar(Pedidos? entidad);
     }
 }

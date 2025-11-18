@@ -1,4 +1,5 @@
 ﻿using lib_dominio.Entidades;
+using System.Diagnostics.Metrics;
 
 namespace lib_presentaciones.Interfaces
 {
@@ -6,6 +7,7 @@ namespace lib_presentaciones.Interfaces
     {
         Task<List<Canciones>> Listar();
         Task<Canciones?> Guardar(Canciones? entidad);
+        Task<List<Canciones>> BuscarPorTitulo(Canciones? entidad);
         Task<Canciones?> Modificar(Canciones? entidad);
         Task<Canciones?> Borrar(Canciones? entidad);
     }
