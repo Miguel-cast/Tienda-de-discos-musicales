@@ -3,6 +3,7 @@ using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,14 @@ namespace lib_repositorios.Implementaciones
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        public List<Empleados> PorCargo(Empleados? entidad)
+        {
+            return this.IConexion!.Empleados!
+                .Where(x => x.Cargo!.Contains(entidad!.Cargo!))
+                .Take(50)
+                .ToList();
         }
     }
 }

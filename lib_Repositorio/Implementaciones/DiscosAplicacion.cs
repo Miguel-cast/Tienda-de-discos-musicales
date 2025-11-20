@@ -1,6 +1,7 @@
 ﻿using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace lib_repositorios.Implementaciones
 {
@@ -107,43 +108,13 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        public List<Discos> ObtenerDiscosPorArtista(int artistaId)
+        public List<Discos> PorTitulo (Discos? entidad)
         {
             return this.IConexion!.Discos!
-                .Include(d => d.Artista)
-                .Where(d => d.ArtistaId == artistaId)
+                .Where(x => x.Titulo!.Contains(entidad!.Titulo!))
+                .Take(50)
                 .ToList();
         }
 
-        public List<Discos> ObtenerDiscosPorGenero(int generoId)
-        {
-            return this.IConexion!.Discos!
-                .Include(d => d.Genero)
-                .Where(d => d.GenerosId == generoId)
-                .ToList();
-        }
-
-        public decimal CalcularPromedioPrecios()
-        {
-            var discos = this.IConexion!.Discos!.ToList();
-            return discos.Any() ? discos.Average(d => d.Precio) : 0;
-        }
-
-        public List<Discos> ObtenerDiscosRecientes(int añosAtras = 5)
-        {
-            var añoMinimo = DateTime.Now.Year - añosAtras;
-            return this.IConexion!.Discos!
-                .Where(d => d.AñoLanzamiento >= añoMinimo)
-                .OrderByDescending(d => d.AñoLanzamiento)
-                .ToList();
-        }
-
-        public List<Discos> BuscarPorTitulo(string titulo)
-        {
-            return this.IConexion!.Discos!
-                .Include(d => d.Artista)
-                .Where(d => d.Titulo!.Contains(titulo))
-                .ToList();
-        }
     }
 }

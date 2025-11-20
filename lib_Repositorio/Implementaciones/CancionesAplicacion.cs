@@ -1,11 +1,12 @@
-﻿using System;
+﻿using lib_dominio.Entidades;
+using lib_repositorios.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using lib_dominio.Entidades;
-using lib_repositorios.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
@@ -75,18 +76,11 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-
-        public List<Canciones> ObtenerPorDisco(int discoId)
+        public List<Canciones> PorTitulo(Canciones? entidad)
         {
             return this.IConexion!.Canciones!
-                .Where(c => c.DiscoID == discoId)
-                .ToList();
-        }
-
-        public List<Canciones> BuscarPorTitulo(string titulo)
-        {
-            return this.IConexion!.Canciones!
-                .Where(c => c.Titulo.Contains(titulo))
+                .Where(x => x.Titulo!.Contains(entidad!.Titulo!))
+                .Take(50)
                 .ToList();
         }
 

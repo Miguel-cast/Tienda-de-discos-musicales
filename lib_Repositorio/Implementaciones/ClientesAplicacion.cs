@@ -1,6 +1,7 @@
 using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace lib_repositorios.Implementaciones
 {
@@ -55,6 +56,14 @@ namespace lib_repositorios.Implementaciones
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;
+        }
+
+        public List<Clientes> PorNombre(Clientes? entidad)
+        {
+            return this.IConexion!.Clientes!
+                .Where(x => x.Nombre!.Contains(entidad!.Nombre!))
+                .Take(50)
+                .ToList();
         }
     }
 }   

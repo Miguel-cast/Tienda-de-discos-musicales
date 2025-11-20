@@ -1,5 +1,6 @@
 using lib_dominio.Entidades;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 
 namespace lib_repositorios.Interfaces
 {

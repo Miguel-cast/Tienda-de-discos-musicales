@@ -107,28 +107,13 @@ namespace lib_repositorios.Implementaciones
                 .ToList();
         }
 
-        public List<Pedidos> ObtenerPedidosPorEstado(string estado)
+        public List<Pedidos> PorEstado(Pedidos? entidad)
         {
             return this.IConexion!.Pedidos!
-                .Include(p => p.Cliente)
-                .Where(p => p.Estado == estado)
+                .Where(x => x.Estado!.Contains(entidad!.Estado!))
+                .Take(50)
                 .ToList();
         }
 
-        public int ContarPedidosPorMes(int año, int mes)
-        {
-            return this.IConexion!.Pedidos!
-                .Count(p => p.FechaPedido.Year == año && p.FechaPedido.Month == mes);
-        }
-
-        public List<Pedidos> ObtenerPedidosRecientes(int dias = 7)
-        {
-            var fechaMinima = DateTime.Now.Date.AddDays(-dias);
-            return this.IConexion!.Pedidos!
-                .Include(p => p.Cliente)
-                .Where(p => p.FechaPedido >= fechaMinima)
-                .OrderByDescending(p => p.FechaPedido)
-                .ToList();
-        }
     }
 }

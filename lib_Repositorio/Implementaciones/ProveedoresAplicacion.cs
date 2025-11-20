@@ -56,5 +56,13 @@ namespace lib_repositorios.Implementaciones
             this.IConexion.SaveChanges();
             return entidad;
         }
+
+        public List<Proveedores> PorNombreEmpresa(Proveedores? entidad)
+        {
+            return this.IConexion!.Proveedores!
+                .Where(x => x.NombreEmpresa!.Contains(entidad!.NombreEmpresa!))
+                .Take(50)
+                .ToList();
+        }
     }
 }

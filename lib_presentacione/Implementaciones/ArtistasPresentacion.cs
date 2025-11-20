@@ -1,6 +1,7 @@
 ﻿using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
+using System.Diagnostics.Metrics;
 
 namespace lib_presentaciones.Implementaciones
 {
@@ -109,6 +110,25 @@ namespace lib_presentaciones.Implementaciones
             entidad = JsonConversor.ConvertirAObjeto<Artistas>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
+        }
+
+        public async Task<List<Artistas>> PorNombreArtista(Artistas? entidad)
+        {
+            var lista = new List<Artistas>();
+            var datos = new Dictionary<string, object>();
+            datos["Entidad"] = entidad!;
+
+            comunicaciones = new Comunicaciones();
+            datos = comunicaciones.ConstruirUrl(datos, "Artistas/PorNombreArtista");
+            var respuesta = await comunicaciones!.Ejecutar(datos);
+
+            if (respuesta.ContainsKey("Error"))
+            {
+                throw new Exception(respuesta["Error"].ToString()!);
+            }
+            lista = JsonConversor.ConvertirAObjeto<List<Artistas>>(
+                JsonConversor.ConvertirAString(respuesta["Entidades"]));
+            return lista;
         }
     }
 }

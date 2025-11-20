@@ -26,25 +26,6 @@ namespace lib_presentaciones.Implementaciones
             return lista;
         }
 
-        public async Task<List<Facturas>> PorTipo(Facturas? entidad)
-        {
-            var lista = new List<Facturas>();
-            var datos = new Dictionary<string, object>();
-            datos["Entidad"] = entidad!;
-            
-            comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Facturas/PorTipo");
-            var respuesta = await comunicaciones!.Ejecutar(datos);
-            
-            if (respuesta.ContainsKey("Error"))
-            {
-                throw new Exception(respuesta["Error"].ToString()!);
-            }
-            lista = JsonConversor.ConvertirAObjeto<List<Facturas>>(
-                JsonConversor.ConvertirAString(respuesta["Entidades"]));
-            return lista;
-        }
-
         public async Task<Facturas?> Guardar(Facturas? entidad)
         {
             if (entidad!.FacturaID!= 0)

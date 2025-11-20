@@ -7,7 +7,7 @@ namespace lib_presentaciones.Interfaces
     {
         Task<List<Canciones>> Listar();
         Task<Canciones?> Guardar(Canciones? entidad);
-        Task<List<Canciones>> BuscarPorTitulo(Canciones? entidad);
+        Task<List<Canciones>> PorTitulo(Canciones? entidad);
         Task<Canciones?> Modificar(Canciones? entidad);
         Task<Canciones?> Borrar(Canciones? entidad);
     }

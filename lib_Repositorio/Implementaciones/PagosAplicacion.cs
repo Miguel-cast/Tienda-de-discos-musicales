@@ -96,52 +96,5 @@ namespace lib_repositorios.Implementaciones
             this.IConexion.SaveChanges();
             return entidad;
         }
-
-        public List<Pagos> ObtenerPagosPorFactura(int facturaId)
-        {
-            return this.IConexion!.Pagos!
-                .Include(p => p.Factura)
-                .Where(p => p.FacturaID == facturaId)
-                .OrderBy(p => p.FechaPago)
-                .ToList();
-        }
-
-        public decimal CalcularTotalPagosPorMetodo(string metodoPago)
-        {
-            return this.IConexion!.Pagos!
-                .Where(p => p.MetodoPago == metodoPago)
-                .Sum(p => p.Monto);
-        }
-
-        public List<Pagos> ObtenerPagosPorFecha(DateTime fechaInicio, DateTime fechaFin)
-        {
-            return this.IConexion!.Pagos!
-                .Include(p => p.Factura)
-                .Where(p => p.FechaPago >= fechaInicio && p.FechaPago <= fechaFin)
-                .OrderByDescending(p => p.FechaPago)
-                .ToList();
-        }
-
-        public decimal CalcularSaldoPendienteFactura(int facturaId)
-        {
-            var factura = this.IConexion!.Facturas!.Find(facturaId);
-            if (factura == null) return 0;
-
-            var totalPagado = this.IConexion!.Pagos!
-                .Where(p => p.FacturaID == facturaId)
-                .Sum(p => p.Monto);
-
-            return factura.Total - totalPagado;
-        }
-
-        public List<Pagos> ObtenerPagosRecientes(int dias = 7)
-        {
-            var fechaMinima = DateTime.Now.Date.AddDays(-dias);
-            return this.IConexion!.Pagos!
-                .Include(p => p.Factura)
-                .Where(p => p.FechaPago >= fechaMinima)
-                .OrderByDescending(p => p.FechaPago)
-                .ToList();
-        }
     }
 }

@@ -7,7 +7,7 @@ namespace lib_presentaciones.Interfaces
     {
         Task<List<Discos>> Listar();
         Task<Discos?> Guardar(Discos? entidad);
-        Task<List<Discos>> ObtenerDiscosPorArtista (Discos? entidad);
+        Task<List<Discos>> PorTitulo (Discos? entidad);
         Task<Discos?> Modificar(Discos? entidad);
         Task<Discos?> Borrar(Discos? entidad);
     }

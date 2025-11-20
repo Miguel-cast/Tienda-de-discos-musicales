@@ -6,12 +6,9 @@ namespace lib_repositorios.Interfaces
     {
         void Configurar(string StringConexion);
         List<Pedidos> Listar();
+        List<Pedidos> PorEstado(Pedidos? entidad);
         Pedidos? Guardar(Pedidos? entidad);
         Pedidos? Modificar(Pedidos? entidad);
         Pedidos? Borrar(Pedidos? entidad);
-        List<Pedidos> ObtenerPedidosPorCliente(int clienteId);
-        List<Pedidos> ObtenerPedidosPorEstado(string estado);
-        int ContarPedidosPorMes(int año, int mes);
-        List<Pedidos> ObtenerPedidosRecientes(int dias = 7);
     }
 }

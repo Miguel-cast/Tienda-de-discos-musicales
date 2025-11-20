@@ -26,25 +26,6 @@ namespace lib_presentaciones.Implementaciones
             return lista;
         }
 
-        public async Task<List<InventarioMovimientos>> PorTipo(InventarioMovimientos? entidad)
-        {
-            var lista = new List<InventarioMovimientos>();
-            var datos = new Dictionary<string, object>();
-            datos["Entidad"] = entidad!;
-            
-            comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "InventarioMovimientos/PorTipo");
-            var respuesta = await comunicaciones!.Ejecutar(datos);
-            
-            if (respuesta.ContainsKey("Error"))
-            {
-                throw new Exception(respuesta["Error"].ToString()!);
-            }
-            lista = JsonConversor.ConvertirAObjeto<List<InventarioMovimientos>>(
-                JsonConversor.ConvertirAString(respuesta["Entidades"]));
-            return lista;
-        }
-
         public async Task<InventarioMovimientos?> Guardar(InventarioMovimientos? entidad)
         {
             if (entidad!.MovimientoId != 0)

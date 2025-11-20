@@ -1,6 +1,7 @@
 using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace lib_repositorios.Implementaciones
 {
@@ -64,24 +65,6 @@ namespace lib_repositorios.Implementaciones
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;
-        }
-
-
-        
-
-        public List<DetallePedidos> ObtenerPorPedido(int pedidoId)
-        {
-            return this.IConexion!.DetallePedidos!
-                .Where(d => d.PedidoId == pedidoId)
-                .ToList();
-        }
-
-
-        public decimal CalcularTotalPorPedido(int pedidoId)
-        {
-            return this.IConexion!.DetallePedidos!
-                .Where(d => d.PedidoId == pedidoId)
-                .Sum(d => d.cantidad * d.PrecioUnitario);
         }
     }
 }

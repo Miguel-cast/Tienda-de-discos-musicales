@@ -7,6 +7,7 @@ namespace lib_repositorios.Interfaces
     {
         void Configurar(string StringConexion);
         List<Generos> Listar();
+        List<Generos> PorNombreGenero(Generos? entidad);
         Generos? Guardar(Generos? entidad);
         Generos? Modificar(Generos? entidad);
         Generos? Borrar(Generos? entidad);
