@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lib_repositorios.Implementaciones
 {
-    public class UsuariosSistemaAplicacion : IUsuariosSistemaAplicacion
+    public class UsuariosAplicacion : IUsuariosAplicacion
     {
         private IConexion? IConexion = null;
 
-        public UsuariosSistemaAplicacion(IConexion iConexion)
+        public UsuariosAplicacion(IConexion iConexion)
         {
             this.IConexion = iConexion;
         }
@@ -18,40 +18,47 @@ namespace lib_repositorios.Implementaciones
             this.IConexion!.StringConexion = StringConexion;
         }
 
-        public UsuariosSistema? Borrar(UsuariosSistema? entidad)
+        public Usuarios? Borrar(Usuarios? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
             if (entidad.UsuarioId == 0)
                 throw new Exception("lbNoSeGuardo");
-            this.IConexion!.UsuariosSistema!.Remove(entidad);
+            this.IConexion!.Usuarios!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public UsuariosSistema? Guardar(UsuariosSistema? entidad)
+        public Usuarios? Guardar(Usuarios? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
             if (entidad.UsuarioId != 0)
                 throw new Exception("lbYaSeGuardo");
-            this.IConexion!.UsuariosSistema!.Add(entidad);
+            this.IConexion!.Usuarios!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public List<UsuariosSistema> Listar()
+        public List<Usuarios> Listar()
         {
-            return this.IConexion!.UsuariosSistema!.Take(20).ToList();
+            return this.IConexion!.Usuarios!.Take(20).ToList();
+        }
+        public List<Usuarios> PorEmail(Usuarios? entidad)
+        {
+            return this.IConexion!.Usuarios!
+                .Where(x => x.Email!.Contains(entidad!.Email!))
+                .Take(50)
+                .ToList();
         }
 
-        public UsuariosSistema? Modificar(UsuariosSistema? entidad)
+        public Usuarios? Modificar(Usuarios? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
             if (entidad.UsuarioId == 0)
                 throw new Exception("lbNoSeGuardo");
-            var entry = this.IConexion!.Entry<UsuariosSistema>(entidad);
+            var entry = this.IConexion!.Entry<Usuarios>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;

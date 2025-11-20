@@ -18,7 +18,7 @@ namespace lib_dominio.Entidades
         public string? Telefono { get; set; }
 
         [NotMapped] public ICollection<Pedidos>? Pedidos { get; set; }
-        [NotMapped] public ICollection<UsuariosSistema>? UsuariosSistema { get; set; }
+        [NotMapped] public ICollection<Usuarios>? Usuarios { get; set; }
         [NotMapped] public ICollection<InventarioMovimientos>? InventarioMovimientos { get; set; }
 
     }

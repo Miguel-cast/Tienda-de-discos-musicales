@@ -1,9 +1,9 @@
-﻿using lib_aplicaciones.Interfaces;
+﻿using lib_repositorios.Interfaces;
 using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace lib_aplicaciones.Implementaciones
+namespace lib_repositorios.Implementaciones
 {
     public class AuditoriasAplicacion : IAuditoriasAplicacion
     {

@@ -1,6 +1,6 @@
 ﻿using lib_dominio.Entidades;
 
-namespace lib_aplicaciones.Interfaces
+namespace lib_repositorios.Interfaces
 {
     public interface IRolesAplicacion
     {

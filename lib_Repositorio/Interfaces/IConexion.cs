@@ -21,7 +21,7 @@ namespace lib_repositorios.Interfaces
         DbSet<Pedidos>? Pedidos { get; set; }
         DbSet<Proveedores>? Proveedores { get; set; }
         DbSet<ReseñasClientes>? ReseñasClientes { get; set; }
-        DbSet<UsuariosSistema>? UsuariosSistema { get; set; }
+        DbSet<Usuarios>? Usuarios { get; set; }
         DbSet<Roles>? Roles { get; set; }
         DbSet<Auditorias>? Auditorias { get; set; }
 

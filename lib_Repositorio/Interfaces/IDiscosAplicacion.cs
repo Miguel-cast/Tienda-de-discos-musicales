@@ -2,7 +2,7 @@
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace lib_Repositorio.Interfaces
+namespace lib_repositorios.Interfaces
 {
     public interface IDiscosAplicacion
     {

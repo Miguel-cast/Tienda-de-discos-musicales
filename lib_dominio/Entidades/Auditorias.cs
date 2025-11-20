@@ -16,7 +16,7 @@ namespace lib_dominio.Entidades
         public string? Accion { get; set; }
         public string? Tabla { get; set; }
 
-        public UsuariosSistema? Usuario { get; set; }
+        public Usuarios? Usuario { get; set; }
     }
 }
 

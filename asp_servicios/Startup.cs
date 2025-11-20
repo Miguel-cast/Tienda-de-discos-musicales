@@ -1,6 +1,4 @@
-﻿using lib_aplicaciones.Implementaciones;
-using lib_aplicaciones.Interfaces;
-using lib_Repositorio.Interfaces;
+﻿using asp_servicios.Controllers;
 using lib_repositorios.Implementaciones;
 using lib_repositorios.Interfaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -43,9 +41,10 @@ namespace asp_servicios
             services.AddScoped<IPedidosAplicacion, PedidosAplicacion>();
             services.AddScoped<IRolesAplicacion, RolesAplicacion>();
             services.AddScoped<IAuditoriasAplicacion, AuditoriasAplicacion>();
+            services.AddScoped<TokenAplicacion, TokenAplicacion>();
 
             // Controladores
-            //services.AddScoped<TokenController, TokenController>();
+            services.AddScoped<TokenController, TokenController>();
             services.AddCors(o => o.AddDefaultPolicy(b => b.AllowAnyOrigin()));
         }
 

@@ -8,13 +8,14 @@ using System.Collections.Generic;
 
 namespace lib_repositorios.Interfaces
     {
-        public interface IUsuariosSistemaAplicacion
+        public interface IUsuariosAplicacion
         {
             void Configurar(string StringConexion);
-            UsuariosSistema? Guardar(UsuariosSistema? entidad);
-            UsuariosSistema? Modificar(UsuariosSistema? entidad);
-            UsuariosSistema? Borrar(UsuariosSistema? entidad);
-            List<UsuariosSistema> Listar();
+            Usuarios? Guardar(Usuarios? entidad);
+            Usuarios? Modificar(Usuarios? entidad);
+            Usuarios? Borrar(Usuarios? entidad);
+            List<Usuarios> Listar();
+            List<Usuarios> PorEmail(Usuarios? entidad);
         }
 
     }

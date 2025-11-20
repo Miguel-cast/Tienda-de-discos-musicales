@@ -9,12 +9,12 @@ namespace asp_servicios.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class UsuariosSistemaController : ControllerBase
+    public class UsuariosController : ControllerBase
     {
-        private IUsuariosSistemaAplicacion? iAplicacion = null;
+        private IUsuariosAplicacion? iAplicacion = null;
         private TokenController? tokenController = null;
 
-        public UsuariosSistemaController(IUsuariosSistemaAplicacion? iAplicacion, TokenController tokenController)
+        public UsuariosController(IUsuariosAplicacion? iAplicacion, TokenController tokenController)
         {
             this.iAplicacion = iAplicacion;
             this.tokenController = tokenController;
@@ -67,7 +67,7 @@ namespace asp_servicios.Controllers
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
                 }
-                var entidad = JsonConversor.ConvertirAObjeto<UsuariosSistema>(
+                var entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                 JsonConversor.ConvertirAString(datos["Entidad"]));
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
 
@@ -97,7 +97,7 @@ namespace asp_servicios.Controllers
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
                 }
-                var entidad = JsonConversor.ConvertirAObjeto<UsuariosSistema>(
+                var entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                 JsonConversor.ConvertirAString(datos["Entidad"]));
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
 
@@ -127,7 +127,7 @@ namespace asp_servicios.Controllers
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
                 }
-                var entidad = JsonConversor.ConvertirAObjeto<UsuariosSistema>(
+                var entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                 JsonConversor.ConvertirAString(datos["Entidad"]));
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
 

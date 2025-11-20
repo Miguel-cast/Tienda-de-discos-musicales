@@ -4,48 +4,48 @@ using lib_presentaciones.Interfaces;
 
 namespace lib_presentaciones.Implementaciones
 {
-    public class UsuariosSistemaPresentacion : IUsuariosSistemaPresentacion
+    public class UsuariosPresentacion : IUsuariosPresentacion
     {
         private Comunicaciones? comunicaciones = null;
 
-        public async Task<List<UsuariosSistema>> Listar()
+        public async Task<List<Usuarios>> Listar()
         {
-            var lista = new List<UsuariosSistema>();
+            var lista = new List<Usuarios>();
             var datos = new Dictionary<string, object>();
             
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "UsuariosSistema/Listar");
+            datos = comunicaciones.ConstruirUrl(datos, "Usuarios/Listar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
             
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            lista = JsonConversor.ConvertirAObjeto<List<UsuariosSistema>>(
+            lista = JsonConversor.ConvertirAObjeto<List<Usuarios>>(
                 JsonConversor.ConvertirAString(respuesta["Entidades"]));
             return lista;
         }
 
-        public async Task<List<UsuariosSistema>> PorTipo(UsuariosSistema? entidad)
+        public async Task<List<Usuarios>> PorTipo(Usuarios? entidad)
         {
-            var lista = new List<UsuariosSistema>();
+            var lista = new List<Usuarios>();
             var datos = new Dictionary<string, object>();
             datos["Entidad"] = entidad!;
             
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "UsuariosSistema/PorTipo");
+            datos = comunicaciones.ConstruirUrl(datos, "Usuarios/PorTipo");
             var respuesta = await comunicaciones!.Ejecutar(datos);
             
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            lista = JsonConversor.ConvertirAObjeto<List<UsuariosSistema>>(
+            lista = JsonConversor.ConvertirAObjeto<List<Usuarios>>(
                 JsonConversor.ConvertirAString(respuesta["Entidades"]));
             return lista;
         }
 
-        public async Task<UsuariosSistema?> Guardar(UsuariosSistema? entidad)
+        public async Task<Usuarios?> Guardar(Usuarios? entidad)
         {
             if (entidad!.UsuarioId!= 0)
             {
@@ -55,19 +55,19 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
             
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "UsuariosSistema/Guardar");
+            datos = comunicaciones.ConstruirUrl(datos, "Usuarios/Guardar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
             
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            entidad = JsonConversor.ConvertirAObjeto<UsuariosSistema>(
+            entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }
 
-        public async Task<UsuariosSistema?> Modificar(UsuariosSistema? entidad)
+        public async Task<Usuarios?> Modificar(Usuarios? entidad)
         {
             if (entidad!.UsuarioId == 0)
             {
@@ -77,19 +77,19 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "UsuariosSistema/Modificar");
+            datos = comunicaciones.ConstruirUrl(datos, "Usuarios/Modificar");
             
             var respuesta = await comunicaciones!.Ejecutar(datos);
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            entidad = JsonConversor.ConvertirAObjeto<UsuariosSistema>(
+            entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }
 
-        public async Task<UsuariosSistema?> Borrar(UsuariosSistema? entidad)
+        public async Task<Usuarios?> Borrar(Usuarios? entidad)
         {
             if (entidad!.UsuarioId == 0)
             {
@@ -99,14 +99,14 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
             
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "UsuariosSistema/Borrar");
+            datos = comunicaciones.ConstruirUrl(datos, "Usuarios/Borrar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
             
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            entidad = JsonConversor.ConvertirAObjeto<UsuariosSistema>(
+            entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }

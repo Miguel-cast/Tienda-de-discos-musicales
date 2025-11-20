@@ -130,33 +130,25 @@ CREATE TABLE [Envios] (
         FOREIGN KEY ([PedidoID]) REFERENCES [Pedidos]([PedidoID])
 );
 GO
+CREATE TABLE [Roles](
+    [RolId] INT IDENTITY(1,1) PRIMARY KEY,
+    [NombreRol] NVARCHAR(50) NOT NULL UNIQUE,
+    [Descripcion] NVARCHAR(200)
+    );
+GO
 
-CREATE TABLE [UsuariosSistema](
+CREATE TABLE [Usuarios](
     [UsuarioId] INT IDENTITY (1,1) PRIMARY KEY,
-    [NombreUsuario] NVARCHAR(50) NOT NULL,
-    [ContrasenaHash] NVARCHAR(200) NOT NULL,
-    [Rol] NVARCHAR(50) NOT NULL,
+    [Email] NVARCHAR(50) NOT NULL,
+    [Contraseña] NVARCHAR(200) NOT NULL,
+    [RolID] INT NOT NULL,
     [EmpleadoId] INT NOT NULL,
-    CONSTRAINT FK_UsuariosSistema_Empleados 
-        FOREIGN KEY ([EmpleadoId]) REFERENCES [Empleados]([EmpleadoId])
+    CONSTRAINT FK_Usuarios_Empleados 
+        FOREIGN KEY ([EmpleadoId]) REFERENCES [Empleados]([EmpleadoId]),
+    CONSTRAINT FK_Usuarios_Roles 
+            FOREIGN KEY ([RolID]) REFERENCES [Roles]([RolId])
 );
 GO
-
-ALTER TABLE [UsuariosSistema]
-    ADD [RolId] INT NULL;
-GO
-
-
-ALTER TABLE [UsuariosSistema]
-    ADD    CONSTRAINT FK_UsuariosSistema_Roles 
-            FOREIGN KEY ([RolId]) REFERENCES [Roles]([RolId])
-GO
-
-ALTER TABLE UsuariosSistema
-    DROP COLUMN Rol;
-GO
-
-
 
 CREATE TABLE [InventarioMovimientos](
     [MovimientoId] INT IDENTITY (1,1) PRIMARY KEY,
@@ -186,12 +178,7 @@ CREATE TABLE [ReseñasClientes] (
 );
 GO
 
-CREATE TABLE [Roles](
-    [RolId] INT IDENTITY(1,1) PRIMARY KEY,
-    [NombreRol] NVARCHAR(50) NOT NULL UNIQUE,
-    [Descripcion] NVARCHAR(200)
-    );
-GO
+
 
 CREATE TABLE [Auditoria](
     [AuditoriaId] INT IDENTITY(1,1) PRIMARY KEY,
@@ -199,8 +186,8 @@ CREATE TABLE [Auditoria](
     [UsuarioId] INT NOT NULL,
     [Accion] NVARCHAR(100) NOT NULL, -- INSERT, UPDATE, DELETE, LOGIN, etc.
     [Tabla] NVARCHAR(100), -- Tabla afectada
-    CONSTRAINT FK_Auditoria_UsuariosSistema 
-        FOREIGN KEY ([UsuarioId]) REFERENCES [UsuariosSistema]([UsuarioId])
+    CONSTRAINT FK_Auditoria_Usuarios 
+        FOREIGN KEY ([UsuarioId]) REFERENCES [Usuarios]([UsuarioId])
 
     );
 GO
@@ -344,12 +331,19 @@ VALUES
 ('Cl 20 #10-05', 'Cartagena', 'Colombia', '2025-09-06', 5);
 GO
 
-INSERT INTO [UsuariosSistema] (NombreUsuario, ContrasenaHash, EmpleadoId, RolId) VALUES
-('andresg', 'hash123',  1,1),
-('claudiar', 'hash234',  2,1),
-('felipet', 'hash345',  3,1),
-('lauram', 'hash456',  4,1),
-('santiagom', 'hash567', 5,1);
+INSERT INTO [Roles] (NombreRol, Descripcion) VALUES
+('Admin', 'Acceso total al sistema con todos los permisos administrativos'),
+('Gerente', 'Gestión de inventario, ventas, empleados y generación de reportes'),
+('Vendedor', 'Registro de ventas, gestión de pedidos y atención al cliente'),
+('Cajera', 'Procesamiento de pagos, emisión de facturas y manejo de caja')
+GO
+
+INSERT INTO [Usuarios] (Email, Contraseña, EmpleadoId, RolID) VALUES
+('andresg@hotmail.com', 'hash123',  1,1),
+('claudiar@gmail.com', 'hash234',  2,1),
+('felipet@gmail.com', 'hash345',  3,1),
+('lauram@gmail.com', 'hash456',  4,1),
+('santiagom@gmail.com', 'hash567', 5,1);
 GO
 
 INSERT INTO [InventarioMovimientos] (FechaMovimiento, TipoMovimiento, Cantidad, DiscoId, EmpleadoId) VALUES
@@ -369,18 +363,6 @@ VALUES
 ('El mejor álbum del año, recomendado.', 5, '2025-09-09', 5, 5);
 GO
 
-INSERT INTO [Roles] (NombreRol, Descripcion) VALUES
-('Admin', 'Acceso total al sistema con todos los permisos administrativos'),
-('Gerente', 'Gestión de inventario, ventas, empleados y generación de reportes'),
-('Vendedor', 'Registro de ventas, gestión de pedidos y atención al cliente'),
-('Cajera', 'Procesamiento de pagos, emisión de facturas y manejo de caja')
-GO
 
-
-
-
-
-
-
-SELECT * FROM UsuariosSistema;
+SELECT * FROM Usuarios;
 GO

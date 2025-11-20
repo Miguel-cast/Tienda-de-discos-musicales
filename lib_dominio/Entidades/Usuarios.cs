@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace lib_dominio.Entidades
 {
-    public class UsuariosSistema
+    public class Usuarios
     {
         [Key]
         public int UsuarioId { get; set; }
-        public string NombreUsuario { get; set; }
-        public string ContrasenaHash { get; set; }
+        public string Email { get; set; }
+        public string Contraseña { get; set; }
         public int EmpleadoId { get; set; }
         public int RolId { get; set; }
         public Empleados? Empleado { get; set; }
