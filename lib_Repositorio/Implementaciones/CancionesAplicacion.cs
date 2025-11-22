@@ -13,10 +13,11 @@ namespace lib_repositorios.Implementaciones
     public class CancionesAplicacion : ICancionesAplicacion
     {
         private IConexion? IConexion = null;
-
-        public CancionesAplicacion(IConexion iConexion)
+        private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
+        public CancionesAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -32,6 +33,16 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("lbNoSeGuardo");
             this.IConexion!.Canciones!.Remove(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Canciones",
+                Accion = "Borrar",
+                Descripcion = $"CancionId={entidad.CancionId}",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -55,6 +66,15 @@ namespace lib_repositorios.Implementaciones
 
             this.IConexion!.Canciones!.Add(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Canciones",
+                Accion = "Guardar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -73,6 +93,15 @@ namespace lib_repositorios.Implementaciones
             var entry = this.IConexion!.Entry<Canciones>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Canciones",
+                Accion = "Modificar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 

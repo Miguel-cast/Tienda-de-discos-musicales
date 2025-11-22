@@ -8,10 +8,12 @@ namespace lib_repositorios.Implementaciones
     public class ClientesAplicacion : IClientesAplicacion
     {
         private IConexion? IConexion = null;
+        private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
 
-        public ClientesAplicacion(IConexion iConexion)
+        public ClientesAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -27,6 +29,16 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("lbNoSeGuardo");
             this.IConexion!.Clientes!.Remove(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Clientes",
+                Accion = "Borrar",
+                Descripcion = $"ClienteId={entidad.ClienteId}",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -38,6 +50,15 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("lbYaSeGuardo");
             this.IConexion!.Clientes!.Add(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Clientes",
+                Accion = "Guardar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -55,6 +76,15 @@ namespace lib_repositorios.Implementaciones
             var entry = this.IConexion!.Entry<Clientes>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Clientes",
+                Accion = "Modificar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 

@@ -7,11 +7,14 @@ namespace lib_repositorios.Implementaciones
     public class PagosAplicacion : IPagosAplicacion
     {
         private IConexion? IConexion = null;
+        private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
 
-        public PagosAplicacion(IConexion iConexion)
+        public PagosAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
+
 
         public void Configurar(string StringConexion)
         {
@@ -31,6 +34,16 @@ namespace lib_repositorios.Implementaciones
 
             this.IConexion!.Pagos!.Remove(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Pagos",
+                Accion = "Borrar",
+                Descripcion = $"PagoID={entidad.PagoID}",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -66,6 +79,15 @@ namespace lib_repositorios.Implementaciones
 
             this.IConexion!.Pagos!.Add(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Pagos",
+                Accion = "Guardar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -94,6 +116,15 @@ namespace lib_repositorios.Implementaciones
             var entry = this.IConexion!.Entry<Pagos>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Pagos",
+                Accion = "Modificar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
     }

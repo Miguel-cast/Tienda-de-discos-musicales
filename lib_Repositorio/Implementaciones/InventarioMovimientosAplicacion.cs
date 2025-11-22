@@ -7,10 +7,12 @@ namespace lib_repositorios.Implementaciones
     public class InventarioMovimientosAplicacion : IInventarioMovimientosAplicacion
     {
         private IConexion? IConexion = null;
+        private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
 
-        public InventarioMovimientosAplicacion(IConexion iConexion)
+        public InventarioMovimientosAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -26,6 +28,16 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("lbNoSeGuardo");
             this.IConexion!.InventarioMovimientos!.Remove(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "InventarioMovimientos",
+                Accion = "Borrar",
+                Descripcion = $"MovimientoId={entidad.MovimientoId}",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -37,6 +49,15 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("lbYaSeGuardo");
             this.IConexion!.InventarioMovimientos!.Add(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "InventarioMovimientos",
+                Accion = "Guardar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -54,6 +75,15 @@ namespace lib_repositorios.Implementaciones
             var entry = this.IConexion!.Entry<InventarioMovimientos>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "InventarioMovimientos",
+                Accion = "Modificar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
     }

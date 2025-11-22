@@ -1,5 +1,4 @@
-﻿using lib_repositorios.Interfaces;
-using lib_dominio.Entidades;
+﻿using lib_dominio.Entidades;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,8 +26,6 @@ namespace lib_repositorios.Implementaciones
             if (entidad!.AuditoriaId == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Calculos
-
             this.IConexion!.Auditorias!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
@@ -42,7 +39,18 @@ namespace lib_repositorios.Implementaciones
             if (entidad.AuditoriaId != 0)
                 throw new Exception("lbYaSeGuardo");
 
-            // Calculos
+            //// Asegurar fecha y truncar/normalizar campos si hace falta
+            //if (entidad.FechaHora == DateTime.MinValue)
+            //    entidad.FechaHora = DateTime.Now;
+
+            //if (!string.IsNullOrWhiteSpace(entidad.Accion))
+            //    entidad.Accion = entidad.Accion!.Trim();
+
+            //if (!string.IsNullOrWhiteSpace(entidad.Tabla))
+            //    entidad.Tabla = entidad.Tabla!.Trim();
+
+            //if (!string.IsNullOrWhiteSpace(entidad.Descripcion))
+            //    entidad.Descripcion = entidad.Descripcion!.Trim();
 
             this.IConexion!.Auditorias!.Add(entidad);
             this.IConexion.SaveChanges();
@@ -51,19 +59,26 @@ namespace lib_repositorios.Implementaciones
 
         public List<Auditorias> Listar()
         {
-            return this.IConexion!.Auditorias!.Take(20).ToList();
+            return this.IConexion!.Auditorias!.OrderByDescending(a => a.Fecha).Take(50).ToList();
         }
 
+        public List<Auditorias> PorUsuario(Auditorias? entidad)
+        {
+            if (entidad == null)
+                return new List<Auditorias>();
+
+             return this.IConexion!.Auditorias!
+                .Where(x => x.Usuario!.Contains(entidad!.Usuario!))
+                .ToList();
+        }
 
         public Auditorias? Modificar(Auditorias? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.UsuarioId == 0)
+            if (entidad!.AuditoriaId == 0)
                 throw new Exception("lbNoSeGuardo");
-
-            // Calculos
 
             var entry = this.IConexion!.Entry<Auditorias>(entidad);
             entry.State = EntityState.Modified;

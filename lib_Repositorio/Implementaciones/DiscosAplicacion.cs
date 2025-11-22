@@ -8,10 +8,12 @@ namespace lib_repositorios.Implementaciones
     public class DiscosAplicacion : IDiscosAplicacion
     {
         private IConexion? IConexion = null;
+        private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
 
-        public DiscosAplicacion(IConexion iConexion)
+        public DiscosAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -40,6 +42,16 @@ namespace lib_repositorios.Implementaciones
 
             this.IConexion!.Discos!.Remove(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Discos",
+                Accion = "Borrar",
+                Descripcion = $"DiscoId={entidad.DiscoId}",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -73,6 +85,15 @@ namespace lib_repositorios.Implementaciones
 
             this.IConexion!.Discos!.Add(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Discos",
+                Accion = "Guardar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -105,6 +126,15 @@ namespace lib_repositorios.Implementaciones
             var entry = this.IConexion!.Entry<Discos>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Discos",
+                Accion = "Modificar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 

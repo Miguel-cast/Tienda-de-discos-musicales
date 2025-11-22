@@ -37,9 +37,11 @@ namespace lib_repositorios.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                UsuarioId = 1,
+                Usuario = "admin",
                 Tabla = "Roles",
-                Accion = "Borrar"
+                Accion = "Borrar",
+                Descripcion = $"RolId={entidad.RolId}",
+                Fecha = DateTime.Now
             });
             return entidad;
         }
@@ -59,9 +61,10 @@ namespace lib_repositorios.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                UsuarioId = 1,
+                Usuario = "admin",
                 Tabla = "Roles",
-                Accion = "Guardar"
+                Accion = "Guardar",
+                Fecha = DateTime.Now
             });
             return entidad;
         }
@@ -94,9 +97,10 @@ namespace lib_repositorios.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                UsuarioId = 1,
+                Usuario = "admin",
                 Tabla = "Roles",
-                Accion = "Modificar"
+                Accion = "Modificar",
+                Fecha = DateTime.Now
             });
             return entidad;
         }

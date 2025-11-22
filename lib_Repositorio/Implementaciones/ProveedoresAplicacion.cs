@@ -7,10 +7,12 @@ namespace lib_repositorios.Implementaciones
     public class ProveedoresAplicacion : IProveedoresAplicacion
     {
         private IConexion? IConexion = null;
+        private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
 
-        public ProveedoresAplicacion(IConexion iConexion)
+        public ProveedoresAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -26,6 +28,16 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("lbNoSeGuardo");
             this.IConexion!.Proveedores!.Remove(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Proveedores",
+                Accion = "Borrar",
+                Descripcion = $"ProveedoresId={entidad.ProveedoresId}",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -37,6 +49,15 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("lbYaSeGuardo");
             this.IConexion!.Proveedores!.Add(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Proveedores",
+                Accion = "Guardar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -54,6 +75,15 @@ namespace lib_repositorios.Implementaciones
             var entry = this.IConexion!.Entry<Proveedores>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Proveedores",
+                Accion = "Modificar",
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 

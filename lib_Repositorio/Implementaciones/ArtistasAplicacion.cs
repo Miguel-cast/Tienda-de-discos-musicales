@@ -1,4 +1,5 @@
 ﻿using lib_dominio.Entidades;
+using lib_dominio.Nucleo;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,10 +14,11 @@ namespace lib_repositorios.Implementaciones
     public class ArtistasAplicacion : IArtistasAplicacion
     {
         private IConexion? IConexion = null;
-
-        public ArtistasAplicacion(IConexion iConexion)
+        private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
+        public ArtistasAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -32,6 +34,17 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("lbNoSeGuardo");
             this.IConexion!.Artistas!.Remove(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin",
+                Tabla = "Artistas",
+                Accion = "Borrar",
+                Descripcion = $"ArtistaId={entidad.ArtistaId}",
+                Fecha=DateTime.Now
+            });
+
             return entidad;
         }
 
@@ -45,6 +58,18 @@ namespace lib_repositorios.Implementaciones
                 throw new Exception("El nombre del artista no puede ser nulo o vacío");
             this.IConexion!.Artistas!.Add(entidad);
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin", 
+                Tabla = "Artistas",
+                Accion = "Guardar",
+                Descripcion= JsonConversor.ConvertirAString(entidad!),
+                Fecha = DateTime.Now
+
+            });
+
             return entidad;
         }
 
@@ -62,6 +87,17 @@ namespace lib_repositorios.Implementaciones
             var entry = this.IConexion!.Entry<Artistas>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "admin", 
+                Tabla = "Artistas",
+                Accion = "Modificar",
+                Descripcion= JsonConversor.ConvertirAString(entidad!),
+                Fecha = DateTime.Now
+
+            });
             return entidad;
         }
 

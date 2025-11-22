@@ -130,11 +130,12 @@ CREATE TABLE [Envios] (
         FOREIGN KEY ([PedidoID]) REFERENCES [Pedidos]([PedidoID])
 );
 GO
-CREATE TABLE [Roles](
-    [RolId] INT IDENTITY(1,1) PRIMARY KEY,
-    [NombreRol] NVARCHAR(50) NOT NULL UNIQUE,
-    [Descripcion] NVARCHAR(200)
-    );
+CREATE TABLE [Roles] (
+	[RolId] INT NOT NULL IDENTITY (1,1) PRIMARY KEY,
+	[Nombre] NVARCHAR (50),
+	[Descripcion] NVARCHAR (70)
+);
+GO
 GO
 
 CREATE TABLE [Usuarios](
@@ -180,15 +181,13 @@ GO
 
 
 
-CREATE TABLE [Auditoria](
+CREATE TABLE [Auditorias](
     [AuditoriaId] INT IDENTITY(1,1) PRIMARY KEY,
-    [FechaHora] DATETIME NOT NULL DEFAULT GETDATE(),
-    [UsuarioId] INT NOT NULL,
+    [Fecha] DATETIME NOT NULL DEFAULT GETDATE(),
+    [Usuario] NVARCHAR(100) NOT NULL,
     [Accion] NVARCHAR(100) NOT NULL, -- INSERT, UPDATE, DELETE, LOGIN, etc.
-    [Tabla] NVARCHAR(100), -- Tabla afectada
-    CONSTRAINT FK_Auditoria_Usuarios 
-        FOREIGN KEY ([UsuarioId]) REFERENCES [Usuarios]([UsuarioId])
-
+    [Tabla] NVARCHAR(100), -- Tabla     afectada
+    [Descripcion] NVARCHAR(100), -- Tabla     afectada
     );
 GO
 ----- Inserts -----
@@ -205,7 +204,8 @@ INSERT INTO [Empleados] (Nombre, Apellido, Cargo, Email, Telefono) VALUES
 ('Claudia', 'Ruiz', 'Cajera', 'claudia.ruiz@tiendadiscos.com', '3202223344'),
 ('Felipe', 'Torres', 'Gerente', 'felipe.torres@tiendadiscos.com', '3203334455'),
 ('Laura', 'Mendoza', 'Bodeguera', 'laura.mendoza@tiendadiscos.com', '3204445566'),
-('Santiago', 'Morales', 'Soporte TI', 'santiago.morales@tiendadiscos.com', '3205556677');
+('Santiago', 'Morales', 'Soporte TI', 'santiago.morales@tiendadiscos.com', '3205556677'),
+('Santiagopro', 'Morales', 'Soporte TI', 'santiagopro.morales@tiendadiscos.com', '3205556677');
 GO
 
 INSERT INTO [Proveedores] (NombreEmpresa, Contacto, Telefono, Direccion) VALUES
@@ -331,19 +331,20 @@ VALUES
 ('Cl 20 #10-05', 'Cartagena', 'Colombia', '2025-09-06', 5);
 GO
 
-INSERT INTO [Roles] (NombreRol, Descripcion) VALUES
-('Admin', 'Acceso total al sistema con todos los permisos administrativos'),
-('Gerente', 'Gestión de inventario, ventas, empleados y generación de reportes'),
-('Vendedor', 'Registro de ventas, gestión de pedidos y atención al cliente'),
-('Cajera', 'Procesamiento de pagos, emisión de facturas y manejo de caja')
+INSERT INTO [Roles] (Nombre, Descripcion) VALUES
+('Administrador', 'Dueño de la tienda'),
+('Cliente', 'Comprador'),
+('Vendedor', 'Empleado');
+
 GO
 
 INSERT INTO [Usuarios] (Email, Contraseña, EmpleadoId, RolID) VALUES
-('andresg@hotmail.com', 'hash123',  1,1),
-('claudiar@gmail.com', 'hash234',  2,1),
-('felipet@gmail.com', 'hash345',  3,1),
-('lauram@gmail.com', 'hash456',  4,1),
-('santiagom@gmail.com', 'hash567', 5,1);
+('andresg@hotmail.com', 'hash123',  1,3),
+('claudiar@gmail.com', 'hash234',  2,3),
+('felipet@gmail.com', 'hash345',  3,2),
+('lauram@gmail.com', 'hash456',  4,2),
+('santiagom@gmail.com', 'hash567', 5,2),
+('admin', 'admin', 6, 1);
 GO
 
 INSERT INTO [InventarioMovimientos] (FechaMovimiento, TipoMovimiento, Cantidad, DiscoId, EmpleadoId) VALUES
