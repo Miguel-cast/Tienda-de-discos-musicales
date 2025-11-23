@@ -1,4 +1,5 @@
 ﻿using lib_dominio.Nucleo;
+using lib_dominio.Entidades;
 
 namespace lib_presentaciones
 {
@@ -35,24 +36,30 @@ namespace lib_presentaciones
                 datos["Llave"] = llave!;
                 var stringData = JsonConversor.ConvertirAString(datos);
 
-                var httpClient = new HttpClient();
+                using var httpClient = new HttpClient(); // Usamos 'using' para asegurar Dispose
                 httpClient.Timeout = new TimeSpan(0, 4, 0);
                 var message = await httpClient.PostAsync(url, new StringContent(stringData));
+
+                // --- CAMBIO CLAVE: Leer la respuesta inmediatamente ---
+                var resp = await message.Content.ReadAsStringAsync();
+
                 if (!message.IsSuccessStatusCode)
                 {
-                    respuesta.Add("Error", "lbErrorComunicacion");
+                    // Si el servidor devolvió un error (4xx, 5xx), agregamos la respuesta cruda al error.
+                    respuesta.Add("Error", $"lbErrorComunicacion. Status: {message.StatusCode}. Respuesta Cruda: {resp.Substring(0, Math.Min(resp.Length, 100))}");
                     return respuesta;
                 }
 
-                var resp = await message.Content.ReadAsStringAsync();
-                httpClient.Dispose(); httpClient = null;
                 if (string.IsNullOrEmpty(resp))
                 {
                     respuesta.Add("Error", "lbErrorComunicacion");
                     return respuesta;
                 }
 
+                // --- CAMBIO CLAVE: Llamar a Replace solo si es una respuesta exitosa ---
+                // Esto previene el error si el servidor devuelve HTML de error.
                 resp = Replace(resp);
+
                 respuesta = JsonConversor.ConvertirAObjeto(resp);
                 return respuesta;
             }
@@ -70,11 +77,15 @@ namespace lib_presentaciones
             {
                 var url = datos["UrlLlave"].ToString();
                 var temp = new Dictionary<string, object>();
-                temp["Entidad"] = new Dictionary<string, object>()
+
+                // Usar un usuario existente de la tabla Usuarios para solicitar la llave.
+                // En tu script de BD existe el usuario ('admin','admin'), lo usamos aquí.
+                temp["Entidad"] = new Usuarios
                 {
-                    { "Nombre", "Pepito" },
-                    { "Contraseña", "KJYgtuidt8f87w4r6ysd" }
+                    Email = "admin",
+                    Contraseña = "admin"
                 };
+
                 var stringData = JsonConversor.ConvertirAString(temp);
 
                 var httpClient = new HttpClient();
@@ -96,6 +107,15 @@ namespace lib_presentaciones
 
                 resp = Replace(resp);
                 respuesta = JsonConversor.ConvertirAObjeto(resp);
+
+                // proteger contra KeyNotFoundException
+                if (!respuesta.ContainsKey("Llave") || string.IsNullOrEmpty(respuesta["Llave"]?.ToString()))
+                {
+                    respuesta.Clear();
+                    respuesta.Add("Error", "lbNoAutenticacion");
+                    return respuesta;
+                }
+
                 llave = respuesta["Llave"].ToString();
                 return respuesta;
             }
@@ -108,24 +128,12 @@ namespace lib_presentaciones
 
         private string Replace(string resp)
         {
+            // Solo elimina los caracteres de retorno de carro y nueva línea
+            // que a veces se serializan doblemente en algunas configuraciones.
             return resp.Replace("\\\\r\\\\n", "")
-            .Replace("\\r\\n", "")
-            .Replace("\\", "")
-            .Replace("\\\"", "\"")
-            .Replace("\"", "'")
-            .Replace("'[", "[")
-            .Replace("]'", "]")
-            .Replace("'{'", "{'")
-            .Replace("\\\\", "\\")
-            .Replace("'}'", "'}")
-            .Replace("}'", "}")
-            .Replace("\\n", "")
-            .Replace("\\r", "")
-            .Replace(" ", "")
-            .Replace("'{", "{")
-            .Replace("\"", "")
-            .Replace(" ", "")
-            .Replace("null", "''");
+                       .Replace("\\r\\n", "")
+                       .Replace("\\n", "")
+                       .Replace("\\r", "");
         }
     }
 }

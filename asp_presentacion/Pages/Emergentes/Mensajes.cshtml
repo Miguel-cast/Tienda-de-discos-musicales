@@ -1,0 +1,25 @@
+﻿@{
+    var mensaje = ViewData["Mensaje"]?.ToString() ?? "";
+    var tipoAlerta = "";
+    var icono = "";
+
+    if (!string.IsNullOrEmpty(mensaje))
+    {
+        if (mensaje.ToLower().Contains("error") || mensaje.ToLower().Contains("excepción"))
+        {
+            tipoAlerta = "alert-danger";
+            icono = "fa-exclamation-triangle";
+        }
+        else
+        {
+            tipoAlerta = "alert-success"; // Usamos verde para éxito por defecto
+            icono = "fa-check-circle";
+        }
+
+        <div class="alert @tipoAlerta alert-dismissible fade show shadow-sm mt-3" role="alert">
+            <i class="fas @icono me-2"></i>
+            <strong>Aviso:</strong> @mensaje
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+    }
+}

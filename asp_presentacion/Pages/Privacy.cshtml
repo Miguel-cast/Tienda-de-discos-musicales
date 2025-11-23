@@ -1,8 +1,37 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Política de Privacidad";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card card-custom">
+                <div class="card-header-custom">
+                    <span><i class="fas fa-user-shield me-2"></i>@ViewData["Title"]</span>
+                </div>
+                <div class="card-body-custom">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Utilice esta página para detallar la política de privacidad de su sitio.
+                    </div>
+
+                    <h4>Seguridad de los datos</h4>
+                    <p class="text-muted">
+                        En el Sistema de Panadería, nos tomamos muy en serio la seguridad de la información.
+                        Todos los datos de productos y proveedores son manejados bajo estrictos estándares de confidencialidad.
+                    </p>
+
+                    <hr />
+
+                    <h4>Uso de la información</h4>
+                    <p class="text-muted">
+                        La información recopilada se utiliza únicamente para fines administrativos y de gestión de inventario
+                        dentro del establecimiento.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

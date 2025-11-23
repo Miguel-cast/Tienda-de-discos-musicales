@@ -11,27 +11,27 @@ using ut_presentacion.Nucleo;
 namespace ut_presentacion.Aplicacion
 {
     [TestClass]
-    public class UsuariosSistemaAplicacionPruebas
+    public class UsuariosAplicacionPruebas
     {
         private IConexion? iConexion;
-        private UsuariosSistemaAplicacion? aplicacion;
-        private UsuariosSistema? entidad;
+        private UsuariosAplicacion? aplicacion;
+        private Usuarios? entidad;
 
         [TestInitialize]
         public void Inicializar()
         {
             iConexion = new Conexion();
             iConexion.StringConexion = Configuracion.ObtenerValor("StringConexion");
-            aplicacion = new UsuariosSistemaAplicacion(iConexion);
+            aplicacion = new UsuariosAplicacion(iConexion);
         }
 
         [TestMethod]
         public void PruebaGuardarUsuarioValido()
         {
-            entidad = EntidadesNucleo.UsuariosSistema();
-            entidad.NombreUsuario = "usuario_prueba";
-            entidad.ContrasenaHash = "password123";
-            entidad.Rol = "Administrador";
+            entidad = EntidadesNucleo.Usuarios();
+            entidad.Email = "claertur@gmail.com";
+            entidad.Contraseña = "password123";
+            entidad.RolId = 1;
             var resultado = aplicacion!.Guardar(entidad);
             Assert.IsNotNull(resultado);
             Assert.IsTrue(resultado.UsuarioId > 0);
@@ -43,10 +43,10 @@ namespace ut_presentacion.Aplicacion
         {
             if (entidad != null && entidad.UsuarioId > 0)
             {
-                var usuarioExistente = iConexion!.UsuariosSistema!.Find(entidad.UsuarioId);
+                var usuarioExistente = iConexion!.Usuarios!.Find(entidad.UsuarioId);
                 if (usuarioExistente != null)
                 {
-                    iConexion.UsuariosSistema.Remove(usuarioExistente);
+                    iConexion.Usuarios.Remove(usuarioExistente);
                     iConexion.SaveChanges();
                 }
             }

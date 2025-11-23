@@ -1,145 +1,204 @@
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-}
-
-a {
-    color: #0366d6;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-html {
-    font-size: 14px;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    margin-bottom: 60px;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
-}
-
-.card_index {
-    background-color: white;
-}
-/* Screens --------------------- */
-.tb_data {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.cts_forms {
-    width: 100%;
-}
-
-.cl_actions {
-    width: 170px;
-}
-
-.cl_hidden {
-    display: normal;
-}
-
-@media (max-width: 950px) {
-    .cl_hidden {
-        display: none;
-    }
-}
-
-.containers_vn {
-    height: 70vh;
-    width: 100%;
-    overflow: auto;
-    display: inline-block;
-}
-
-/* Popups --------------------- */
-.containers_em {
-    height: 250px;
-    width: 100%;
-    overflow: auto;
-    display: inline-block;
-}
-
-.popup {
-    position: fixed;
-    width: 100%;
+/* 1. Asegurar que la altura sea del 100% de la ventana */
+html, body {
     height: 100%;
+    margin: 0;
+}
+
+/* 2. Convertir el body en un contenedor flexible vertical */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. Hacer que el contenedor principal (donde va el @RenderBody) ocupe todo el espacio disponible */
+.container, main[role="main"] {
+    flex: 1 0 auto;
+    width: 100%; /* Asegura que ocupe el ancho */
+}
+
+/* 4. Estilizar el footer para que no se encoja y tenga buen aspecto */
+.footer {
+    flex-shrink: 0;
+    background-color: #f8f9fa; /* Un gris muy suave */
+    border-top: 1px solid #dee2e6;
+    padding: 1rem 0;
+    margin-top: auto; /* Esto es clave si no usas flex-grow en el main */
+    width: 100%;
+}
+
+
+
+/* Estilos Generales */
+.page-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 1rem;
+}
+
+/* Tarjetas para agrupar contenido */
+.card-custom {
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.card-header-custom {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-body-custom {
+    padding: 25px;
+}
+
+/* Barra de Acciones Superior */
+.action-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/* Estilos para inputs de formulario */
+.form-floating-custom .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+/* Tabla moderna */
+.table-custom thead th {
+    background-color: #f1f3f5;
+    border-bottom: 2px solid #dee2e6;
+    color: #495057;
+    font-weight: 600;
+}
+
+.table-custom tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Modal de Borrado (Overlay) */
+.modal-overlay {
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    background-color: rgba(0,0,0, 0.5);
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+    backdrop-filter: blur(2px);
 }
 
-.pp_inner {
-    position: absolute;
-    left: 50px;
-    right: 50px;
-    top: 50px;
-    bottom: 25%;
-    min-width: 300px;
-    max-width: 500px;
-    height: 440px;
-    margin: auto;
+.modal-content-custom {
     background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: slideDown 0.3s ease-out;
 }
 
-.pp_del_inner, .pp_ms_inner {
-    position: absolute;
-    left: 50px;
-    right: 50px;
-    top: 50px;
-    bottom: 25%;
-    min-width: 300px;
-    max-width: 500px;
-    height: 200px;
-    margin: auto;
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Botones con Iconos */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Estilos específicos para el Dashboard (Index) */
+
+/* Tarjetas de Estadísticas (KPIs) */
+.stat-card {
+    transition: transform 0.2s;
+    border-left: 5px solid #0d6efd; /* Borde azul por defecto */
+}
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* Variaciones de color para las tarjetas */
+.border-success-custom {
+    border-left-color: #198754 !important;
+}
+
+.border-warning-custom {
+    border-left-color: #ffc107 !important;
+}
+
+.border-danger-custom {
+    border-left-color: #dc3545 !important;
+}
+
+/* Accesos Directos */
+.shortcut-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
     background: white;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #495057;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+    border: 1px solid #dee2e6;
+}
+
+    .shortcut-btn:hover {
+        background-color: #f8f9fa;
+        color: #0d6efd;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .shortcut-btn i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+/* Hero Section (Bienvenida) */
+.hero-banner {
+    background: linear-gradient(135deg, #0d6efd 0%, #0043a8 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
 }
