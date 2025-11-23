@@ -1,4 +1,5 @@
-﻿using lib_presentaciones.Implementaciones;
+﻿using lib_dominio.Entidades;
+using lib_presentaciones.Implementaciones;
 using lib_presentaciones.Interfaces;
 
 namespace asp_presentacion
@@ -16,6 +17,19 @@ namespace asp_presentacion
         {
             // Presentaciones
             services.AddScoped<IDiscosPresentacion, DiscosPresentacion>();
+            services.AddScoped<IArtistasPresentacion, ArtistasPresentacion>();
+            services.AddScoped<ICancionesPresentacion, CancionesPresentacion>();
+            services.AddScoped<IClientesPresentacion, ClientesPresentacion>();
+            services.AddScoped<IGenerosPresentacion, GenerosPresentacion>();
+            services.AddScoped<IProveedoresPresentacion, ProveedoresPresentacion>();
+            services.AddScoped<IPedidosPresentacion, PedidosPresentacion>();
+            services.AddScoped<IDetallePedidosPresentacion, DetallePedidosPresentacion>();
+            services.AddScoped<IEnviosPresentacion, EnviosPresentacion>();
+            services.AddScoped<IFacturasPresentacion, FacturasPresentacion>();
+            services.AddScoped<IPagosPresentacion, PagosPresentacion>();
+            services.AddScoped<IEmpleadosPresentacion, EmpleadosPresentacion>();
+            services.AddScoped<IInventarioMovimientosPresentacion, InventarioMovimientosPresentacion>();
+            services.AddScoped<IReseñasClientesPresentacion, ReseñasClientesPresentacion>();
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddRazorPages();

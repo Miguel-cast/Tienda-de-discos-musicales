@@ -132,55 +132,5 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        public List<Envios> ObtenerEnviosPorCiudad(string ciudad)
-        {
-            return this.IConexion!.Envios!
-                .Include(e => e.Pedido)
-                .Where(e => e.CiudadEntrega!.ToLower().Contains(ciudad.ToLower()))
-                .OrderBy(e => e.FechaEnvio)
-                .ToList();
-        }
-
-        public List<Envios> ObtenerEnviosPorFecha(DateTime fechaInicio, DateTime fechaFin)
-        {
-            return this.IConexion!.Envios!
-                .Include(e => e.Pedido)
-                .Where(e => e.FechaEnvio >= fechaInicio && e.FechaEnvio <= fechaFin)
-                .OrderByDescending(e => e.FechaEnvio)
-                .ToList();
-        }
-
-        public List<Envios> ObtenerEnviosPendientes()
-        {
-            var fechaActual = DateTime.Now.Date;
-            return this.IConexion!.Envios!
-                .Include(e => e.Pedido)
-                .Where(e => e.FechaEnvio >= fechaActual)
-                .OrderBy(e => e.FechaEnvio)
-                .ToList();
-        }
-
-        public List<Envios> ObtenerEnviosRealizados()
-        {
-            var fechaActual = DateTime.Now.Date;
-            return this.IConexion!.Envios!
-                .Include(e => e.Pedido)
-                .Where(e => e.FechaEnvio < fechaActual)
-                .OrderByDescending(e => e.FechaEnvio)
-                .ToList();
-        }
-
-        public int ContarEnviosPorPais(string pais)
-        {
-            return this.IConexion!.Envios!
-                .Count(e => e.PaisEntrega!.ToLower() == pais.ToLower());
-        }
-
-        public Envios? ObtenerEnvioPorPedido(int pedidoId)
-        {
-            return this.IConexion!.Envios!
-                .Include(e => e.Pedido)
-                .FirstOrDefault(e => e.PedidoID == pedidoId);
-        }
     }
 }

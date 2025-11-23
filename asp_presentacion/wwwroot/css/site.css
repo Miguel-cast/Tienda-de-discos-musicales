@@ -24,6 +24,7 @@ body {
     padding: 1rem 0;
     margin-top: auto; /* Esto es clave si no usas flex-grow en el main */
     width: 100%;
+    justify-content: flex-end
 }
 
 
@@ -201,4 +202,113 @@ body {
     padding: 2rem;
     margin-bottom: 2rem;
     box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+/* --- DASHBOARD LAYOUT CON HEADER EXISTENTE --- */
+
+/* Contenedor principal flexible */
+#dashboard-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    /*  min-height: calc(100vh - 130px); Resta altura aprox de header y footer */
+}
+
+/* Estilos de la Barra Lateral */
+#sidebar-wrapper {
+    min-width: 260px;
+    max-width: 260px;
+    background: #fff;
+    border-right: 1px solid #dee2e6;
+    transition: all 0.3s;
+}
+
+/* Links del menú lateral */
+.list-group-item-action {
+    padding: 12px 20px;
+    border: none;
+    color: #555;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+    .list-group-item-action i {
+        width: 25px;
+        text-align: center;
+        margin-right: 10px;
+    }
+
+    .list-group-item-action:hover {
+        background-color: #f0f2f5;
+        color: #0d6efd;
+        padding-left: 25px; /* Efecto de desplazamiento suave */
+        text-decoration: none;
+    }
+
+    .list-group-item-action.active-link {
+        color: #0d6efd;
+        background-color: #e7f1ff;
+        border-right: 3px solid #0d6efd;
+    }
+
+/* Categorías (Títulos pequeños en el menú) */
+.sidebar-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #adb5bd;
+    text-transform: uppercase;
+    padding: 20px 20px 5px 20px;
+    letter-spacing: 0.5px;
+}
+
+/* Contenido de la página */
+#page-content-wrapper {
+    width: 100%;
+    padding: 20px;
+    background-color: #f8f9fa; /* Fondo gris muy suave para diferenciar del panel blanco */
+    display: flex;
+    flex-direction: column;
+    /* min-height: 100vh;  Ocupar toda la altura */
+}
+
+#page-content-wrapper main {
+        flex: 1; /* Esto hace que el contenido ocupe todo el espacio disponible, empujando el footer */
+        padding: 20px;
+}
+
+
+/* Responsive: Ocultar sidebar en móviles */
+#dashboard-wrapper.toggled #sidebar-wrapper {
+    margin-left: -260px;
+}
+
+/* Make the dashboard wrapper grow to fill the remaining vertical space */
+#dashboard-wrapper {
+    display: flex; /* ya lo tienes */
+    width: 100%;
+    align-items: stretch;
+    flex: 1 0 auto; /* permite que crezca dentro del body flex */
+    min-height: 0; /* evita que hijos con min-height rompan el contenedor */
+}
+
+/* Page content becomes a vertical flex column and fills available space */
+#page-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto; /* ocupa el espacio restante dentro de #dashboard-wrapper */
+    padding: 20px;
+    min-height: 0; /* importante para evitar overflow en flex children */
+}
+
+    /* El main ocupa el espacio restante dentro de #page-content-wrapper */
+    #page-content-wrapper main {
+        flex: 1 0 auto;
+        padding: 20px; /* si quieres mantener padding */
+    }
+
+/* Footer: asegurar que no se encoja */
+.footer {
+    flex-shrink: 0;
+    width: 100%;
 }

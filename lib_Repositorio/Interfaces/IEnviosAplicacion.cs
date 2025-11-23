@@ -9,11 +9,5 @@ namespace lib_repositorios.Interfaces
         Envios? Guardar(Envios? entidad);
         Envios? Modificar(Envios? entidad);
         Envios? Borrar(Envios? entidad);
-        List<Envios> ObtenerEnviosPorCiudad(string ciudad);
-        List<Envios> ObtenerEnviosPorFecha(DateTime fechaInicio, DateTime fechaFin);
-        List<Envios> ObtenerEnviosPendientes();
-        List<Envios> ObtenerEnviosRealizados();
-        int ContarEnviosPorPais(string pais);
-        Envios? ObtenerEnvioPorPedido(int pedidoId);
     }
 }

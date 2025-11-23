@@ -40,9 +40,10 @@ button.accept-policy {
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    position: relative; /* Vuelve al flujo normal */
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    background-color: #f8f9fa; /* Un gris suave para que se note */
+    margin-top: auto; /* Truco de Flexbox: Empuja el footer siempre al final */
 }

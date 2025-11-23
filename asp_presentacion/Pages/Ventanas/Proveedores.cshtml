@@ -1,7 +1,7 @@
 ﻿@page
-@model asp_presentacion.Pages.Ventanas.DiscosModel
+@model asp_presentacion.Pages.Ventanas.ProveedoresModel
 @{
-    ViewData["Titulo"] = "Gestión de Discos";
+    ViewData["Titulo"] = "Gestión de Proveedores";
 }
 
 <div class="container-fluid py-4">
@@ -9,7 +9,7 @@
         @Html.AntiForgeryToken()
 
         <div class="d-flex justify-content-between align-items-center page-header">
-            <h2 class="text-primary mb-0"><i class="fas fa-compact-disc me-2"></i>Discos</h2>
+            <h2 class="text-primary mb-0"><i class="fas fa-truck"></i>Proveedores</h2>
 
             <div class="action-bar">
                 <button type="submit" asp-page-handler="BtRefrescar"
@@ -41,16 +41,14 @@
         @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
                 Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
         {
-            <input type="hidden" asp-for="@Model.Actual!.DiscoId" />
+            <input type="hidden" asp-for="@Model.Actual!.ProveedoresId" />
         }
         @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
         {
-            <input type="hidden" asp-for="@Model.Actual!.Titulo" />
-            <input type="hidden" asp-for="@Model.Actual!.AñoLanzamiento" />
-            <input type="hidden" asp-for="@Model.Actual!.Precio" />
-            <input type="hidden" asp-for="@Model.Actual!.ArtistaId" />
-            <input type="hidden" asp-for="@Model.Actual!.GenerosId" />
-            <input type="hidden" asp-for="@Model.Actual!.ProveedoresId" />
+            <input type="hidden" asp-for="@Model.Actual!.NombreEmpresa" />
+            <input type="hidden" asp-for="@Model.Actual!.Contacto" />
+            <input type="hidden" asp-for="@Model.Actual!.Telefono" />
+            <input type="hidden" asp-for="@Model.Actual!.Direccion" />
         }
 
         @if (ViewData.ContainsKey("Mensaje"))
@@ -66,27 +64,32 @@
         {
             <div class="card card-custom">
                 <div class="card-header-custom">
-                    <span><i class="fas fa-edit me-2"></i>Información del Disco</span>
+                    <span><i class="fas fa-edit me-2"></i>Información del Proveedor</span>
                 </div>
                 <div class="card-body-custom">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Titulo</label>
-                            <input class="form-control" asp-for="@Model.Actual!.Titulo" placeholder="Ej. Laptop Gamer" />
-                            <span asp-validation-for="@Model.Actual!.Titulo" class="text-danger"></span>
+                            <label class="form-label fw-bold">Nombre del proveedor</label>
+                            <input class="form-control" asp-for="@Model.Actual!.NombreEmpresa" placeholder="Ej. Sonic music" />
+                            <span asp-validation-for="@Model.Actual!.NombreEmpresa" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Año de Lanzamiento</label>
-                            <input class="form-control" asp-for="@Model.Actual!.AñoLanzamiento" placeholder="Ej. Sony, LG..." />
+                            <label class="form-label fw-bold">Contacto</label>
+                            <input class="form-control" asp-for="@Model.Actual!.Contacto" placeholder="Ej. Carlos Mendoza" />
+                            <span asp-validation-for="@Model.Actual!.Contacto" class="text-danger"></span>
                         </div>
 
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Precio</label>
-                            <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                <input class="form-control" asp-for="@Model.Actual!.Precio" type="number" step="0.01" />
-                            </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Telefono</label>
+                            <input class="form-control" asp-for="@Model.Actual!.Telefono" placeholder="Ej. +57 3214251672" />
+                            <span asp-validation-for="@Model.Actual!.Telefono" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Direccion</label>
+                            <input class="form-control" asp-for="@Model.Actual!.Direccion" placeholder="Ej. El Poblado, Medellín" />
+                            <span asp-validation-for="@Model.Actual!.Direccion" class="text-danger"></span>
                         </div>
 
                     </div>
@@ -105,7 +108,7 @@
                     <p class="text-muted">Esta acción no se puede deshacer.</p>
 
                     <div class="alert alert-warning">
-                        <strong>@Model.Actual!.Titulo</strong>
+                        <strong>@Model.Actual!.NombreEmpresa</strong>
                     </div>
 
                     <div class="d-flex justify-content-center gap-3 mt-4">
@@ -125,7 +128,7 @@
         {
             <div class="card card-custom">
                 <div class="card-header-custom">
-                    <span><i class="fas fa-list me-2"></i>Listado de Discos</span>
+                    <span><i class="fas fa-list me-2"></i>Listado de Proveedores</span>
                 </div>
                 <div class="card-body-custom">
 
@@ -133,7 +136,7 @@
                         <div class="col-md-5">
                             <div class="input-group">
                                 <span class="input-group-text bg-white"><i class="fas fa-filter"></i></span>
-                                <input class="form-control" asp-for="@Model.Filtro!.Titulo" placeholder="Filtrar por Titulo..." />
+                                <input class="form-control" asp-for="@Model.Filtro!.NombreEmpresa" placeholder="Filtrar por Nombre del proveedor..." />
                             </div>
                         </div>
 
@@ -148,12 +151,10 @@
                         <table class="table table-custom align-middle">
                             <thead>
                                 <tr>
-                                    <th>Titulo</th>
-                                    <th>Año Lanzamiento</th>
-                                    <th>Precio</th>
-                                    <th>Artista</th>
-                                    <th>Genero</th>
-                                    <th class="text-center">Proveedor</th>
+                                    <th>Proveedor</th>
+                                    <th>Contacto</th>
+                                    <th>Telefono</th>
+                                    <th>Direccion</th>
                                     <th class="text-end">Acciones</th>
                                 </tr>
                             </thead>
@@ -163,18 +164,16 @@
                                     @foreach (var elemento in Model.Lista)
                                     {
                                         <tr>
-                                            <td class="fw-bold">@elemento.Titulo</td>
-                                            <td class="text-muted">@elemento.AñoLanzamiento</td>
-                                            <td class="text-success fw-bold">@elemento.Precio.ToString("C")</td>
-                                            <td><span class="badge bg-secondary bg-opacity-25 text-dark">@elemento.Artista?.NombreArtista</span></td>
-                                            <td><span class="badge bg-info bg-opacity-25 text-dark">@elemento.Genero?.NombreGenero</span></td>
-                                            <td class="text-center"><span class="badge bg-primary bg-opacity-25 text-dark">@elemento.Proveedor?.NombreEmpresa</span></td>
+                                            <td class="fw-bold">@elemento.NombreEmpresa</td>
+                                            <td class="text-muted">@elemento.Contacto</td>
+                                            <td class="text-muted">@elemento.Telefono</td>
+                                            <td class="text-muted">@elemento.Direccion</td>
                                             <td class="text-end">
-                                                <button type="submit" asp-page-handler="BtModificar" asp-route-data="@elemento.DiscoId"
+                                                <button type="submit" asp-page-handler="BtModificar" asp-route-data="@elemento.ProveedoresId"
                                                         class="btn btn-sm btn-warning text-white" title="Editar">
                                                     <i class="fas fa-pen"></i>
                                                 </button>
-                                                <button type="submit" asp-page-handler="BtBorrarVal" asp-route-data="@elemento.DiscoId"
+                                                <button type="submit" asp-page-handler="BtBorrarVal" asp-route-data="@elemento.ProveedoresId"
                                                         class="btn btn-sm btn-danger" title="Borrar">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -187,7 +186,7 @@
                                     <tr>
                                         <td colspan="7" class="text-center py-4 text-muted">
                                             <i class="fas fa-inbox fa-2x mb-2"></i><br>
-                                            No hay Discos registrados
+                                            No hay Proveedores registrados
                                         </td>
                                     </tr>
                                 }

@@ -1,55 +1,136 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - asp_presentacion</title>
+    <title>@ViewData["Title"] - Sistema Discos Musicales</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/asp_presentacion.styles.css" asp-append-version="true" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">asp_presentacion</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-0">
+            <div class="container-fluid px-4">
+                <button class="btn btn-outline-secondary me-3 d-none d-md-block" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <a class="navbar-brand fw-bold text-primary" asp-area="" asp-page="/Index">
+                    <i class="fas fa-compact-disc me-2"></i>Tienda Discos
+                </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Ventanas/Discos">Discos</a>
+                            <span class="nav-link text-dark">Hola, <b>Usuario</b></span>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div id="dashboard-wrapper">
+
+        <div id="sidebar-wrapper">
+            <div class="list-group list-group-flush my-3">
+
+                <a asp-page="/Index" class="list-group-item list-group-item-action">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+
+                <div class="sidebar-category">Catálogo Musical</div>
+
+                <a asp-page="/Ventanas/Discos" class="list-group-item list-group-item-action">
+                    <i class="fas fa-record-vinyl text-primary"></i> Discos
+                </a>
+                <a asp-page="/Ventanas/Artistas" class="list-group-item list-group-item-action">
+                    <i class="fas fa-microphone-alt" style="color: #6610f2;"></i> Artistas
+                </a>
+
+                <a asp-page="/Ventanas/Canciones" class="list-group-item list-group-item-action">
+                    <i class="fas fa-music" style="color: #CB3234;"></i> Canciones
+                </a>
+
+                <a asp-page="/Ventanas/Generos" class="list-group-item list-group-item-action">
+                    <i class="fas fa-tags" style="color: #FF8C00;"></i> Generos
+                </a>
+
+                <a asp-page="/Ventanas/ReseñasClientes" class="list-group-item list-group-item-action">
+                    <i class="fas fa-star" style="color: #FF8C00;"></i> Reseñas
+                </a>
+                <div class="sidebar-category">Administración</div>
+
+                <a asp-page="/Ventanas/Proveedores" class="list-group-item list-group-item-action">
+                    <i class="fas fa-truck" style="color: #008f39;"></i> Proveedores
+                </a>
+
+                <a asp-page="/Ventanas/Clientes" class="list-group-item list-group-item-action">
+                    <i class="fas fa-users" style="color: #1669CC;"></i> Clientes
+                </a>
+
+                <a asp-page="/Ventanas/Envios" class="list-group-item list-group-item-action">
+                    <i class="fas fa-truck-fast" style="color: #00aae4;"></i> Envios
+                </a>
+
+                <a asp-page="/Ventanas/DetallePedidos" class="list-group-item list-group-item-action">
+                    <i class="fas fa-list-ul" style="color: #000D;"></i> Detalles de pedidos
+                </a>
+
+                <a asp-page="/Ventanas/Facturas" class="list-group-item list-group-item-action">
+                    <i class="fas fa-file-invoice-dollar" style="color: #008f39;"></i> Facturas
+                </a>
+
+                <a asp-page="/Ventanas/Empleados" class="list-group-item list-group-item-action">
+                    <i class="fas fa-user-tie" style="color: #000d;"></i> Empleados
+                </a>
+
+                <a asp-page="/Ventanas/Pagos" class="list-group-item list-group-item-action">
+                    <i class="fas fa-credit-card" style="color: #CFC819;"></i> Pagos
+                </a>
+
+                <div class="sidebar-category">Sistema</div>
+
+                <a asp-page="/Privacy" class="list-group-item list-group-item-action">
+                    <i class="fas fa-shield-alt"></i> Privacidad
+                </a>
+            </div>
+        </div>
+
+        <div id="page-content-wrapper">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted bg-white">
         <div class="container">
-            &copy; 2025 - asp_presentacion - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2025 - Sistema Discos Musicales - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#dashboard-wrapper").toggleClass("toggled");
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

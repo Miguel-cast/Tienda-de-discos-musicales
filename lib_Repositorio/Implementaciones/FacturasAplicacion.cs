@@ -121,45 +121,5 @@ namespace lib_repositorios.Implementaciones
             });
             return entidad;
         }
-
-        public decimal CalcularTotalFacturasCliente(int clienteId)
-        {
-            return this.IConexion!.Facturas!
-                .Include(f => f.Pedido)
-                .Where(f => f.Pedido!.ClienteID == clienteId)
-                .Sum(f => f.Total);
-        }
-
-        public List<Facturas> ObtenerFacturasPendientesPago()
-        {
-            return this.IConexion!.Facturas!
-                .Include(f => f.Pagos)
-                .Where(f => !f.Pagos!.Any() || f.Pagos!.Sum(p => p.Monto) < f.Total)
-                .ToList();
-        }
-
-        public List<Facturas> ObtenerFacturasPorFecha(DateTime fechaInicio, DateTime fechaFin)
-        {
-            return this.IConexion!.Facturas!
-                .Include(f => f.Pedido)
-                .Where(f => f.FechaFactura >= fechaInicio && f.FechaFactura <= fechaFin)
-                .OrderByDescending(f => f.FechaFactura)
-                .ToList();
-        }
-
-        public decimal CalcularMontoTotalMes(int año, int mes)
-        {
-            return this.IConexion!.Facturas!
-                .Where(f => f.FechaFactura.Year == año && f.FechaFactura.Month == mes)
-                .Sum(f => f.Total);
-        }
-
-        public Facturas? ObtenerFacturaPorPedido(int pedidoId)
-        {
-            return this.IConexion!.Facturas!
-                .Include(f => f.Pedido)
-                .Include(f => f.Pagos)
-                .FirstOrDefault(f => f.PedidoID == pedidoId);
-        }
     }
 }
