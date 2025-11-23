@@ -139,12 +139,12 @@ namespace ut_presentacion.Nucleo
             return entidad;
         }
 
-        public static UsuariosSistema? UsuariosSistema()
+        public static Usuarios? Usuarios()
         {
-            var entidad = new UsuariosSistema();
-            entidad.NombreUsuario = "admin";
-            entidad.ContrasenaHash = "hashed_password";
-            entidad.Rol = "Administrador";
+            var entidad = new Usuarios();
+            entidad.Email = "mandter1234";
+            entidad.Contraseña = "hashed_password";
+            entidad.RolId = 1;
             entidad.EmpleadoId = 1;
 
             return entidad;

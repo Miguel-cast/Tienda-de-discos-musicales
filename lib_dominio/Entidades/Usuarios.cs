@@ -12,8 +12,8 @@ namespace lib_dominio.Entidades
     {
         [Key]
         public int UsuarioId { get; set; }
-        public string Email { get; set; }
-        public string Contraseña { get; set; }
+        public string? Email { get; set; }
+        public string? Contraseña { get; set; }
         public int EmpleadoId { get; set; }
         public int RolId { get; set; }
         public Empleados? Empleado { get; set; }
