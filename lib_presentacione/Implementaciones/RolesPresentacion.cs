@@ -26,16 +26,16 @@ namespace lib_presentaciones.Implementaciones
             return lista;
         }
 
-        public async Task<List<Roles>> PorTipo(Roles? entidad)
+        public async Task<List<Roles>> PorNombre(Roles? entidad)
         {
             var lista = new List<Roles>();
             var datos = new Dictionary<string, object>();
             datos["Entidad"] = entidad!;
-            
+
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Roles/PorTipo");
+            datos = comunicaciones.ConstruirUrl(datos, "Roles/PorNombre");
             var respuesta = await comunicaciones!.Ejecutar(datos);
-            
+
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);

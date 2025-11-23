@@ -12,10 +12,10 @@ namespace asp_servicios.Controllers
     [Route("[controller]/[action]")]
     public class GenerosController : ControllerBase
     {
-        private IArtistasAplicacion? iAplicacion = null;
+        private IGenerosAplicacion? iAplicacion = null;
         private TokenAplicacion? tokenAplicacion = null;
 
-        public GenerosController(IArtistasAplicacion? iAplicacion, TokenAplicacion tokenAplicacion)
+        public GenerosController(IGenerosAplicacion? iAplicacion, TokenAplicacion tokenAplicacion)
         {
             this.iAplicacion = iAplicacion;
             this.tokenAplicacion = tokenAplicacion;
@@ -68,7 +68,7 @@ namespace asp_servicios.Controllers
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
                 }
-                var entidad = JsonConversor.ConvertirAObjeto<Artistas>(
+                var entidad = JsonConversor.ConvertirAObjeto<Generos>(
                 JsonConversor.ConvertirAString(datos["Entidad"]));
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
 
@@ -98,7 +98,7 @@ namespace asp_servicios.Controllers
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
                 }
-                var entidad = JsonConversor.ConvertirAObjeto<Artistas>(
+                var entidad = JsonConversor.ConvertirAObjeto<Generos>(
                 JsonConversor.ConvertirAString(datos["Entidad"]));
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
 
@@ -128,7 +128,7 @@ namespace asp_servicios.Controllers
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
                 }
-                var entidad = JsonConversor.ConvertirAObjeto<Artistas>(
+                var entidad = JsonConversor.ConvertirAObjeto<Generos>(
                 JsonConversor.ConvertirAString(datos["Entidad"]));
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
 
@@ -137,6 +137,40 @@ namespace asp_servicios.Controllers
                 respuesta["Entidad"] = entidad!;
                 respuesta["Respuesta"] = "OK";
                 respuesta["Fecha"] = DateTime.Now.ToString();
+                return JsonConversor.ConvertirAString(respuesta);
+            }
+            catch (Exception ex)
+            {
+                respuesta["Error"] = ex.Message.ToString();
+                respuesta["Respuesta"] = "Error";
+                return JsonConversor.ConvertirAString(respuesta);
+            }
+        }
+
+        [HttpPost]
+        public string PorNombreGenero()
+        {
+            var respuesta = new Dictionary<string, object>();
+            try
+            {
+                var datos = ObtenerDatos();
+                if (!tokenAplicacion!.Validar(datos))
+                {
+                    respuesta["Error"] = "lbNoAutenticacion";
+                    return JsonConversor.ConvertirAString(respuesta);
+                }
+
+
+                var entidad = JsonConversor.ConvertirAObjeto<Generos>(
+                    JsonConversor.ConvertirAString(datos["Entidad"]));
+
+                this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
+
+
+                respuesta["Entidades"] = this.iAplicacion!.PorNombreGenero(entidad);
+                respuesta["Respuesta"] = "OK";
+                respuesta["Fecha"] = DateTime.Now.ToString();
+
                 return JsonConversor.ConvertirAString(respuesta);
             }
             catch (Exception ex)

@@ -1,7 +1,8 @@
 ﻿using asp_servicios.Nucleo;
-using lib_repositorios.Interfaces;
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
+using lib_repositorios.Implementaciones;
+using lib_repositorios.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -12,12 +13,12 @@ namespace asp_servicios.Controllers
     public class RolesController : ControllerBase
     {
         private IRolesAplicacion? iAplicacion = null;
-        private TokenController? tokenController = null;
+        private TokenAplicacion? tokenAplicacion = null;
 
-        public RolesController(IRolesAplicacion? iAplicacion, TokenController tokenController)
+        public RolesController(IRolesAplicacion? iAplicacion, TokenAplicacion tokenAplicacion)
         {
             this.iAplicacion = iAplicacion;
-            this.tokenController = tokenController;
+            this.tokenAplicacion = tokenAplicacion;
         }
 
         private Dictionary<string, object> ObtenerDatos()
@@ -35,7 +36,7 @@ namespace asp_servicios.Controllers
             try
             {
                 var datos = ObtenerDatos();
-                if (!tokenController!.Validate(datos))
+                if (!tokenAplicacion!.Validar(datos))
                 {
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
@@ -62,7 +63,7 @@ namespace asp_servicios.Controllers
             try
             {
                 var datos = ObtenerDatos();
-                if (!tokenController!.Validate(datos))
+                if (!tokenAplicacion!.Validar(datos))
                 {
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
@@ -92,7 +93,7 @@ namespace asp_servicios.Controllers
             try
             {
                 var datos = ObtenerDatos();
-                if (!tokenController!.Validate(datos))
+                if (!tokenAplicacion!.Validar(datos))
                 {
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
@@ -122,7 +123,7 @@ namespace asp_servicios.Controllers
             try
             {
                 var datos = ObtenerDatos();
-                if (!tokenController!.Validate(datos))
+                if (!tokenAplicacion!.Validar(datos))
                 {
                     respuesta["Error"] = "lbNoAutenticacion";
                     return JsonConversor.ConvertirAString(respuesta);
@@ -136,6 +137,40 @@ namespace asp_servicios.Controllers
                 respuesta["Entidad"] = entidad!;
                 respuesta["Respuesta"] = "OK";
                 respuesta["Fecha"] = DateTime.Now.ToString();
+                return JsonConversor.ConvertirAString(respuesta);
+            }
+            catch (Exception ex)
+            {
+                respuesta["Error"] = ex.Message.ToString();
+                respuesta["Respuesta"] = "Error";
+                return JsonConversor.ConvertirAString(respuesta);
+            }
+        }
+
+        [HttpPost]
+        public string PorNombre()
+        {
+            var respuesta = new Dictionary<string, object>();
+            try
+            {
+                var datos = ObtenerDatos();
+                if (!tokenAplicacion!.Validar(datos))
+                {
+                    respuesta["Error"] = "lbNoAutenticacion";
+                    return JsonConversor.ConvertirAString(respuesta);
+                }
+
+
+                var entidad = JsonConversor.ConvertirAObjeto<Roles>(
+                    JsonConversor.ConvertirAString(datos["Entidad"]));
+
+                this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion"));
+
+
+                respuesta["Entidades"] = this.iAplicacion!.PorNombre(entidad);
+                respuesta["Respuesta"] = "OK";
+                respuesta["Fecha"] = DateTime.Now.ToString();
+
                 return JsonConversor.ConvertirAString(respuesta);
             }
             catch (Exception ex)
