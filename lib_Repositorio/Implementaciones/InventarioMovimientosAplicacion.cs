@@ -63,7 +63,10 @@ namespace lib_repositorios.Implementaciones
 
         public List<InventarioMovimientos> Listar()
         {
-            return this.IConexion!.InventarioMovimientos!.Take(20).ToList();
+            return this.IConexion!.InventarioMovimientos!.Take(20)
+            .Include(x => x.Disco)
+            .Include(x => x.Empleado)
+            .ToList();
         }
 
         public InventarioMovimientos? Modificar(InventarioMovimientos? entidad)

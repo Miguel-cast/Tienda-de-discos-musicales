@@ -85,7 +85,6 @@ namespace lib_repositorios.Implementaciones
         {
             return this.IConexion!.Facturas!
                 .Include(f => f.Pedido)
-                .Include(f => f.Pagos)
                 .Take(20)
                 .ToList();
         }

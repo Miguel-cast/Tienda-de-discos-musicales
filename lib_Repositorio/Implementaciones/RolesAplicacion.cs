@@ -77,7 +77,7 @@ namespace lib_repositorios.Implementaciones
         public List<Roles> PorNombre(Roles? entidad)
         {
             return this.IConexion!.Roles!
-                .Where(x => x.NombreRol!.Contains(entidad!.NombreRol!))
+                .Where(x => x.Nombre!.Contains(entidad!.Nombre!))
                 .ToList();
         }
 

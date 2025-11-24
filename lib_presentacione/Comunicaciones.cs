@@ -69,7 +69,7 @@ namespace lib_presentaciones
                     return respuesta;
                 }
 
-                resp = Replace(resp);
+                //resp = Replace(resp);
                 respuesta = JsonConversor.ConvertirAObjeto(resp);
                 return respuesta;
             }
@@ -120,7 +120,7 @@ namespace lib_presentaciones
                     return respuesta;
                 }
 
-                resp = Replace(resp);
+                //resp = Replace(resp);
                 respuesta = JsonConversor.ConvertirAObjeto(resp);
 
                 if (respuesta.ContainsKey("Llave"))
@@ -135,7 +135,7 @@ namespace lib_presentaciones
             }
         }
 
-        private string Replace(string resp)
+       /* private string Replace(string resp)
         {
             // OJO: He eliminado el .Replace(" ", "") de tu código original
             // porque eso elimina los espacios en los nombres de los discos (Ej: "Pink Floyd" -> "PinkFloyd")
@@ -155,7 +155,6 @@ namespace lib_presentaciones
             //.Replace(" ", "")  <-- ESTO ROMPE LOS TÍTULOS CON ESPACIOS
             .Replace("'{", "{")
             .Replace("\"", "")
-            .Replace("null", "''");
+            .Replace("null", "''"); */
         }
     }
-}

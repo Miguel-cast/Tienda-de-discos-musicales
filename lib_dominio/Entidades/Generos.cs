@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,7 +11,8 @@ namespace lib_dominio.Entidades
         public string? NombreGenero { get; set; } 
         public string? Descripcion { get; set; }
 
-        [NotMapped] public ICollection<Discos>? Discos { get; set; }
+        [JsonIgnore]
+        public ICollection<Discos>? Discos { get; set; }
     }
 }
 

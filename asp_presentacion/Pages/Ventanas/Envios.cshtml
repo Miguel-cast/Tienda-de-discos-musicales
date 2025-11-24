@@ -163,6 +163,8 @@
                                             <td class="text-muted">@elemento.CiudadEntrega</td>
                                             <td class="text-muted">@elemento.PaisEntrega</td>
                                             <td class="fw-bold">@elemento.FechaEnvio.ToString("d")</td>
+
+											<td><span class="badge bg-secondary bg-opacity-25 text-dark">@elemento.Pedido?.Estado</span></td>
                                             <td class="text-end">
                                                 <button type="submit" asp-page-handler="BtModificar" asp-route-data="@elemento.EnvioID"
                                                         class="btn btn-sm btn-warning text-white" title="Editar">

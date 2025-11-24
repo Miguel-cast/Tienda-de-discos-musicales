@@ -153,7 +153,7 @@
                                     <th>Precio</th>
                                     <th>Artista</th>
                                     <th>Genero</th>
-                                    <th class="text-center">Proveedor</th>
+                                    <th>Proveedor</th>
                                     <th class="text-end">Acciones</th>
                                 </tr>
                             </thead>
@@ -166,6 +166,7 @@
                                             <td class="fw-bold">@elemento.Titulo</td>
                                             <td class="text-muted">@elemento.AñoLanzamiento</td>
                                             <td class="text-success fw-bold">@elemento.Precio.ToString("C")</td>
+
                                             <td><span class="badge bg-secondary bg-opacity-25 text-dark">@elemento.Artista?.NombreArtista</span></td>
                                             <td><span class="badge bg-info bg-opacity-25 text-dark">@elemento.Genero?.NombreGenero</span></td>
                                             <td class="text-center"><span class="badge bg-primary bg-opacity-25 text-dark">@elemento.Proveedor?.NombreEmpresa</span></td>

@@ -31,8 +31,8 @@ namespace asp_presentacion.Pages.Ventanas
 
         public void OnPostBtRefrescar()
         {
-            //try
-            //{
+            try
+            {
             //    //var variable_session = HttpContext.Session.GetString("Usuario");
             //    //if (String.IsNullOrEmpty(variable_session))
             //    //{
@@ -40,16 +40,16 @@ namespace asp_presentacion.Pages.Ventanas
             //    //    return;
             //    //}
             //    Filtro!.Titulo = Filtro!.Titulo ?? "";
-            //    Accion = Enumerables.Ventanas.Listas;
-            //    var task = this.iPresentacion!.PorTitulo(Filtro!);
-            //    task.Wait();
-            //    Lista = task.Result;
-            //    Actual = null;
-            //}
-            //catch (Exception ex)
-            //{
-            //    LogConversor.Log(ex, ViewData!);
-            //}
+                Accion = Enumerables.Ventanas.Listas;
+                var task = this.iPresentacion!.Listar();
+                task.Wait();
+                 Lista = task.Result;
+                Actual = null;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
         }
 
         public virtual void OnPostBtNuevo()

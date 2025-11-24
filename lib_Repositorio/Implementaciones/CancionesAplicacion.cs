@@ -108,6 +108,12 @@ namespace lib_repositorios.Implementaciones
         public List<Canciones> PorTitulo(Canciones? entidad)
         {
             return this.IConexion!.Canciones!
+                .Include(c => c.Disco)
+                    .ThenInclude(d => d.Artista)
+                .Include(c => c.Disco)
+                    .ThenInclude(d => d.Genero)
+                .Include(c => c.Disco)
+                    .ThenInclude(d => d.Proveedor)
                 .Where(x => x.Titulo!.Contains(entidad!.Titulo!))
                 .Take(50)
                 .ToList();

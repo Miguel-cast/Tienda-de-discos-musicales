@@ -12,7 +12,7 @@ namespace lib_dominio.Entidades
 
         public Pedidos? Pedido { get; set; }
 
-        public ICollection<Pagos>? Pagos { get; set; }
+      
     }
 }
 

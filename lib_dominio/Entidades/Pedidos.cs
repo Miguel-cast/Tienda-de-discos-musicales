@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace lib_dominio.Entidades
 {
@@ -14,8 +15,11 @@ namespace lib_dominio.Entidades
         public Clientes? Cliente { get; set; }
         public Empleados? Empleado { get; set; }
 
+        [JsonIgnore]
         public ICollection<Facturas>? Facturas { get; set; }
+        [JsonIgnore]
         public ICollection<Envios>? Envios { get; set; }
+        [JsonIgnore]
         public ICollection<DetallePedidos>? DetallesPedidos { get; set; }
     }
 }

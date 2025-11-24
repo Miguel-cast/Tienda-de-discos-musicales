@@ -14,7 +14,7 @@ namespace lib_presentaciones.Implementaciones
             var datos = new Dictionary<string, object>();
             
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "DetallePedidos/Listar");
+            datos = comunicaciones.ConstruirUrl(datos, "DetallesPedidos/Listar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
             
             if (respuesta.ContainsKey("Error"))
@@ -36,7 +36,7 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
             
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "DetallePedidos/Guardar");
+            datos = comunicaciones.ConstruirUrl(datos, "DetallesPedidos/Guardar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
             
             if (respuesta.ContainsKey("Error"))
@@ -58,7 +58,7 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "DetallePedidos/Modificar");
+            datos = comunicaciones.ConstruirUrl(datos, "DetallesPedidos/Modificar");
             
             var respuesta = await comunicaciones!.Ejecutar(datos);
             if (respuesta.ContainsKey("Error"))
@@ -80,7 +80,7 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
             
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "DetallePedidos/Borrar");
+            datos = comunicaciones.ConstruirUrl(datos, "DetallesPedidos/Borrar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
             
             if (respuesta.ContainsKey("Error"))

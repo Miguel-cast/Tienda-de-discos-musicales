@@ -7,14 +7,10 @@ namespace lib_dominio.Entidades
 {
     public class Canciones
     {
-        public object NombreArtista;
-
         [Key] public int CancionId { get; set; }
         public string? Titulo { get; set; }
-        public TimeOnly Duracion { get; set; }
+        public TimeSpan Duracion { get; set; }
         public int DiscoID { get; set; }
-
-
        public Discos? Disco { get; set; }
 
     }

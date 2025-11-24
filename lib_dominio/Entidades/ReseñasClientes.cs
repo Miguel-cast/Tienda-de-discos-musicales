@@ -9,7 +9,7 @@ namespace lib_dominio.Entidades
         public string? Comentario { get; set; }
         public int Calificacion { get; set; }
         public DateTime Fecha { get; set; }
-        public int ClienteID { get; set; }
+        public int ClienteID { get; set; }  
         public int DiscoID { get; set; }
 
         public Clientes? Cliente { get; set; }

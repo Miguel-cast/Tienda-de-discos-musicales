@@ -138,9 +138,13 @@ namespace lib_repositorios.Implementaciones
             return entidad;
         }
 
-        public List<Discos> PorTitulo (Discos? entidad)
+
+public List<Discos> PorTitulo(Discos? entidad)
         {
             return this.IConexion!.Discos!
+                .Include(d => d.Artista)
+                .Include(d => d.Genero)
+                .Include(d => d.Proveedor)
                 .Where(x => x.Titulo!.Contains(entidad!.Titulo!))
                 .Take(50)
                 .ToList();
