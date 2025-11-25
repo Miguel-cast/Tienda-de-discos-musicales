@@ -6,19 +6,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 namespace asp_presentacion.Pages.Ventanas
 {
-    public class FacturasModel : PageModel
+    public class PedidosModel : PageModel
     {
-        private IFacturasPresentacion? iPresentacion = null;
-        private readonly IPedidosPresentacion? iPedidosPresentacion;
+        private IPedidosPresentacion? iPresentacion = null;
+        private readonly IClientesPresentacion? iClientesPresentacion;
+        private readonly IEmpleadosPresentacion? iEmpleadosPresentacion;
 
-        public List<SelectListItem> PedidosSelectList { get; set; } = new List<SelectListItem>();
-        public FacturasModel(IFacturasPresentacion iPresentacion, IPedidosPresentacion iPedidosPresentacion)
+        public List<SelectListItem> ClientesSelectList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> EmpleadosSelectList { get; set; } = new List<SelectListItem>();
+        public PedidosModel(IPedidosPresentacion iPresentacion, IClientesPresentacion iClientesPresentacion,
+            IEmpleadosPresentacion iEmpleadosPresentacion)
         {
             try
             {
                 this.iPresentacion = iPresentacion;
-                this.iPedidosPresentacion = iPedidosPresentacion;
-                Filtro = new Facturas();
+                this.iClientesPresentacion = iClientesPresentacion;
+                this.iEmpleadosPresentacion = iEmpleadosPresentacion;
+                Filtro = new Pedidos();
             }
             catch (Exception ex)
             {
@@ -28,39 +32,53 @@ namespace asp_presentacion.Pages.Ventanas
 
         public IFormFile? FormFile { get; set; }
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
-        [BindProperty] public Facturas? Actual { get; set; }
-        [BindProperty] public Facturas? Filtro { get; set; }
-        [BindProperty] public List<Facturas>? Lista { get; set; }
-        public virtual void OnGet()
+        [BindProperty] public Pedidos? Actual { get; set; }
+        [BindProperty] public Pedidos? Filtro { get; set; }
+        [BindProperty] public List<Pedidos>? Lista { get; set; }
+        public virtual void OnGet() 
         {
-            CargarListasSecundarias(); // Llamamos a la nueva función
+            CargarListasSecundarias();
             OnPostBtRefrescar();
         }
-
         private void CargarListasSecundarias()
         {
             try
             {
- 
-                var taskPedidos = this.iPedidosPresentacion!.Listar();
-                taskPedidos.Wait();
-                var pedidos = taskPedidos.Result;
+               
+                var taskClientes = this.iClientesPresentacion!.Listar();
+                taskClientes.Wait();
+                var clientes = taskClientes.Result;
 
-  
-                if (pedidos != null)
+                var taskEmpleados = this.iEmpleadosPresentacion!.Listar();
+                taskEmpleados.Wait();
+                var empleados = taskEmpleados.Result;
+
+
+
+                if (clientes != null)
                 {
-                    PedidosSelectList = pedidos.Select(d => new SelectListItem
+                    ClientesSelectList = clientes.Select(d => new SelectListItem
                     {
-                    
-                        Value = d.PedidoID.ToString(),
-                       
-                        Text = d.FechaPedido.ToString("yyyy-MM-dd")
+
+                        Value = d.ClienteId.ToString(),
+
+                        Text = d.Nombre
                     }).ToList();
-                }
+                }  
+                
+                if(empleados != null) {
+                    EmpleadosSelectList = empleados.Select(d => new SelectListItem
+                    {
+
+                        Value = d.EmpleadoId.ToString(),
+
+                        Text = d.Nombre
+                    }).ToList();
+                }  
+
             }
             catch (Exception ex)
             {
-        
                 LogConversor.Log(ex, ViewData!);
             }
         }
@@ -68,21 +86,23 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                //    //var variable_session = HttpContext.Session.GetString("Usuario");
-                //    //if (String.IsNullOrEmpty(variable_session))
-                //    //{
-                //    //    HttpContext.Response.Redirect("/");
-                //    //    return;
-                //    //}
-                //    Filtro!.Titulo = Filtro!.Titulo ?? "";
+                //var variable_session = HttpContext.Session.GetString("Usuario");
+                //if (String.IsNullOrEmpty(variable_session))
+                //{
+                //    HttpContext.Response.Redirect("/");
+                //    return;
+                //}
+                Filtro!.Estado = Filtro!.Estado ?? "";
                 Accion = Enumerables.Ventanas.Listas;
-                var task = this.iPresentacion!.Listar();
+
+                CargarListasSecundarias();
+
+                var task = this.iPresentacion!.PorEstado(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
             }
             catch (Exception ex)
-           
             {
                 LogConversor.Log(ex, ViewData!);
             }
@@ -93,7 +113,7 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = new Facturas();
+                Actual = new Pedidos();
                 CargarListasSecundarias();
             }
             catch (Exception ex)
@@ -108,7 +128,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = Lista!.FirstOrDefault(x => x.FacturaID.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.PedidoID.ToString() == data);
                 CargarListasSecundarias();
             }
             catch (Exception ex)
@@ -122,8 +142,8 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
-                Task<Facturas>? task = null;
-                if (Actual!.FacturaID == 0)
+                Task<Pedidos>? task = null;
+                if (Actual!.PedidoID == 0)
                     task = this.iPresentacion!.Guardar(Actual!)!;
                 else
                     task = this.iPresentacion!.Modificar(Actual!)!;
@@ -144,7 +164,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Borrar;
-                Actual = Lista!.FirstOrDefault(x => x.FacturaID.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.PedidoID.ToString() == data);
             }
             catch (Exception ex)
             {

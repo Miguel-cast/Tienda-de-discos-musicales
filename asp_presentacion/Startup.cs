@@ -2,6 +2,7 @@
 using lib_presentaciones.Implementaciones;
 using lib_presentaciones.Interfaces;
 
+
 namespace asp_presentacion
 {
     public class Startup
@@ -30,6 +31,7 @@ namespace asp_presentacion
             services.AddScoped<IEmpleadosPresentacion, EmpleadosPresentacion>();
             services.AddScoped<IInventarioMovimientosPresentacion, InventarioMovimientosPresentacion>();
             services.AddScoped<IReseñasClientesPresentacion, ReseñasClientesPresentacion>();
+
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddRazorPages();

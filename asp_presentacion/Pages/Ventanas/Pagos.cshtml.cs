@@ -3,17 +3,21 @@ using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace asp_presentacion.Pages.Ventanas
 {
     public class PagosModel : PageModel
     {
         private IPagosPresentacion? iPresentacion = null;
+        private readonly IFacturasPresentacion? iFacturasPresentacion;
 
-        public PagosModel(IPagosPresentacion iPresentacion)
+        public List<SelectListItem> FacturasSelectList { get; set; } = new List<SelectListItem>();
+        public PagosModel(IPagosPresentacion iPresentacion, IFacturasPresentacion iFacturasPresentacion)
         {
             try
             {
                 this.iPresentacion = iPresentacion;
+                this.iFacturasPresentacion = iFacturasPresentacion;
                 Filtro = new Pagos();
             }
             catch (Exception ex)
@@ -27,8 +31,39 @@ namespace asp_presentacion.Pages.Ventanas
         [BindProperty] public Pagos? Actual { get; set; }
         [BindProperty] public Pagos? Filtro { get; set; }
         [BindProperty] public List<Pagos>? Lista { get; set; }
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+        public virtual void OnGet()
+        {
+            CargarListasSecundarias(); // Llamamos a la nueva función
+            OnPostBtRefrescar();
+        }
 
+        private void CargarListasSecundarias()
+        {
+            try
+            {
+
+                var taskFacturas = this.iFacturasPresentacion!.Listar();
+                taskFacturas.Wait();
+                var facturas = taskFacturas.Result;
+
+
+                if (facturas != null)
+                {
+                    FacturasSelectList = facturas.Select(d => new SelectListItem
+                    {
+
+                        Value = d.FacturaID.ToString(),
+
+                        Text = d.FechaFactura.ToString("g")
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
         public void OnPostBtRefrescar()
         {
             try
@@ -39,6 +74,7 @@ namespace asp_presentacion.Pages.Ventanas
                 //    //    HttpContext.Response.Redirect("/");
                 //    //    return;
                 //    //}
+                //    Filtro!.Titulo = Filtro!.Titulo ?? "";
                 Accion = Enumerables.Ventanas.Listas;
                 var task = this.iPresentacion!.Listar();
                 task.Wait();
@@ -46,6 +82,7 @@ namespace asp_presentacion.Pages.Ventanas
                 Actual = null;
             }
             catch (Exception ex)
+
             {
                 LogConversor.Log(ex, ViewData!);
             }
@@ -57,6 +94,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new Pagos();
+                CargarListasSecundarias();
             }
             catch (Exception ex)
             {
@@ -70,7 +108,8 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = Lista!.FirstOrDefault(x => x.PagoID.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.FacturaID.ToString() == data);
+                CargarListasSecundarias();
             }
             catch (Exception ex)
             {
@@ -84,7 +123,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Task<Pagos>? task = null;
-                if (Actual!.PagoID == 0)
+                if (Actual!.FacturaID == 0)
                     task = this.iPresentacion!.Guardar(Actual!)!;
                 else
                     task = this.iPresentacion!.Modificar(Actual!)!;
@@ -105,7 +144,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Borrar;
-                Actual = Lista!.FirstOrDefault(x => x.PagoID.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.FacturaID.ToString() == data);
             }
             catch (Exception ex)
             {

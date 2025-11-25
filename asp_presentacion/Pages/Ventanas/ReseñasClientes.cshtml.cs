@@ -3,17 +3,25 @@ using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace asp_presentacion.Pages.Ventanas
 {
     public class ReseñasClientesModel : PageModel
     {
         private IReseñasClientesPresentacion? iPresentacion = null;
-
-        public ReseñasClientesModel(IReseñasClientesPresentacion iPresentacion)
+        private readonly IClientesPresentacion? iClientesPresentacion;
+        private readonly IDiscosPresentacion? iDiscosPresentacion;
+        private readonly IProveedoresPresentacion? iProveedoresPresentacion;
+        public List<SelectListItem> ClientesSelectList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> DiscosSelectList { get; set; } = new List<SelectListItem>();
+        public ReseñasClientesModel(IReseñasClientesPresentacion iPresentacion, IClientesPresentacion iClientesPresentacion,
+            IDiscosPresentacion iDiscosPresentacion)
         {
             try
             {
                 this.iPresentacion = iPresentacion;
+                this.iClientesPresentacion = iClientesPresentacion;
+                this.iDiscosPresentacion = iDiscosPresentacion;
                 Filtro = new ReseñasClientes();
             }
             catch (Exception ex)
@@ -27,8 +35,52 @@ namespace asp_presentacion.Pages.Ventanas
         [BindProperty] public ReseñasClientes? Actual { get; set; }
         [BindProperty] public ReseñasClientes? Filtro { get; set; }
         [BindProperty] public List<ReseñasClientes>? Lista { get; set; }
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+        public virtual void OnGet()
+        {
+            CargarListasSecundarias();
+            OnPostBtRefrescar();
+        }
+        private void CargarListasSecundarias()
+        {
+            try
+            {
 
+                var taskClientes = this.iClientesPresentacion!.Listar();
+                taskClientes.Wait();
+                var clientes = taskClientes.Result;
+
+                var taskDiscos = this.iDiscosPresentacion!.Listar();
+                taskDiscos.Wait();
+                var discos = taskDiscos.Result;
+
+
+                if (clientes != null)
+                {
+                    ClientesSelectList = clientes.Select(d => new SelectListItem
+                    {
+
+                        Value = d.ClienteId.ToString(),
+
+                        Text = d.Nombre
+                    }).ToList();
+                }
+
+                if (discos != null)
+                {
+                    DiscosSelectList = discos.Select(d => new SelectListItem
+                    {
+
+                        Value = d.DiscoId.ToString(),
+
+                        Text = d.Titulo
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
         public void OnPostBtRefrescar()
         {
             try
@@ -57,6 +109,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new ReseñasClientes();
+                CargarListasSecundarias();
             }
             catch (Exception ex)
             {
@@ -71,6 +124,7 @@ namespace asp_presentacion.Pages.Ventanas
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = Lista!.FirstOrDefault(x => x.ReseñaID.ToString() == data);
+                CargarListasSecundarias();
             }
             catch (Exception ex)
             {

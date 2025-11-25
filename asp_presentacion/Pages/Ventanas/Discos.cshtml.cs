@@ -3,17 +3,27 @@ using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace asp_presentacion.Pages.Ventanas
 {
     public class DiscosModel : PageModel
     {
         private IDiscosPresentacion? iPresentacion = null;
-
-        public DiscosModel(IDiscosPresentacion iPresentacion)
+        private readonly IArtistasPresentacion? iArtistasPresentacion;
+        private readonly IGenerosPresentacion? iGenerosPresentacion;
+        private readonly IProveedoresPresentacion? iProveedoresPresentacion;
+        public List<SelectListItem> ArtistasSelectList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> GenerosSelectList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> ProveedoresSelectList { get; set; } = new List<SelectListItem>();
+        public DiscosModel(IDiscosPresentacion iPresentacion, IArtistasPresentacion iArtistasPresentacion,
+            IGenerosPresentacion iGenerosPresentacion, IProveedoresPresentacion iProveedoresPresentacion)
         {
             try
             {
                 this.iPresentacion = iPresentacion;
+                this.iArtistasPresentacion = iArtistasPresentacion;
+                this.iGenerosPresentacion = iGenerosPresentacion;
+                this.iProveedoresPresentacion = iProveedoresPresentacion;
                 Filtro = new Discos();
             }
             catch (Exception ex)
@@ -27,8 +37,64 @@ namespace asp_presentacion.Pages.Ventanas
         [BindProperty] public Discos? Actual { get; set; }
         [BindProperty] public Discos? Filtro { get; set; }
         [BindProperty] public List<Discos>? Lista { get; set; }
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+        public virtual void OnGet() 
+        {
+            CargarListasSecundarias();
+            OnPostBtRefrescar();
+        }
+        private void CargarListasSecundarias()
+        {
+            try
+            {
+               
+                var taskArtistas = this.iArtistasPresentacion!.Listar();
+                taskArtistas.Wait();
+                var artistas = taskArtistas.Result;
 
+                var taskGeneros = this.iGenerosPresentacion!.Listar();
+                taskGeneros.Wait();
+                var generos = taskGeneros.Result;
+
+                var taskProveedores = this.iProveedoresPresentacion!.Listar();
+                taskProveedores.Wait();
+                var proveedores = taskProveedores.Result;
+
+                if (artistas != null)
+                {
+                    ArtistasSelectList = artistas.Select(d => new SelectListItem
+                    {
+
+                        Value = d.ArtistaId.ToString(),
+
+                        Text = d.NombreArtista
+                    }).ToList();
+                }  
+                
+                if(generos != null) {
+                    GenerosSelectList = generos.Select(d => new SelectListItem
+                    {
+
+                        Value = d.GenerosId.ToString(),
+
+                        Text = d.NombreGenero
+                    }).ToList();
+                }  
+                
+                if (proveedores != null) {
+                    ProveedoresSelectList = proveedores.Select(d => new SelectListItem
+                    {
+
+                        Value = d.ProveedoresId.ToString(),
+
+                        Text = d.NombreEmpresa
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
         public void OnPostBtRefrescar()
         {
             try
@@ -41,6 +107,9 @@ namespace asp_presentacion.Pages.Ventanas
                 //}
                 Filtro!.Titulo = Filtro!.Titulo ?? "";
                 Accion = Enumerables.Ventanas.Listas;
+
+                CargarListasSecundarias();
+
                 var task = this.iPresentacion!.PorTitulo(Filtro!);
                 task.Wait();
                 Lista = task.Result;
@@ -58,6 +127,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new Discos();
+                CargarListasSecundarias();
             }
             catch (Exception ex)
             {
@@ -72,6 +142,7 @@ namespace asp_presentacion.Pages.Ventanas
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = Lista!.FirstOrDefault(x => x.DiscoId.ToString() == data);
+                CargarListasSecundarias();
             }
             catch (Exception ex)
             {

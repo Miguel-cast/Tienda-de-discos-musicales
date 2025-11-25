@@ -1,7 +1,7 @@
 ﻿@page
-@model asp_presentacion.Pages.Ventanas.DiscosModel
+@model asp_presentacion.Pages.Ventanas.InventarioMovimientosModel
 @{
-    ViewData["Titulo"] = "Gestión de Discos";
+    ViewData["Titulo"] = "Gestión de Inventario";
 }
 
 <div class="container-fluid py-4">
@@ -9,7 +9,7 @@
         @Html.AntiForgeryToken()
 
         <div class="d-flex justify-content-between align-items-center page-header">
-            <h2 class="text-primary mb-0"><i class="fas fa-compact-disc me-2"></i>Discos</h2>
+            <h2 class="text-primary mb-0"><i class="fas fa-right-left"></i>Inventario</h2>
 
             <div class="action-bar">
                 <button type="submit" asp-page-handler="BtRefrescar"
@@ -41,16 +41,15 @@
         @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
                 Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
         {
-            <input type="hidden" asp-for="@Model.Actual!.DiscoId" />
+            <input type="hidden" asp-for="@Model.Actual!.MovimientoId" />
         }
         @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
         {
-            <input type="hidden" asp-for="@Model.Actual!.Titulo" />
-            <input type="hidden" asp-for="@Model.Actual!.AñoLanzamiento" />
-            <input type="hidden" asp-for="@Model.Actual!.Precio" />
-            <input type="hidden" asp-for="@Model.Actual!.ArtistaId" />
-            <input type="hidden" asp-for="@Model.Actual!.GenerosId" />
-            <input type="hidden" asp-for="@Model.Actual!.ProveedoresId" />
+            <input type="hidden" asp-for="@Model.Actual!.FechaMovimiento" />
+            <input type="hidden" asp-for="@Model.Actual!.TipoMovimiento" />
+            <input type="hidden" asp-for="@Model.Actual!.Cantidad" />
+            <input type="hidden" asp-for="@Model.Actual!.DiscoId" />
+            <input type="hidden" asp-for="@Model.Actual!.EmpleadoId" />
         }
 
         @if (ViewData.ContainsKey("Mensaje"))
@@ -71,62 +70,55 @@
                 <div class="card-body-custom">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Titulo</label>
-                            <input class="form-control" asp-for="@Model.Actual!.Titulo" placeholder="Ej. Laptop Gamer" />
-                            <span asp-validation-for="@Model.Actual!.Titulo" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Año de Lanzamiento</label>
-                            <input class="form-control" asp-for="@Model.Actual!.AñoLanzamiento" placeholder="Ej. Sony, LG..." />
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Precio</label>
+                            <label class="form-label fw-bold">Fecha del Movimiento</label>
                             <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                <input class="form-control" asp-for="@Model.Actual!.Precio" type="number" step="0.01" />
+                                <span class="input-group-text bg-white text-muted">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+
+                                <input type="date"
+                                       class="form-control"
+                                       asp-for="@Model.Actual!.FechaMovimiento" />
                             </div>
+                            <span asp-validation-for="@Model.Actual!.FechaMovimiento" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Artista</label>
-
-                            <select class="form-control"
-                                    asp-for="@Model.Actual!.ArtistaId"
-                                    asp-items="Model.ArtistasSelectList">
-
-                                <option value="">-- Seleccione un Artista --</option>
-                            </select>
-
-                            <span asp-validation-for="@Model.Actual!.ArtistaId" class="text-danger"></span>
+                            <label class="form-label fw-bold">Tipo de movimiento</label>
+                            <input class="form-control" asp-for="@Model.Actual!.TipoMovimiento" placeholder="Ej. (Entrada o Salida)" />
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Genero</label>
-
-                            <select class="form-control"
-                                    asp-for="@Model.Actual!.GenerosId"
-                                    asp-items="Model.GenerosSelectList">
-
-                                <option value="">-- Seleccione un Genero --</option>
-                            </select>
-
-                            <span asp-validation-for="@Model.Actual!.GenerosId" class="text-danger"></span>
+                            <label class="form-label fw-bold">Cantidad</label>
+                            <input class="form-control" asp-for="@Model.Actual!.Cantidad" placeholder="Ej. 12,3,15..." />
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Proveedor</label>
+                            <label class="form-label fw-bold">Disco</label>
 
                             <select class="form-control"
-                                    asp-for="@Model.Actual!.ProveedoresId"
-                                    asp-items="Model.ProveedoresSelectList">
+                                    asp-for="@Model.Actual!.DiscoId"
+                                    asp-items="Model.DiscosSelectList">
 
-                                <option value="">-- Seleccione un Proveedor --</option>
+                                <option value="">-- Seleccione un Disco --</option>
                             </select>
 
-                            <span asp-validation-for="@Model.Actual!.ProveedoresId" class="text-danger"></span>
+                            <span asp-validation-for="@Model.Actual!.DiscoId" class="text-danger"></span>
                         </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Empleado</label>
+
+                            <select class="form-control"
+                                    asp-for="@Model.Actual!.EmpleadoId"
+                                    asp-items="Model.EmpleadosSelectList">
+
+                                <option value="">-- Seleccione un Empleado --</option>
+                            </select>
+
+                            <span asp-validation-for="@Model.Actual!.EmpleadoId" class="text-danger"></span>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -143,7 +135,7 @@
                     <p class="text-muted">Esta acción no se puede deshacer.</p>
 
                     <div class="alert alert-warning">
-                        <strong>@Model.Actual!.Titulo</strong>
+                        <strong>@Model.Actual!.FechaMovimiento</strong>
                     </div>
 
                     <div class="d-flex justify-content-center gap-3 mt-4">
@@ -163,35 +155,21 @@
         {
             <div class="card card-custom">
                 <div class="card-header-custom">
-                    <span><i class="fas fa-list me-2"></i>Listado de Discos</span>
+                    <span><i class="fas fa-list me-2"></i>Listado de InventarioMovimientos</span>
                 </div>
                 <div class="card-body-custom">
 
-                    <div class="row g-2 mb-4 p-3 bg-light rounded">
-                        <div class="col-md-5">
-                            <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="fas fa-filter"></i></span>
-                                <input class="form-control" asp-for="@Model.Filtro!.Titulo" placeholder="Filtrar por Titulo..." />
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <button type="submit" asp-page-handler="BtRefrescar" class="btn btn-primary w-100">
-                                <i class="fas fa-search"></i> Buscar
-                            </button>
-                        </div>
-                    </div>
 
                     <div class="table-responsive">
                         <table class="table table-custom align-middle">
                             <thead>
                                 <tr>
-                                    <th>Titulo</th>
-                                    <th>Año Lanzamiento</th>
-                                    <th>Precio</th>
-                                    <th>Artista</th>
-                                    <th>Genero</th>
-                                    <th>Proveedor</th>
+                                    <th>Fecha del movimiento</th>
+                                    <th>tipo</th>
+                                    <th>cantidad</th>
+                                    <th>Disco</th>
+                                    <th>Empleado</th>
+
                                     <th class="text-end">Acciones</th>
                                 </tr>
                             </thead>
@@ -201,19 +179,18 @@
                                     @foreach (var elemento in Model.Lista)
                                     {
                                         <tr>
-                                            <td class="fw-bold">@elemento.Titulo</td>
-                                            <td class="text-muted">@elemento.AñoLanzamiento</td>
-                                            <td class="text-success fw-bold">@elemento.Precio.ToString("C")</td>
+                                            <td class="fw-bold">@elemento.FechaMovimiento.ToString("d")</td>
+                                            <td class="text-muted">@elemento.TipoMovimiento</td>
+                                            <td class="text-muted">@elemento.Cantidad</td>
 
-                                            <td><span class="badge bg-secondary bg-opacity-25 text-dark">@elemento.Artista?.NombreArtista</span></td>
-                                            <td><span class="badge bg-info bg-opacity-25 text-dark">@elemento.Genero?.NombreGenero</span></td>
-                                            <td class="text-center"><span class="badge bg-primary bg-opacity-25 text-dark">@elemento.Proveedor?.NombreEmpresa</span></td>
+                                            <td><span class="badge bg-secondary bg-opacity-25 text-dark">@elemento.Disco?.Titulo</span></td>
+                                            <td><span class="badge bg-info bg-opacity-25 text-dark">@elemento.Empleado?.Nombre</span></td>
                                             <td class="text-end">
-                                                <button type="submit" asp-page-handler="BtModificar" asp-route-data="@elemento.DiscoId"
+                                                <button type="submit" asp-page-handler="BtModificar" asp-route-data="@elemento.MovimientoId"
                                                         class="btn btn-sm btn-warning text-white" title="Editar">
                                                     <i class="fas fa-pen"></i>
                                                 </button>
-                                                <button type="submit" asp-page-handler="BtBorrarVal" asp-route-data="@elemento.DiscoId"
+                                                <button type="submit" asp-page-handler="BtBorrarVal" asp-route-data="@elemento.MovimientoId"
                                                         class="btn btn-sm btn-danger" title="Borrar">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -226,7 +203,7 @@
                                     <tr>
                                         <td colspan="7" class="text-center py-4 text-muted">
                                             <i class="fas fa-inbox fa-2x mb-2"></i><br>
-                                            No hay Discos registrados
+                                            No hay InventarioMovimientos registrados
                                         </td>
                                     </tr>
                                 }

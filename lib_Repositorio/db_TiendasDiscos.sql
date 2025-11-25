@@ -190,6 +190,23 @@ CREATE TABLE [Auditorias](
     [Descripcion] NVARCHAR(100), -- Tabla     afectada
     );
 GO
+
+
+
+CREATE TABLE [dbo].[ImagenPrincipal]
+(
+
+    [ImagenID] INT IDENTITY(1,1) PRIMARY KEY, 
+    
+    [NombreArchivo] NVARCHAR(255) NOT NULL,
+
+    [TipoMime] NVARCHAR(50) NOT NULL,
+    
+    [ContenidoBytes] VARBINARY(MAX) NOT NULL,
+    
+    [FechaCreacion] DATETIME NOT NULL DEFAULT GETDATE()
+);
+GO
 ----- Inserts -----
 INSERT INTO [Clientes] (Nombre, Apellido, Email, Telefono, Direccion, Ciudad, Pais) VALUES
 ('Carlos', 'Ramírez', 'carlos.ramirez@mail.com', '3001234567', 'Cra 10 #20-30', 'Bogotá', 'Colombia'),
@@ -364,6 +381,15 @@ VALUES
 ('El mejor álbum del año, recomendado.', 5, '2025-09-09', 5, 5);
 GO
 
+INSERT INTO ImagenPrincipal (NombreArchivo, TipoMime, ContenidoBytes, FechaCreacion)
+SELECT 
+    'logo_principal.png', 
+    'image/png',          
+    BulkColumn,         
+    GETDATE()
+FROM OPENROWSET(BULK 'C:\Users\abela\Downloads\ImagenPrincipal.png', SINGLE_BLOB) AS x;
+GO
 
-SELECT * FROM Usuarios;
+
+SELECT * FROM ImagenPrincipal;
 GO

@@ -91,6 +91,19 @@
                             </div>
                         </div>
 
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Pedido</label>
+
+                            <select class="form-control"
+                                    asp-for="@Model.Actual!.PedidoID"
+                                    asp-items="Model.PedidosSelectList">
+
+                                <option value="">-- Seleccione un Pedido --</option>
+                            </select>
+
+                            <span asp-validation-for="@Model.Actual!.PedidoID" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,7 +161,7 @@
                                         <tr>
                                             <td class="fw-bold">@elemento.FechaFactura</td>
                                             <td class="text-success fw-bold">@elemento.Total.ToString("C")</td>
-                                            <td class="text-muted">@elemento.PedidoID</td>
+                                            <td><span class="badge bg-secondary bg-opacity-25 text-dark">@elemento.Pedido?.FechaPedido.ToString("d")</span></td>
                                             <td class="text-end">
                                                 <button type="submit" asp-page-handler="BtModificar" asp-route-data="@elemento.FacturaID"
                                                         class="btn btn-sm btn-warning text-white" title="Editar">

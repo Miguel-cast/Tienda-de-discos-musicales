@@ -3,17 +3,29 @@ using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering; // ¡Necesario para SelectListItem!
+
 namespace asp_presentacion.Pages.Ventanas
 {
     public class CancionesModel : PageModel
     {
+        
         private ICancionesPresentacion? iPresentacion = null;
 
-        public CancionesModel(ICancionesPresentacion iPresentacion)
+        // Interfaz NUEVA: Necesaria para obtener la lista de Discos (FK)
+        private readonly IDiscosPresentacion? iDiscosPresentacion;
+
+        // NUEVA PROPIEDAD: Lista para llenar el Dropdown (Select)
+        public List<SelectListItem> DiscosSelectList { get; set; } = new List<SelectListItem>();
+
+
+        // Constructor modificado para inyectar AMBAS interfaces
+        public CancionesModel(ICancionesPresentacion iPresentacion, IDiscosPresentacion iDiscosPresentacion)
         {
             try
             {
                 this.iPresentacion = iPresentacion;
+                this.iDiscosPresentacion = iDiscosPresentacion; // Asignación de la nueva interfaz
                 Filtro = new Canciones();
             }
             catch (Exception ex)
@@ -27,20 +39,56 @@ namespace asp_presentacion.Pages.Ventanas
         [BindProperty] public Canciones? Actual { get; set; }
         [BindProperty] public Canciones? Filtro { get; set; }
         [BindProperty] public List<Canciones>? Lista { get; set; }
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+
+        // Método principal de carga de página (OnGet)
+        public virtual void OnGet()
+        {
+            CargarListasSecundarias(); // Llamamos a la nueva función
+            OnPostBtRefrescar();
+        }
+
+        // --- Nuevo método para cargar datos de claves foráneas ---
+        private void CargarListasSecundarias()
+        {
+            try
+            {
+                // 1. Cargar la lista de Discos desde el servicio
+                var taskDiscos = this.iDiscosPresentacion!.Listar();
+                taskDiscos.Wait();
+                var discos = taskDiscos.Result;
+
+                // 2. Convertir la lista de Discos a SelectListItem
+                if (discos != null)
+                {
+                    DiscosSelectList = discos.Select(d => new SelectListItem
+                    {
+                        // Se asume que el ID del Disco es DiscoID
+                        Value = d.DiscoId.ToString(),
+                        // Se asume que el texto a mostrar es Titulo
+                        Text = d.Titulo
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores si la DB de Discos falla
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+        // -----------------------------------------------------------
+
 
         public void OnPostBtRefrescar()
         {
             try
             {
-                //var variable_session = HttpContext.Session.GetString("Usuario");
-                //if (String.IsNullOrEmpty(variable_session))
-                //{
-                //    HttpContext.Response.Redirect("/");
-                //    return;
-                //}
+                // ... (lógica de sesión comentada)
                 Filtro!.Titulo = Filtro!.Titulo ?? "";
                 Accion = Enumerables.Ventanas.Listas;
+
+                // Aseguramos que las listas secundarias estén cargadas antes de refrescar
+                CargarListasSecundarias();
+
                 var task = this.iPresentacion!.PorTitulo(Filtro!);
                 task.Wait();
                 Lista = task.Result;
@@ -58,6 +106,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new Canciones();
+                CargarListasSecundarias(); // Cargar listas al crear uno nuevo
             }
             catch (Exception ex)
             {
@@ -72,6 +121,7 @@ namespace asp_presentacion.Pages.Ventanas
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = Lista!.FirstOrDefault(x => x.CancionId.ToString() == data);
+                CargarListasSecundarias(); // Cargar listas al modificar
             }
             catch (Exception ex)
             {

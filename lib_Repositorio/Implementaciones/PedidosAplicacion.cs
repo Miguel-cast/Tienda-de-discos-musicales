@@ -141,7 +141,8 @@ namespace lib_repositorios.Implementaciones
         public List<Pedidos> PorEstado(Pedidos? entidad)
         {
             return this.IConexion!.Pedidos!
-                
+                .Include(d => d.Cliente)
+                .Include(d => d.Empleado)
                 .Where(x => x.Estado!.Contains(entidad!.Estado!))
                 .Take(50)
                 .ToList();

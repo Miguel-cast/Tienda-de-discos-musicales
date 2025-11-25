@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Fecha de factura</label>
+                            <label class="form-label fw-bold">Fecha</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-white text-muted">
                                     <i class="fas fa-calendar-alt"></i>
@@ -94,6 +94,33 @@
                             <span asp-validation-for="@Model.Actual!.Fecha" class="text-danger"></span>
                         </div>
 
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Cliente</label>
+
+                            <select class="form-control"
+                                    asp-for="@Model.Actual!.ClienteID"
+                                    asp-items="Model.ClientesSelectList">
+
+                                <option value="">-- Seleccione un Cliente --</option>
+                            </select>
+
+                            <span asp-validation-for="@Model.Actual!.ClienteID" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Disco</label>
+
+                            <select class="form-control"
+                                    asp-for="@Model.Actual!.DiscoID"
+                                    asp-items="Model.DiscosSelectList">
+
+                                <option value="">-- Seleccione un Disco --</option>
+                            </select>
+
+                            <span asp-validation-for="@Model.Actual!.DiscoID" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
             </div>
