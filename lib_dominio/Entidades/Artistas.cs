@@ -13,8 +13,9 @@ namespace lib_dominio.Entidades
         [Key] public int ArtistaId { get; set; }
         public string? NombreArtista { get; set; } 
         public string? Nacionalidad { get; set; }
-            
-        
+        public string? Imagen { get; set; }
+
+
         [NotMapped] public ICollection<Discos>? Discos { get; set; }
     }
 }

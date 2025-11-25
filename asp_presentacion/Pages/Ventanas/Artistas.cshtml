@@ -76,6 +76,20 @@
                             <label class="form-label fw-bold">Nacionalidad</label>
                             <input class="form-control" asp-for="@Model.Actual!.Nacionalidad" placeholder="Ej. Colombia" />
                             <span asp-validation-for="@Model.Actual!.Nacionalidad" class="text-danger"></span>
+
+							<div class="col-md-6">
+								<label class="form-label fw-bold">Imagen (URL)</label>
+								<input class="form-control" asp-for="@Model.Actual!.Imagen" placeholder="https://..." />
+							</div>
+
+							@if (!string.IsNullOrEmpty(Model.Actual!.Imagen))
+							{
+								<div class="col-md-6 text-center">
+									<label class="form-label fw-bold">Vista previa</label><br />
+									<img src="@Model.Actual.Imagen" class="img-thumbnail" style="max-height:150px;" />
+								</div>
+							}
+
                         </div>
 
                     </div>
@@ -135,19 +149,31 @@
 
                     <div class="table-responsive">
                         <table class="table table-custom align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Artista</th>
-                                    <th>Nacionalidad</th>
-                                    <th class="text-end">Acciones</th>
-                                </tr>
-                            </thead>
+							<thead>
+								<tr>
+									<th>Imagen</th>
+									<th>Artista</th>
+									<th>Nacionalidad</th>
+									<th class="text-end">Acciones</th>
+								</tr>
+							</thead>
+
                             <tbody>
                                 @if (Model != null && Model.Lista != null && Model.Lista.Any())
                                 {
                                     @foreach (var elemento in Model.Lista)
                                     {
                                         <tr>
+											<td>
+												@if (!string.IsNullOrEmpty(elemento.Imagen))
+												{
+													<img src="@elemento.Imagen" width="70" class="rounded" />
+												}
+												else
+												{
+													<span class="text-muted">Sin imagen</span>
+												}
+											</td>
                                             <td class="fw-bold">@elemento.NombreArtista</td>
                                             <td class="fw-bold">@elemento.Nacionalidad</td>
                                             <td class="text-end">

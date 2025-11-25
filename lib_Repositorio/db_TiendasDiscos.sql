@@ -39,7 +39,8 @@ GO
 CREATE TABLE [Artistas](
     [ArtistaId] INT IDENTITY (1,1) PRIMARY KEY,
     [NombreArtista] NVARCHAR(100) NOT NULL,
-    [Nacionalidad] NVARCHAR(50)
+    [Nacionalidad] NVARCHAR(50),
+    [Imagen] NVARCHAR (200) NOT NULL
 );
 GO
 
@@ -193,20 +194,7 @@ GO
 
 
 
-CREATE TABLE [dbo].[ImagenPrincipal]
-(
 
-    [ImagenID] INT IDENTITY(1,1) PRIMARY KEY, 
-    
-    [NombreArchivo] NVARCHAR(255) NOT NULL,
-
-    [TipoMime] NVARCHAR(50) NOT NULL,
-    
-    [ContenidoBytes] VARBINARY(MAX) NOT NULL,
-    
-    [FechaCreacion] DATETIME NOT NULL DEFAULT GETDATE()
-);
-GO
 ----- Inserts -----
 INSERT INTO [Clientes] (Nombre, Apellido, Email, Telefono, Direccion, Ciudad, Pais) VALUES
 ('Carlos', 'Ramírez', 'carlos.ramirez@mail.com', '3001234567', 'Cra 10 #20-30', 'Bogotá', 'Colombia'),
@@ -234,12 +222,12 @@ INSERT INTO [Proveedores] (NombreEmpresa, Contacto, Telefono, Direccion) VALUES
 ('Flow Music', 'Camila Torres', '3167894521', 'Norte, Barranquilla');
 GO
 
-INSERT INTO [Artistas] (NombreArtista, Nacionalidad) VALUES
-('The Beatles', 'Reino Unido'),
-('Shakira', 'Colombia'),
-('Adele', 'Reino Unido'),
-('Michael Jackson', 'Estados Unidos'),
-('Hades66', 'Colombia');
+INSERT INTO [Artistas] (NombreArtista, Nacionalidad, Imagen) VALUES
+('The Beatles', 'Reino Unido','https://i.etsystatic.com/34327129/r/il/6fb10d/3683486012/il_1080xN.3683486012_r4yp.jpg'),
+('Shakira', 'Colombia','https://upload.wikimedia.org/wikipedia/commons/0/0b/2023-11-16_Gala_de_los_Latin_Grammy%2C_03_%28cropped%2901.jpg'),
+('Adele', 'Reino Unido','https://upload.wikimedia.org/wikipedia/commons/7/7c/Adele_2016.jpg'),
+('Michael Jackson', 'Estados Unidos','https://upload.wikimedia.org/wikipedia/commons/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg'),
+('Hades66', 'Colombia','https://cdn-images.dzcdn.net/images/artist/ee252621a5a23d7cdda5dbb9c9bb5d00/500x500.jpg');
 GO
 
 INSERT INTO [Generos] (NombreGenero, Descripcion) VALUES
@@ -381,15 +369,3 @@ VALUES
 ('El mejor álbum del año, recomendado.', 5, '2025-09-09', 5, 5);
 GO
 
-INSERT INTO ImagenPrincipal (NombreArchivo, TipoMime, ContenidoBytes, FechaCreacion)
-SELECT 
-    'logo_principal.png', 
-    'image/png',          
-    BulkColumn,         
-    GETDATE()
-FROM OPENROWSET(BULK 'C:\Users\abela\Downloads\ImagenPrincipal.png', SINGLE_BLOB) AS x;
-GO
-
-
-SELECT * FROM ImagenPrincipal;
-GO
